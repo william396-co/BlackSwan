@@ -15,10 +15,15 @@ void post_vs_dispatch_test()
 
 	std::jthread worker([&io] {io.run();});
 
+	// === post：总是排入队列 ===
+    // 无论当前线程是不是 io_context 线程，都排队等 run() 执行
 	boost::asio::post(io, []() {
 		std::cout << std::this_thread::get_id() << " [post] must run in the io_context thread\n";
 	});
 
+	// == = dispatch：看情况 == =
+	// 如果当前线程正在 run() io_context → 立即执行
+	// 否则 → 等同于 post
 	boost::asio::dispatch(io, [] {
 		std::cout <<std::this_thread::get_id()<< " [dispatch] may run immediatly, may in run queue\n";
 		});

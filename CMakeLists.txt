@@ -35,4 +35,7 @@ add_subdirectory(src/gameserver)
 
 if(BLACKSWAN_BUILD_EXAMPLES)
     add_subdirectory(src/example/boost)
+    add_subdirectory(src/example/echo_server)
+    add_subdirectory(src/example/echo_client)
+    add_subdirectory(src/example/chat_server)
 endif()

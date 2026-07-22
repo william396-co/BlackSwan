@@ -22,11 +22,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{17BE22E7-26C4-3935-A42C-FD2E2C70D7AE}</ProjectGuid>
+    <ProjectGuid>{535460C2-5F2D-3102-BE06-E6DC7B7C6A8D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
-    <ProjectName>boost</ProjectName>
+    <ProjectName>example_boost</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -60,26 +60,26 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">boost.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">boost</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">example_boost.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">example_boost</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">boost.dir\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">boost</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">example_boost.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">example_boost</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">boost.dir\MinSizeRel\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">boost</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">example_boost.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">example_boost</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">boost.dir\RelWithDebInfo\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">boost</TargetName>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">example_boost.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">example_boost</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
@@ -132,8 +132,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/Debug/boost.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/boost.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/Debug/example_boost.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_boost.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -184,8 +184,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/Release/boost.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/boost.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/Release/example_boost.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_boost.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -236,8 +236,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/MinSizeRel/boost.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/boost.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/MinSizeRel/example_boost.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_boost.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -287,8 +287,8 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/RelWithDebInfo/boost.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/boost.pdb</ProgramDataBaseFile>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/boost/RelWithDebInfo/example_boost.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_boost.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -356,8 +356,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\async_accept.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\io_context.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\main.cpp" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\post_vs_dispatch.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\steady_timer.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\work_guard.cpp" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\period_timer.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

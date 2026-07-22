@@ -10,10 +10,16 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\post_vs_dispatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\steady_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\work_guard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\example\boost\period_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
