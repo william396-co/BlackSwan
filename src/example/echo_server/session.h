@@ -20,14 +20,13 @@ public:
 private:
 	void doRead() {
 
-		auto self = shared_from_this();		
 		socket_.async_read_some(
 			boost::asio::buffer(data_, sizeof(data_)),
-			[this, self](boost::system::error_code const& error, size_t len) {
+			[this, self = shared_from_this()](boost::system::error_code const& error, size_t len) {
 
 				if (!error) {					
 					std::cout << "received data:[" << data_.data() << "]\n";					
-					doWrite(len);
+					doWrite(len);//echo ,send data back
 				}
 				else {
 					std::cerr << error.what() << "\n";
@@ -38,10 +37,9 @@ private:
 	}
 	void doWrite(size_t len) {
 
-		auto self = shared_from_this();		
 		boost::asio::async_write(
 			socket_, boost::asio::buffer(data_, len),
-			[this, self](boost::system::error_code const& error, size_t) {
+			[this, self = shared_from_this()](boost::system::error_code const& error, size_t) {
 				if (!error) {
 					std::cout << "send data:[" << data_.data() << "]\n";
 					doRead();

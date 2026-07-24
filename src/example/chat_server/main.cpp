@@ -47,6 +47,16 @@ private:
 };
 
 
+using MessageList = std::deque<std::pair<ChatSessionPtr, std::string>>;
+
+MessageList message_list;
+std::mutex message_mtx;
+
+void handleMessage(std::string_view data_view,ChatSessionPtr sender) {
+	std::lock_guard lk(message_mtx);
+	message_list.push_back({ sender,std::string(data_view) });
+}
+
 class ChatSession : public std::enable_shared_from_this<ChatSession>
 {
 public:
@@ -58,8 +68,10 @@ public:
 		std::cout << "[" << socket_.remote_endpoint() << "]" << __PRETTY_FUNCTION__ << "\n";
 	}
 	~ChatSession() {
-
-		std::cout << "[" << socket_.remote_endpoint() << "]" << __PRETTY_FUNCTION__ << "\n";
+		if (socket_.is_open()) {
+			std::cout << "[" << socket_.remote_endpoint() << "]" << __PRETTY_FUNCTION__ << "\n";
+		}
+		stop();
 	}
 	void Start() {
 		room_.join(shared_from_this());
@@ -98,18 +110,33 @@ private:
 				buf.consume(n);
 #else
 
-
 				std::fill(std::begin(buf), std::end(buf), '\0');
 				auto n = co_await socket_.async_read_some(boost::asio::buffer(buf), use_awaitable);
 #endif			
+				// TODO async_read_some callback
+				//handleMessage(std::string_view(buf, n));
 				std::cout << "recived data from [" << socket_.remote_endpoint() << "]:" << buf << "\n";
 				room_.broadcast(std::string(buf, n), shared_from_this());
 			}
 		}
-		catch (std::exception&) {
-			stop();
+		catch (boost::system::error_code const&error) {
+			// 在这里统一处理所有断开情况
+			if (error == boost::asio::error::eof) {
+				std::cout << "connection disconnected:" << socket_.remote_endpoint() << "\n";
+			}
+			else if (error == boost::asio::error::connection_reset) {
+				std::cout << "connection reset:" << socket_.remote_endpoint() << "\n";
+			}
+			else if (error == boost::asio::error::broken_pipe) {
+				std::cout << "connection broken pipe:" << socket_.remote_endpoint() << "\n";
+			}
+			else {
+				std::cout << "other network error:" << error.message() << "\n";
+			}
+			// 不需要手动 close，socket 析构时会自动关闭
 		}
 	}
+
 	awaitable<void> writerLoop() {
 
 		try {
@@ -140,8 +167,21 @@ private:
 			}
 
 		}
-		catch (std::exception&) {
-			stop();
+		catch (boost::system::error_code const& error) {
+			// 在这里统一处理所有断开情况
+			if (error == boost::asio::error::eof) {
+				std::cout << "connection disconnected:" << socket_.remote_endpoint() << "\n";
+			}
+			else if (error == boost::asio::error::connection_reset) {
+				std::cout << "connection reset:" << socket_.remote_endpoint() << "\n";
+			}
+			else if (error == boost::asio::error::broken_pipe) {
+				std::cout << "connection broken pipe:" << socket_.remote_endpoint() << "\n";
+			}
+			else {
+				std::cout << "other network error:" << error.message() << "\n";
+			}
+			// 不需要手动 close，socket 析构时会自动关闭
 		}
 	}
 	void stop() {
@@ -159,6 +199,7 @@ private:
 
 void ChatRoom::broadcast(std::string const& msg, ChatSessionPtr sender)
 {
+	std::cout << "broadcast msg:[" << msg << "]\n";
 	for (auto& s : sessions_) {
 		if (s == sender)continue;
 		s->deliver(msg);
@@ -188,22 +229,40 @@ int main() {
 		ChatRoom room;
 		auto port = 9527;
 
+		bool stop = false;
+
 		std::cout << "==================ChatRoom running==================\n";
-		std::cout << "=====List port: 9527============\n";
-		//std::cout << "使用 nc localhost 9527 或 telnet localhost 9527 连接\n";
-		std::cout << "========================\n\n";
+		std::cout << "=====List port: 9527============\n";		
 
 		boost::asio::co_spawn(io,
 			listener(tcp::acceptor(io, tcp::endpoint(tcp::v4(), port)), room), boost::asio::detached);
 
 		// elegant close server
 		boost::asio::signal_set signals(io, SIGINT, SIGTERM);
-		signals.async_wait([&io](auto ,auto) {
-			std::cout << "\n[system] recieved signal, stop the serveice\n";
-			io.stop();
+		signals.async_wait([&io,&stop](auto ,auto) {
+			std::cout << "\n[system] recieved signal, stop the serveice\n";			
+			stop = true;
 			});
 
-		io.run();
+
+		std::jthread io_work(
+			[&io,&stop]() {
+				while (!stop) {
+					io.run();
+				}
+			}
+		);
+
+		while (!stop) {
+			MessageList currList;
+			{
+				std::lock_guard lk(message_mtx);
+				currList.insert(currList.begin(), message_list.begin(), message_list.end());
+			}
+			for (auto const& it : currList) {
+				room.broadcast(it.second,it.first);
+			}
+		}
 	}
 	catch (std::exception const& e) {
 		std::cerr << "Exception:" << e.what() << "\n";

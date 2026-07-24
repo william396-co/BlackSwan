@@ -9,7 +9,6 @@
 
 #include "session.h"
 #include "server.h"
-#include "ioContextPool.h"
 
 using boost::asio::ip::tcp;
 
@@ -93,7 +92,7 @@ void coroutine_echo_server() {
 
 void single_iocontex_multi_thread_test() {
     boost::asio::io_context io;
-    auto guard = boost::asio::make_work_guard(io);
+    //auto guard = boost::asio::make_work_guard(io);
 
 
     for (int i = 0; i != 10;++i) {
@@ -108,9 +107,9 @@ void single_iocontex_multi_thread_test() {
         threads.emplace_back([&io]() {io.run();});
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
+    //std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
 
-    guard.reset();
+   //  guard.reset();
 }
 
 void multi_iocontext_multithread_test() {
@@ -134,23 +133,30 @@ void strand_test() {
     auto strand = boost::asio::make_strand(io);
 
     auto counter = 0;
-    // 通过 strand 提交 1000 个递增任务
-    for (int i = 0; i != 1000;++i) { 
-        // 通过 strand 提交 → 保证串行执行 → 无需加锁
-        boost::asio::post(strand, [&counter] {
-            counter++;
-			std::cout << "[" << std::this_thread::get_id() << "]counter=" << counter << "\n";
-            });
-    }
+
+    srand(time(nullptr));
+	
 
     // 4 个线程并发运行 io_context
     std::vector<std::thread> threads;
     for (int i = 0; i != 10;++i) {
-        threads.emplace_back([&io] {io.run();});
+        threads.emplace_back([&io] {
+            //std::this_thread::sleep_for(std::chrono::milliseconds{ rand() % 10 });
+            std::cout << "[" << std::this_thread::get_id() << "]io.run()\n";
+            io.run();
+            });
+    }
+    
+    // 通过 strand 提交 1000 个递增任务
+    for (int i = 0; i != 1000;++i) {
+        // 通过 strand 提交 → 保证串行执行 → 无需加锁
+        boost::asio::post(strand, [&counter] {
+            counter++;
+            std::cout << "[" << std::this_thread::get_id() << "]counter=" << counter << "\n";
+            });
     }
 
     std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
-    
     // counter 一定是 1000（strand 保证了串行）
     std::cout << "counter = " << counter << "\n";
 }
@@ -158,12 +164,12 @@ void strand_test() {
 int main(){
 
 #if 1
-     coroutine_echo_server();
-#else
     async_echo_server();
+#else
     sync_echo_server();
     single_iocontex_multi_thread_test();
     multi_iocontext_multithread_test();
+    coroutine_echo_server();
     strand_test();
 #endif
     

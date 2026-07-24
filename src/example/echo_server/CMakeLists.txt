@@ -23,6 +23,11 @@ target_link_libraries(example_echo_server
         Threads::Threads
 )
 
+target_include_directories(example_echo_server
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/src/share
+)
+
 if(TARGET Boost::headers)
     target_link_libraries(example_echo_server PRIVATE Boost::headers)
 elseif(TARGET Boost::boost)

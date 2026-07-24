@@ -11,34 +11,34 @@ endif()
 
 find_package(Threads REQUIRED)
 
-add_executable(example_chat_server main.cpp)
+add_executable(example_net_client main.cpp)
 
-target_link_libraries(example_chat_server
+target_link_libraries(example_net_client
     PRIVATE
         blackswan_build_options
         Boost::system
         Threads::Threads
 )
 
-target_include_directories(example_chat_server
+target_include_directories(example_net_client
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src/share
 )
 
 if(TARGET Boost::headers)
-    target_link_libraries(example_chat_server PRIVATE Boost::headers)
+    target_link_libraries(example_net_client PRIVATE Boost::headers)
 elseif(TARGET Boost::boost)
-    target_link_libraries(example_chat_server PRIVATE Boost::boost)
+    target_link_libraries(example_net_client PRIVATE Boost::boost)
 else()
-    target_include_directories(example_chat_server PRIVATE ${Boost_INCLUDE_DIRS})
+    target_include_directories(example_net_client PRIVATE ${Boost_INCLUDE_DIRS})
 endif()
 
 if(WIN32)
-    target_compile_definitions(example_chat_server PRIVATE
+    target_compile_definitions(example_net_client PRIVATE
         _WIN32_WINNT=0x0A00
         WIN32_LEAN_AND_MEAN
         NOMINMAX
     )
 
-    target_link_libraries(example_chat_server PRIVATE ws2_32 mswsock)
+    target_link_libraries(example_net_client PRIVATE ws2_32 mswsock)
 endif()
