@@ -7,11 +7,11 @@ std::string encode_packet(uint32_t msgId, const char* data, uint32_t len) {
     out.resize(MsgHeaderSize + len);
 
     auto* header = reinterpret_cast<MsgHeader*>(out.data());
-    header->id = htonl(msgId);
-    header->sz = htonl(len);
+    header->id = htons(static_cast<uint16_t>(msgId));
+    header->sz = htons(static_cast<uint16_t>(len));
     
 
-    if (size > 0) {
+    if (len > 0) {
         std::memcpy(out.data() + MsgHeaderSize, data, len);
     }
     return out;
@@ -24,10 +24,10 @@ bool decode_packet(const char* data, size_t len, DecodePacket& out) {
     }
 
     const auto* header = reinterpret_cast<const MsgHeader*>(data);
-    out.id = ntohl(header->id);
-    out.sz = ntohll(header->sz);    
+    out.id = ntohs(header->id);
+    out.sz = ntohs(header->sz);
 
-    if (len < MsgHeaderSize + out.size) {
+    if (len < MsgHeaderSize + out.sz) {
         return false;
     }
 

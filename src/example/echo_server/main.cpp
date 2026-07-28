@@ -9,6 +9,7 @@
 
 #include "session.h"
 #include "server.h"
+#include "networkEx/ioContextPool.h"
 
 using boost::asio::ip::tcp;
 

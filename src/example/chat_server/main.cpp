@@ -23,10 +23,12 @@ using boost::asio::awaitable;
 using boost::asio::use_awaitable;
 using boost::asio::co_spawn;
 
+#include "networkEx/packet.h"
+#include "networkEx/chatSession.h"
+
 
 // forward declaration
 class ChatSession;
-using ChatSessionPtr = std::shared_ptr<ChatSession>;
 
 // ChatRoom, oragnzie alll the online user
 class ChatRoom {
@@ -57,6 +59,7 @@ void handleMessage(std::string_view data_view,ChatSessionPtr sender) {
 	message_list.push_back({ sender,std::string(data_view) });
 }
 
+#if 0
 class ChatSession : public std::enable_shared_from_this<ChatSession>
 {
 public:
@@ -100,23 +103,14 @@ private:
 			//boost::asio::streambuf buf;
 			char buf[1024*4];
 			for (;;) {
-#if 0
-				auto n = co_await boost::asio::async_read_until(
-					socket_, buf, '\n', use_awaitable);
-
-				std::string line(boost::asio::buffers_begin(buf.data()),
-					boost::asio::buffers_end(buf.data()) + n);
-	
-				buf.consume(n);
-#else
 
 				std::fill(std::begin(buf), std::end(buf), '\0');
 				auto n = co_await socket_.async_read_some(boost::asio::buffer(buf), use_awaitable);
-#endif			
+
 				// TODO async_read_some callback
-				//handleMessage(std::string_view(buf, n));
+				handleMessage(std::string_view(buf, n), shared_from_this());
 				std::cout << "recived data from [" << socket_.remote_endpoint() << "]:" << buf << "\n";
-				room_.broadcast(std::string(buf, n), shared_from_this());
+				//room_.broadcast(std::string(buf, n), shared_from_this());
 			}
 		}
 		catch (boost::system::error_code const&error) {
@@ -196,13 +190,14 @@ private:
 	boost::asio::steady_timer writeTimer_;
 	std::deque<std::string> writeQueue_;
 };
+#endif
 
 void ChatRoom::broadcast(std::string const& msg, ChatSessionPtr sender)
 {
 	std::cout << "broadcast msg:[" << msg << "]\n";
 	for (auto& s : sessions_) {
 		if (s == sender)continue;
-		s->deliver(msg);
+		s->send(msg);
 	}
 }
 
@@ -214,7 +209,24 @@ awaitable<void> listener(tcp::acceptor acceptor, ChatRoom& room) {
 		std::cout << "[system] new connection:" << socket.remote_endpoint() << "\n";
 
 		// create new session and active it
-		std::make_shared<ChatSession>(std::move(socket), room)->Start();
+		auto chatSession = std::make_shared<ChatSession>(std::move(socket));
+		room.join(chatSession);
+		chatSession->Start();
+
+		chatSession->SetDataProc([&chatSession](const char* data, size_t len)->size_t {			
+			const char* recv_buf = data;
+			while (len) {
+				DecodePacket pack{};
+				if (!decode_packet(recv_buf, len, pack)) {
+					break;
+				}
+				len -= pack.size();
+				recv_buf += pack.size();
+				handleMessage(std::string_view(pack.data, pack.sz), chatSession);
+			}
+			return len;
+		});
+
 #else
 		std::make_shared<ChatSession>(co_await acceptor.async_accept(use_awaitable), room)->Start();
 #endif
@@ -239,12 +251,13 @@ int main() {
 
 		// elegant close server
 		boost::asio::signal_set signals(io, SIGINT, SIGTERM);
-		signals.async_wait([&io,&stop](auto ,auto) {
+		signals.async_wait([&stop](auto ,auto) {
 			std::cout << "\n[system] recieved signal, stop the serveice\n";			
 			stop = true;
 			});
 
 
+		// io_thread
 		std::jthread io_work(
 			[&io,&stop]() {
 				while (!stop) {
@@ -253,12 +266,15 @@ int main() {
 			}
 		);
 
+		// main thread
 		while (!stop) {
+			// swap message from io_thread to main_thread
 			MessageList currList;
 			{
 				std::lock_guard lk(message_mtx);
-				currList.insert(currList.begin(), message_list.begin(), message_list.end());
+				currList.swap(message_list);
 			}
+			// handle message in main_thread
 			for (auto const& it : currList) {
 				room.broadcast(it.second,it.first);
 			}

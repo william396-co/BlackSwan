@@ -29,6 +29,8 @@ else()
     target_compile_options(blackswan_build_options INTERFACE -Wall -Wextra -Wpedantic)
 endif()
 
+add_subdirectory(src/share/networkEx)
+
 add_subdirectory(src/worldserver)
 add_subdirectory(src/gateserver)
 add_subdirectory(src/gameserver)

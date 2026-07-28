@@ -1,8 +1,21 @@
-#include <boost/asio.hpp>
+
 #include <iostream>
+#include <string_view>
 
+#include "networkEx/packet.h"
+#include "networkEx/chatSession.h"
 
-using boost::asio::ip::tcp;
+using MessageList = std::deque<std::pair<ChatSessionPtr, std::string>>;
+
+MessageList message_list;
+std::mutex message_mtx;
+
+void handleMessage(std::string_view data_view) {
+	//std::lock_guard lk(message_mtx);
+	//message_list.push_back({ sender,std::string(data_view) });
+	std::cout << "received data:[" << data_view << "]\n";
+}
+
 
 int main(int argc,char** argv){
 
@@ -21,63 +34,49 @@ int main(int argc,char** argv){
 
 		boost::asio::io_context io_context;
 
+		std::shared_ptr<ChatSession> session = std::make_shared<ChatSession>(io_context);
+		session->Connect(host, port);
+		session->SetDataProc([](const char* data, size_t len)->size_t {
+
+			const char* recv_buf = data;
+			while (len) {
+				DecodePacket pack{};
+				if (!decode_packet(recv_buf, len, pack)) {
+					break;
+				}
+				len -= pack.size();
+				recv_buf += pack.size();
+				handleMessage(std::string_view(pack.data, pack.sz));
+			}
+			return len;
+			});
+
+
+		bool stop = false;
 		// elegant close io_context
 		boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
-		signals.async_wait([&](auto, auto) { io_context.stop(); });
+		signals.async_wait([&stop](auto, auto) {
+			std::cout << "stoping client....\n";
+			stop = true;
+			});
+				
 
-		tcp::resolver resolver(io_context);
-		tcp::resolver::results_type endpoints = resolver.resolve(host, port);
-
-
-		bool connected = false;
-		tcp::socket socket(io_context);
-		boost::asio::async_connect(socket, endpoints,
-			[&connected](boost::system::error_code const& error, tcp::endpoint)
-			{
-				if (!error) {
-					connected = true;
-				}
-				else {
-					std::cerr << "connected failed\n";
-				}
+		// io_thread 
+		std::jthread io_work([&stop, &io_context]() {
+			while (!stop) {
+				io_context.run();
+			}
 			});
 
-
-
-		// read and write work thread
-		std::jthread read_work(
-			[&socket, &io_context, &connected]() {
-
-				// input the message 
-				std::string str;
-				std::array<char, 128> buf;
-				while (connected && !io_context.stopped()) {
-					std::cin >> str;
-
-					socket.async_send(boost::asio::buffer(str, str.size()),
-						[](boost::system::error_code const& error, size_t len) {
-							if (!error) {
-								std::cout << "finished send size: " << len << "\n";
-							}
-						});
-					buf = {};
-					socket.async_read_some(boost::asio::buffer(buf, sizeof(buf)), [&buf](boost::system::error_code const& error, size_t) {
-						if (error) {
-							std::cerr << error.what() << "\n";
-						}
-						else {
-							std::cout << " recived from server:[" << buf.data() << "]\n";
-						}
-						});
-				}
-			});
-
-	
-
-		while (!io_context.stopped()) 
+		// main thread
+		std::string input;
+		while (!stop) 
 		{
-			std::cout << "main loop\n";
-			io_context.run();
+			// send message in main_thread
+			std::cin >> input;
+			session->send(input);
+			//std::cout << "main loop\n";
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
 		}
     }
     catch (std::exception& e) {

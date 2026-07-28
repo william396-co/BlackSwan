@@ -30,15 +30,18 @@ struct MsgHeader
 };
 #pragma pack(pop)
 
+constexpr auto MsgHeaderSize = sizeof(MsgHeader);
+
 struct DecodePacket {
 
     uint16_t id;// msgId
     uint16_t sz;// data size
     //uint32_t sn;// sequnce No
     const char* data{};
+
+    inline size_t size() { return sz + MsgHeaderSize; }
 };
 
-constexpr auto MsgHeaderSize = sizeof(MsgHeader);
 
 std::string encode_packet(uint32_t msgId, const char* data, uint32_t len);
-bool decode_packet(const char* data, size_t uint16_t, DecodePacket& out);
+bool decode_packet(const char* data, size_t len, DecodePacket& out);

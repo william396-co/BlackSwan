@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{CDEC3450-9579-3526-99FA-BB351C3DCB7E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51} = {F55C6A23-6380-3DBD-9B66-9934627A5F51}
+		{26DB65AA-41DD-3D66-8614-F292B2079121} = {26DB65AA-41DD-3D66-8614-F292B2079121}
 		{CB740DFF-14E2-3F89-B58E-915C32448AA9} = {CB740DFF-14E2-3F89-B58E-915C32448AA9}
 		{535460C2-5F2D-3102-BE06-E6DC7B7C6A8D} = {535460C2-5F2D-3102-BE06-E6DC7B7C6A8D}
 		{A8EFC700-0DF2-3DE0-AACF-BF1FDDD5F64E} = {A8EFC700-0DF2-3DE0-AACF-BF1FDDD5F64E}
@@ -21,6 +22,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vc
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blackswan_network_ex", "src\share\networkEx\blackswan_network_ex.vcxproj", "{26DB65AA-41DD-3D66-8614-F292B2079121}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F55C6A23-6380-3DBD-9B66-9934627A5F51} = {F55C6A23-6380-3DBD-9B66-9934627A5F51}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "example_asion_server", "src\example\asio_server\example_asion_server.vcxproj", "{CB740DFF-14E2-3F89-B58E-915C32448AA9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51} = {F55C6A23-6380-3DBD-9B66-9934627A5F51}
@@ -34,11 +40,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "example_chat_client", "src\example\chat_client\example_chat_client.vcxproj", "{A8EFC700-0DF2-3DE0-AACF-BF1FDDD5F64E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51} = {F55C6A23-6380-3DBD-9B66-9934627A5F51}
+		{26DB65AA-41DD-3D66-8614-F292B2079121} = {26DB65AA-41DD-3D66-8614-F292B2079121}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "example_chat_server", "src\example\chat_server\example_chat_server.vcxproj", "{0438B502-B304-39A9-A3CB-1337CB6C30B2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51} = {F55C6A23-6380-3DBD-9B66-9934627A5F51}
+		{26DB65AA-41DD-3D66-8614-F292B2079121} = {26DB65AA-41DD-3D66-8614-F292B2079121}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "example_echo_client", "src\example\echo_client\example_echo_client.vcxproj", "{E33D1933-DC38-34E9-8893-152482BCDB85}"
@@ -96,6 +104,14 @@ Global
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{F55C6A23-6380-3DBD-9B66-9934627A5F51}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.Debug|x64.ActiveCfg = Debug|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.Debug|x64.Build.0 = Debug|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.Release|x64.ActiveCfg = Release|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.Release|x64.Build.0 = Release|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{26DB65AA-41DD-3D66-8614-F292B2079121}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{CB740DFF-14E2-3F89-B58E-915C32448AA9}.Debug|x64.ActiveCfg = Debug|x64
 		{CB740DFF-14E2-3F89-B58E-915C32448AA9}.Debug|x64.Build.0 = Debug|x64
 		{CB740DFF-14E2-3F89-B58E-915C32448AA9}.Release|x64.ActiveCfg = Release|x64
