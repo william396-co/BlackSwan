@@ -1,287 +1,268 @@
 #include <iostream>
 
-#include <unordered_set>
-#include <memory>
+#include <atomic>
 #include <deque>
+#include <memory>
+#include <mutex>
 #include <string>
+#include <thread>
+#include <unordered_set>
 
 #include <boost/asio.hpp>
-#include <boost/asio/coroutine.hpp>
 #include <boost/asio/co_spawn.hpp>
 #include <boost/asio/detached.hpp>
-#include <boost/asio/use_awaitable.hpp>
-#include <boost/asio/read_until.hpp>
 #include <boost/asio/redirect_error.hpp>
-#include <boost/asio/streambuf.hpp>
 #include <boost/asio/signal_set.hpp>
-#include <boost/asio/steady_timer.hpp>
-#include <boost/asio/write.hpp>
+#include <boost/asio/use_awaitable.hpp>
 
-
-using boost::asio::ip::tcp;
-using boost::asio::awaitable;
-using boost::asio::use_awaitable;
-using boost::asio::co_spawn;
-
+#include "networkEx/session.h"
 #include "networkEx/packet.h"
-#include "networkEx/chatSession.h"
+#include "networkEx/ioContextPool.h"
+#include "networkEx/server.h"
 
+using boost::asio::awaitable;
+using boost::asio::ip::tcp;
+using boost::asio::use_awaitable;
 
-// forward declaration
-class ChatSession;
-
-// ChatRoom, oragnzie alll the online user
-class ChatRoom {
-	using SessionList = std::unordered_set<ChatSessionPtr>;
+class Chater {
 public:
-	void join(ChatSessionPtr session) {
-		sessions_.emplace(session);
-		std::cout << "[system] new User join, current online number:" << sessions_.size() << "\n";
-	}
-	void leave(ChatSessionPtr session) {
-		sessions_.erase(session);
-		std::cout << "[system] User Leave, current online number:" << sessions_.size() << "\n";
-	}
-
-	void broadcast(std::string const& msg, ChatSessionPtr sender);
+    explicit Chater(std::string name)
+        :name_{std::move(name)}
+    {
+    }
+    Chater():Chater("unknown")
+    {
+    }
+    void setName(std::string name) { name_ = std::move(name); }
+    std::string const& getName()const { return name_; }
 private:
-	SessionList sessions_;
+    std::string name_;
+    SessionPtr session_;
 };
 
+class ChatRoom {
+    using ChatList = std::unordered_map<uint32_t, Chater>;
 
-using MessageList = std::deque<std::pair<ChatSessionPtr, std::string>>;
+public:
+    void join(SessionPtr session) {
+        {
+            std::lock_guard lock(session_mtx);
+            session_map_.emplace(session->fd(), session);
+        }
+        std::cout << "[system] new user joined, current online number: " << session_map_.size() << "\n";
+    }
+
+    void leave(SessionPtr const& session) {
+        {
+            std::lock_guard lock(session_mtx);
+            session_map_.erase(session->fd());
+        }
+        std::cout << "[system] user left, current online number: " << session_map_.size() << "\n";
+    }
+
+    void broadcast(std::string const& msg, SessionPtr const& sender) {
+        std::cout << "broadcast msg:[" << msg << "]\n";
+        SessionMap curr_sessions;
+        {
+            std::lock_guard lock(session_mtx);
+			curr_sessions = session_map_;
+        }
+
+        for (auto &it : curr_sessions) {
+            (void)sender;
+            it.second->send(msg);
+        }
+    }
+
+    void stop() {
+        SessionMap curr_sessions;
+        {
+            std::lock_guard lock(session_mtx);
+            curr_sessions.swap(session_map_);
+        }
+
+        for (auto& it : curr_sessions){
+            it.second->stop();
+        }
+        curr_sessions.clear();
+    }
+
+private:
+    std::mutex session_mtx;    
+    SessionMap session_map_;
+};
+
+using MessageList = std::deque<std::pair<SessionPtr, std::string>>;
 
 MessageList message_list;
 std::mutex message_mtx;
 
-void handleMessage(std::string_view data_view,ChatSessionPtr sender) {
-	std::lock_guard lk(message_mtx);
-	message_list.push_back({ sender,std::string(data_view) });
+void handleMessage(std::string_view data_view, SessionPtr const& sender) {
+    std::lock_guard lock(message_mtx);
+    message_list.emplace_back(sender, std::string(data_view));
 }
 
-#if 0
-class ChatSession : public std::enable_shared_from_this<ChatSession>
-{
-public:
-	ChatSession(tcp::socket socket, ChatRoom& room)
-		: room_{ room }
-		, socket_{ std::move(socket) }
-		, writeTimer_{ socket_.get_executor() }
-	{
-		std::cout << "[" << socket_.remote_endpoint() << "]" << __PRETTY_FUNCTION__ << "\n";
-	}
-	~ChatSession() {
-		if (socket_.is_open()) {
-			std::cout << "[" << socket_.remote_endpoint() << "]" << __PRETTY_FUNCTION__ << "\n";
-		}
-		stop();
-	}
-	void Start() {
-		room_.join(shared_from_this());
+awaitable<void> listener(tcp::acceptor& acceptor, ChatRoom& room) {
+    for (;;) {
+        boost::system::error_code error;
+        auto socket = co_await acceptor.async_accept(boost::asio::redirect_error(use_awaitable, error));
+        if (error == boost::asio::error::operation_aborted) {
+            std::cout << "[system] listener stopped\n";
+            co_return;
+        }
+        if (error) {
+            std::cerr << "[system] accept failed: " << error.message() << "\n";
+            continue;
+        }
 
-		// active write and read coroutine
-		co_spawn(
-			socket_.get_executor(),
-			[self = shared_from_this()]() { return	self->readerLoop();	},
-			boost::asio::detached);
+        std::cout << "[system] new connection: " << socket.remote_endpoint() << "\n";
 
-		co_spawn(
-			socket_.get_executor(),
-			[self = shared_from_this()]() { return	self->writerLoop();	},
-			boost::asio::detached);
-	}
-	void deliver(std::string const&msg) {
-		writeQueue_.push_back(msg);
-		// wake up write-coroutine by cancel timer once
-		writeTimer_.cancel_one();
-	}
-private:
-	awaitable<void> readerLoop() {
+        auto chatSession = std::make_shared<Session>(std::move(socket));
+        chatSession->SetDisconnectProc([&room](auto session) {            
+                room.leave(session);
+            });
+        room.join(chatSession);// acceptHandle
+        chatSession->SetDataProc([](const char* data, size_t len,SessionPtr session) -> size_t {
+            const char* recv_buf = data;
+            size_t remaining = len;
 
-		try {
+            while (remaining > 0) {
+                DecodePacket packet{};
+                if (!decode_packet(recv_buf, remaining, packet)) {
+                    break;
+                }
 
-			//boost::asio::streambuf buf;
-			char buf[1024*4];
-			for (;;) {
+                auto const packet_size = packet.size();
+                remaining -= packet_size;
+                recv_buf += packet_size;
+                handleMessage(std::string_view(packet.data, packet.sz), session);
+            }
 
-				std::fill(std::begin(buf), std::end(buf), '\0');
-				auto n = co_await socket_.async_read_some(boost::asio::buffer(buf), use_awaitable);
-
-				// TODO async_read_some callback
-				handleMessage(std::string_view(buf, n), shared_from_this());
-				std::cout << "recived data from [" << socket_.remote_endpoint() << "]:" << buf << "\n";
-				//room_.broadcast(std::string(buf, n), shared_from_this());
-			}
-		}
-		catch (boost::system::error_code const&error) {
-			// 在这里统一处理所有断开情况
-			if (error == boost::asio::error::eof) {
-				std::cout << "connection disconnected:" << socket_.remote_endpoint() << "\n";
-			}
-			else if (error == boost::asio::error::connection_reset) {
-				std::cout << "connection reset:" << socket_.remote_endpoint() << "\n";
-			}
-			else if (error == boost::asio::error::broken_pipe) {
-				std::cout << "connection broken pipe:" << socket_.remote_endpoint() << "\n";
-			}
-			else {
-				std::cout << "other network error:" << error.message() << "\n";
-			}
-			// 不需要手动 close，socket 析构时会自动关闭
-		}
-	}
-
-	awaitable<void> writerLoop() {
-
-		try {
-
-			while (socket_.is_open()) {
-				
-				// 设置一个"永不到期"的定时器作为通知机制
-				// 当有新消息时，deliver() 会 cancel_one() 来唤醒这个等待
-				if (writeQueue_.empty()) {
-
-					writeTimer_.expires_at(boost::asio::steady_timer::time_point::max());
-					
-					// redirect_error：将异常转为 error_code
-					// 这样 cancel 不会抛异常，而是返回 operation_aborted
-					boost::system::error_code error;
-					co_await writeTimer_.async_wait(boost::asio::redirect_error(use_awaitable, error));
-					// ec == operation_aborted 表示被 deliver() 唤醒
-				}
-
-				// send the message in the queue
-				while (!writeQueue_.empty()) 
-				{
-					co_await boost::asio::async_write(
-						socket_,
-						boost::asio::buffer(writeQueue_.front()), use_awaitable);
-					writeQueue_.pop_front();
-				}
-			}
-
-		}
-		catch (boost::system::error_code const& error) {
-			// 在这里统一处理所有断开情况
-			if (error == boost::asio::error::eof) {
-				std::cout << "connection disconnected:" << socket_.remote_endpoint() << "\n";
-			}
-			else if (error == boost::asio::error::connection_reset) {
-				std::cout << "connection reset:" << socket_.remote_endpoint() << "\n";
-			}
-			else if (error == boost::asio::error::broken_pipe) {
-				std::cout << "connection broken pipe:" << socket_.remote_endpoint() << "\n";
-			}
-			else {
-				std::cout << "other network error:" << error.message() << "\n";
-			}
-			// 不需要手动 close，socket 析构时会自动关闭
-		}
-	}
-	void stop() {
-		room_.leave(shared_from_this());
-		boost::system::error_code error;
-		socket_.close(error);
-		writeTimer_.cancel();
-	}
-private:
-	ChatRoom& room_;
-	tcp::socket socket_;
-	boost::asio::steady_timer writeTimer_;
-	std::deque<std::string> writeQueue_;
-};
-#endif
-
-void ChatRoom::broadcast(std::string const& msg, ChatSessionPtr sender)
-{
-	std::cout << "broadcast msg:[" << msg << "]\n";
-	for (auto& s : sessions_) {
-		if (s == sender)continue;
-		s->send(msg);
-	}
-}
-
-awaitable<void> listener(tcp::acceptor acceptor, ChatRoom& room) {
-
-	for (;;) {
-#if 1
-		auto socket = co_await acceptor.async_accept(use_awaitable);
-		std::cout << "[system] new connection:" << socket.remote_endpoint() << "\n";
-
-		// create new session and active it
-		auto chatSession = std::make_shared<ChatSession>(std::move(socket));
-		room.join(chatSession);
-		chatSession->Start();
-
-		chatSession->SetDataProc([&chatSession](const char* data, size_t len)->size_t {			
-			const char* recv_buf = data;
-			while (len) {
-				DecodePacket pack{};
-				if (!decode_packet(recv_buf, len, pack)) {
-					break;
-				}
-				len -= pack.size();
-				recv_buf += pack.size();
-				handleMessage(std::string_view(pack.data, pack.sz), chatSession);
-			}
-			return len;
-		});
-
-#else
-		std::make_shared<ChatSession>(co_await acceptor.async_accept(use_awaitable), room)->Start();
-#endif
-	}
+            return remaining;
+        });
+        chatSession->Start();
+    }
 }
 
 int main() {
+    try {
+        ChatRoom room;
+        std::atomic_bool stop = false;
+        constexpr auto port = static_cast<boost::asio::ip::port_type>(9527);
 
-	try {
+        std::cout << "==================ChatRoom running==================\n";
+        std::cout << "=====Listen port: 9527============\n";
 
-		boost::asio::io_context io;
-		ChatRoom room;
-		auto port = 9527;
+#if 0
+        boost::asio::io_context io;
+        tcp::acceptor acceptor(io, tcp::endpoint(tcp::v4(), port));
 
-		bool stop = false;
+        boost::asio::co_spawn(io, listener(acceptor, room), boost::asio::detached);
 
-		std::cout << "==================ChatRoom running==================\n";
-		std::cout << "=====List port: 9527============\n";		
+        boost::asio::signal_set signals(io, SIGINT, SIGTERM);
+        signals.async_wait([&](boost::system::error_code const& error, int) {
+            if (error || stop.exchange(true)) {
+                return;
+            }
 
-		boost::asio::co_spawn(io,
-			listener(tcp::acceptor(io, tcp::endpoint(tcp::v4(), port)), room), boost::asio::detached);
+            std::cout << "\n[system] received signal, stopping server\n";
+            boost::system::error_code ignored;
+            acceptor.cancel(ignored);
+            acceptor.close(ignored);
+        });
 
-		// elegant close server
-		boost::asio::signal_set signals(io, SIGINT, SIGTERM);
-		signals.async_wait([&stop](auto ,auto) {
-			std::cout << "\n[system] recieved signal, stop the serveice\n";			
-			stop = true;
-			});
+        std::jthread io_work([&io]() {
+            io.run();
+        });
 
+        while (!stop.load()) {
+            MessageList current_messages;
+            {
+                std::lock_guard lock(message_mtx);
+                current_messages.swap(message_list);
+            }
 
-		// io_thread
-		std::jthread io_work(
-			[&io,&stop]() {
-				while (!stop) {
-					io.run();
-				}
-			}
-		);
+            for (auto const& message : current_messages) {
+                room.broadcast(message.second, message.first);
+            }
 
-		// main thread
-		while (!stop) {
-			// swap message from io_thread to main_thread
-			MessageList currList;
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+
+        boost::asio::post(io, [&room]() {
+            room.stop();
+        });
+
+        if (io_work.joinable()) {
+            io_work.join();
+        }
+#else
+
+		auto pool = std::make_shared<IoContextPool>(
+			IoContextPool::DefaultPoolSize(),
+			IoContextPool::DefaultConcurrencyHint());
+        pool->run();
+
+        auto server = std::make_unique<Server>(pool, port);
+        server->start(
+            [&room](auto session) {// accept Handle
+                room.join(session);
+            },
+            [](const char* data,size_t len,auto session)->size_t {// Data Process
+                const char* recv_buf = data;
+                size_t remaining = len;
+
+                while (remaining > 0) {
+                    DecodePacket packet{};
+                    if (!decode_packet(recv_buf, remaining, packet)) {
+                        break;
+                    }
+
+                    auto const packet_size = packet.size();
+                    remaining -= packet_size;
+                    recv_buf += packet_size;
+                    handleMessage(std::string_view(packet.data, packet.sz), session);
+                }
+
+                return remaining;            
+            },
+            [&room](auto session) {// Disconnected Handle
+                room.leave(session);
+            });
+
+        boost::asio::signal_set signals(pool->getNext(), SIGINT, SIGTERM);
+        signals.async_wait([&](boost::system::error_code const& error, int) {
+            if (error || stop.exchange(true)) {
+                return;
+            }
+
+            std::cout << "\n[system] received signal, stopping server\n";
+           // server->Stop();
+        });
+
+        while (!stop.load()) {
+			MessageList current_messages;
 			{
-				std::lock_guard lk(message_mtx);
-				currList.swap(message_list);
+				std::lock_guard lock(message_mtx);
+				current_messages.swap(message_list);
 			}
-			// handle message in main_thread
-			for (auto const& it : currList) {
-				room.broadcast(it.second,it.first);
+			// all message handle handling here(synchronizing)
+			for (auto const& message : current_messages) {
+				room.broadcast(message.second, message.first);
 			}
-		}
-	}
-	catch (std::exception const& e) {
-		std::cerr << "Exception:" << e.what() << "\n";
-	}
-	return 0;
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        room.stop();
+
+        server->stop();
+        pool->stop();
+
+#endif
+    }
+    catch (std::exception const& e) {
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
+
+    return 0;
 }

@@ -15,6 +15,9 @@ add_library(blackswan_network_ex STATIC)
 target_sources(blackswan_network_ex
     PRIVATE
         packet.cpp
+        session.cpp
+        server.cpp
+        connector.cpp 
 )
 
 target_link_libraries(blackswan_network_ex

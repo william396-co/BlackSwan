@@ -115,7 +115,7 @@ void single_iocontex_multi_thread_test() {
 
 void multi_iocontext_multithread_test() {
 
-    IoContextPool pool(4);
+	IoContextPool pool(4, std::thread::hardware_concurrency());
     for (int i = 0; i != 10;++i) {
         boost::asio::post(pool.getNext(), [i]() {
             std::lock_guard lock(iomtx);
@@ -135,7 +135,7 @@ void strand_test() {
 
     auto counter = 0;
 
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
 	
 
     // 4 个线程并发运行 io_context
