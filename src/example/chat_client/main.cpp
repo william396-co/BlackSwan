@@ -82,6 +82,7 @@ int main(int argc,char** argv){
 			// send message in main_thread
 			std::cin >> input;
 			connector->send(input);
+			input.clear();
 			//std::cout << "main loop\n";
 			std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
 		}

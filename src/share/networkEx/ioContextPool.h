@@ -15,9 +15,9 @@ using PostEvent = std::function<void()>;
 
 class IoContextPool {
 public:
-	static size_t DefaultPoolSize() {
+	static size_t DefaultPoolSize(double multi_core = 1.0) {// multi_core=1.5 or 2,default is 1.0
 		auto const count = std::thread::hardware_concurrency();
-		return count == 0 ? 1u : count;
+		return count == 0 ? 1u : count * multi_core;
 	}
 
 	static int DefaultConcurrencyHint() {

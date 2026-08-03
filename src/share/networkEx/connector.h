@@ -39,6 +39,7 @@ public:
 	}
 
 	void send(std::string const& msg) {
+		if (msg.empty())return;
 		session_->send(msg);
 	}
 
