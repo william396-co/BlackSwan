@@ -119,7 +119,7 @@ private:
 		SessionMap curList;
 		{
 			std::lock_guard lk(sessions_mtx_);
-			curList = sessions_;
+			curList = std::move(sessions_);
 		}
 		for(auto&it: curList){
 			it.second->stop();

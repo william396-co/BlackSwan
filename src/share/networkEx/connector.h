@@ -37,13 +37,28 @@ public:
 	{
 		asyncConnect({ tcp::endpoint(boost::asio::ip::make_address(host), port) }, timeout, callback, failedCallback);
 	}
+	bool isConnected() const {
+		return connected_.load(std::memory_order_acquire);
+	}
+	void SetDisconnectProc(DisconnectProcess disconnect_proc) {
+		disconnect_proc_ = std::move(disconnect_proc);
+	}
 
 	void send(std::string const& msg) {
-		if (msg.empty())return;
-		session_->send(msg);
+		if (msg.empty()|| !isConnected()) {
+			return;
+		}
+
+		auto session = session_;
+		if (!session) {
+			return;
+		}
+
+		session->send(msg);
 	}
 
 	void Stop() {
+		connected_.store(false, std::memory_order_release);
 		auto session = std::move(session_);
 		if (session) {
 			session->stop();
@@ -57,14 +72,37 @@ public:
 		wrapperAsyncConnect(eps, timeout, callback, failedCallback);
 	}
 private:
+	void onConnected(SessionPtr connectedSession, AsyncConnectCallback callback)
+	{
+		connected_.store(true, std::memory_order_release);
+		connectedSession->SetDisconnectProc(
+			[this](SessionPtr disconnectedSession) {
+				connected_.store(false, std::memory_order_release);
+				if (disconnect_proc_) {
+					disconnect_proc_(std::move(disconnectedSession));
+				}
+			});
+		callback(connectedSession);
+		connectedSession->Start();
+	}
+
 	void wrapperAsyncConnect(std::vector<tcp::endpoint>const& eps,
 		std::chrono::seconds timeout,
 		AsyncConnectCallback callback,
 		AsyncConnectFailedCallback failedCallback)
 	{
+		connected_.store(false, std::memory_order_release);
 		session_ = std::make_shared<Session>(io_);
 		if (timeout <= std::chrono::seconds::zero()) {
-			session_->Connect(eps, std::move(callback), std::move(failedCallback));
+			session_->Connect(
+				eps,
+				[this, callback = std::move(callback)](SessionPtr connectedSession) mutable {
+					onConnected(std::move(connectedSession), std::move(callback));
+				},
+				[this, failedCallback = std::move(failedCallback)](tcp::endpoint ep) mutable {
+					connected_.store(false, std::memory_order_release);
+					failedCallback(ep);
+				});
 			return;
 		}
 
@@ -83,25 +121,27 @@ private:
 
 		session_->Connect(
 			eps,
-			[callback = std::move(callback), timer, completed](SessionPtr connectedSession) mutable {
+			[this, callback = std::move(callback), timer, completed](SessionPtr connectedSession) mutable {
 				if (completed->exchange(true, std::memory_order_acq_rel)) {
 					return;
 				}
 
 				timer->cancel();
-				callback(connectedSession);
-				connectedSession->Start();
+				onConnected(std::move(connectedSession), std::move(callback));
 			},
-			[failedCallback = std::move(failedCallback), timer, completed](tcp::endpoint ep) mutable {
+			[this, failedCallback = std::move(failedCallback), timer, completed](tcp::endpoint ep) mutable {
 				if (completed->exchange(true, std::memory_order_acq_rel)) {
 					return;
 				}
 
+				connected_.store(false, std::memory_order_release);
 				timer->cancel();
 				failedCallback(ep);
 			});
 	}
 private:
 	boost::asio::io_context& io_;
-    SessionPtr session_{};
+	SessionPtr session_{};
+	DisconnectProcess disconnect_proc_;
+	std::atomic_bool connected_ = false;
 };

@@ -163,9 +163,10 @@ private:
 	}
 	awaitable<void> readerLoop() {
 
+		constexpr auto BUF_SIZE = 1024 * 4;
 		try {
 			
-			char buf[1024 * 4];
+			char buf[BUF_SIZE];// temporary buf for once async_read
 			for (;;) {
 
 				std::fill(std::begin(buf), std::end(buf), '\0');
@@ -176,10 +177,8 @@ private:
 					continue;
 				}
 
-				auto remaining = data_proc_(recvBuffer_.data(), recvBuffer_.size(), shared_from_this());
-				if (remaining > recvBuffer_.size()) {
-					remaining = recvBuffer_.size();
-				}
+				auto before = recvBuffer_.size();
+				auto remaining = std::min(data_proc_(recvBuffer_.data(), recvBuffer_.size(), shared_from_this()), before);
 				auto const consumed = recvBuffer_.size() - remaining;
 				if (consumed > 0) {
 					recvBuffer_.erase(0, consumed);
