@@ -48,6 +48,8 @@ int main(){
     boost::asio::signal_set sig(serveiceWrapper.io_context(), SIGINT, SIGTERM);
     sig.async_wait([&](boost::system::error_code const& error, int signal) {
         stopped = true;
+        (void)error;
+        (void)signal;
     });
 
 

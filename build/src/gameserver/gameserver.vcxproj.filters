@@ -4,6 +4,15 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\gameserver\packetParser.cpp">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gameserver\player.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gameserver\playerCtrl.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\git-workspace\BlackSwan\src\gameserver\CMakeLists.txt" />
@@ -12,5 +21,22 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{2FC176B7-A83E-361C-BD63-33644AC8EE12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="protocol">
+      <UniqueIdentifier>{be0e07ae-08e4-45cc-9ae1-1343fe0782ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{c2a15a57-9f36-4ef7-abcc-1d26b4beca24}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\gameserver\packetParser.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gameserver\player.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gameserver\playerCtrl.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

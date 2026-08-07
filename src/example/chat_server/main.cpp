@@ -144,7 +144,8 @@ int main() {
 			},
 			[&room](auto session) {// Disconnected Handle
 				room.leave(session);
-			});
+			}
+		);
 
 		boost::asio::signal_set signals(pool->getNext(), SIGINT, SIGTERM);
 		signals.async_wait([&](boost::system::error_code const& error, int) {
@@ -153,8 +154,10 @@ int main() {
 			}
 
 			std::cout << "\n[system] received signal, stopping server\n";
-			});
+			}
+		);
 
+		// main thread handle
 		while (!stop.load()) {
 			MessageList current_messages;
 			{

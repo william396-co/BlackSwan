@@ -4,6 +4,15 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\gateserver\packetParser.cpp">
+      <Filter>protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gateserver\player.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gateserver\playerCtrl.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\git-workspace\BlackSwan\src\gateserver\CMakeLists.txt" />
@@ -12,5 +21,22 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{2FC176B7-A83E-361C-BD63-33644AC8EE12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="protocol">
+      <UniqueIdentifier>{6ec08ecd-5ed0-4e65-b633-5a96be0e1dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{5766353e-d0be-4b5c-b7d0-9dd83fb273d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\gateserver\packetParser.h">
+      <Filter>protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gateserver\player.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gateserver\playerCtrl.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

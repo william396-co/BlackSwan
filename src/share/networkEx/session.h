@@ -23,6 +23,7 @@ using boost::asio::use_awaitable;
 
 class Session;
 using SessionPtr = std::shared_ptr<Session>;
+using SessionWeakPtr = std::weak_ptr<Session>;
 
 using DataProcess = std::function<size_t(const char*, size_t,SessionPtr)>;
 using DisconnectProcess = std::function<void(SessionPtr)>;

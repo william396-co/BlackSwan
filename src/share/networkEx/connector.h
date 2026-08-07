@@ -71,6 +71,7 @@ public:
 	{
 		wrapperAsyncConnect(eps, timeout, callback, failedCallback);
 	}
+	inline SessionPtr session() { return session_; }
 private:
 	void onConnected(SessionPtr connectedSession, AsyncConnectCallback callback)
 	{
@@ -145,3 +146,5 @@ private:
 	DisconnectProcess disconnect_proc_;
 	std::atomic_bool connected_ = false;
 };
+
+using ConnectorPtr = std::shared_ptr<Connector>;
