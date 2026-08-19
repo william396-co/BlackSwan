@@ -11,7 +11,7 @@
 #include "player.h"
 
 
-using MessageHandler = std::function<void(const char* data, size_t len, PlayerPtr pPlayer)>;
+using MessageHandler = std::function<void(const char* data, size_t len, Player* pPlayer)>;
 
 class PacketParser : public Singleton<PacketParser> 
 {
@@ -24,7 +24,10 @@ private:
 public:
 	~PacketParser() = default;
 
-	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session);
+	// 转发给客户端
+	static void forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t fd);
+	// 消息转发给服务器
+	static void forward2Server(uint32_t msgId, std::string_view data_view, SessionPtr session);
 
 	static size_t onRecvClientData(const char* data, size_t len, SessionPtr session);
 	static size_t onRecvServerData(const char* data, size_t len, SessionPtr session);

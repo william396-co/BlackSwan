@@ -1,15 +1,23 @@
 #include "packetParser.h"
 
-#include "player.h"
-//#include "playerMgr.h"
+#include <cassert>
 
+#include "player.h"
+#include "proto/protocol.h"
+
+
+void PacketParser::Init() {
+
+	registerHandler((uint32_t)MsgId::ECHO_RESP, &PacketParser::HandleEchoResp);
+}
 
 void PacketParser::registerHandler(uint32_t msgId, MessageHandler handler) 
 {
 	handleMap_.emplace(msgId, std::move(handler));
 }
 
-MessageHandler PacketParser::findHandle(uint32_t msgId) {
+MessageHandler PacketParser::findHandle(uint32_t msgId) 
+{
 	auto it = handleMap_.find(msgId);
 	if (it != handleMap_.end()) {
 		return it->second;
@@ -17,30 +25,28 @@ MessageHandler PacketParser::findHandle(uint32_t msgId) {
 	return nullptr;
 }
 
-void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session) {
-
-	(void)session;
-	// TODO 
-	// auto pPlayer = 
-	auto pHandler = g_packetParser->findHandle(msgId);
-	if (pHandler) {
-		pHandler(data_view.data(), data_view.size(), nullptr);
-	}
-	else {
-		std::cerr << "msgid: " << msgId << " not register handler\n";
-	}
+void PacketParser::HandleEchoResp(const char* data, size_t len, Player* pPlayer)
+{
+	std::cout << __FUNCTION__ << " playerId:" << pPlayer->id() << " data : [" << data << "]  size:" << len << "\n";
 }
 
-size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session) {
+void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, Player* pPlayer) 
+{		
+	assert(pPlayer);
+	pPlayer->recv(msgId, data_view.data(), data_view.size());
+}
+
+size_t PacketParser::onRecvData(const char* data, size_t len, Player* pPlayer) 
+{
 	const char* recv_buf = data;
 	while (len) {
-		DecodePacket pack{};
+		Packet pack{};
 		if (!decode_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
-		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session);
+		handleMessage(pack.id, std::string_view(pack.data, pack.sz),  pPlayer);
 	}
 	return len;
 }

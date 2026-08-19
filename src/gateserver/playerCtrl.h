@@ -6,8 +6,10 @@
 
 
 #include "utils/singleton.h"
+#include "networkEx/session.h"
 
 #include "player.h"
+
 
 class PlayerCtrl : public Singleton<PlayerCtrl> 
 {
@@ -18,6 +20,8 @@ class PlayerCtrl : public Singleton<PlayerCtrl>
 private:
 	PlayerCtrl() = default;
 public:
+	void addPlayer(SessionPtr session, Connector* game_connector);
+	void delPlayer(SessionPtr session);
 	void addPlayer(uint64_t id, std::string const& name, PlayerPtr pPlayer);
 	PlayerPtr findPlayer(uint64_t id);
 	PlayerPtr findPlayer(std::string_view name);

@@ -18,12 +18,13 @@ void handleMessage(std::string_view data_view, SessionPtr const& sender) {
 	message_list.emplace_back(sender, std::string(data_view));
 }
 
+constexpr auto listen_port = 8321;
 int main()
 {
-	std::cout<<"GameServer\n";
+	std::cout << "GateServer starting....\n";
 
 	std::atomic_bool stop = false;
-	constexpr auto port = static_cast<boost::asio::ip::port_type>(9527);
+	constexpr auto port = static_cast<boost::asio::ip::port_type>(listen_port);
 
 	try {
 
@@ -37,14 +38,14 @@ int main()
 		auto server = std::make_unique<Server>(pool, port);
 		server->start(
 			[](auto session) {// accept Handle
-				//room.join(session);
+				//room.join(session);// gateSession
 				(void)session;
 			},
 			[](const char* data, size_t len, auto session)->size_t {// Data Process
-				g_packetParser->onRecvData(data, len, session);
+				return g_packetParser->onRecvData(data, len, session);
 			},
 			[](auto session) {// Disconnected Handle
-				//room.leave(session);
+				//room.leave(session);// gateSession
 				(void)session;
 			}
 		);
@@ -59,6 +60,13 @@ int main()
 			}
 		);
 
+		// ×¢²áÐ­Òé
+		g_packetParser->Init();
+
+
+		if (!stop) {
+			std::cout << "GameServer running, listen port:[" << listen_port << "]\n";
+		}
 
 		// main thread handle
 		while (!stop.load()) {
@@ -78,6 +86,9 @@ int main()
 		}
 		//room.stop();
 
+		// Logic Level
+
+		// IO Level
 		server->stop();
 		pool->stop();
 	}

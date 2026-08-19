@@ -13,11 +13,9 @@ public:
 	{
 	}
 
-	inline void send(std::string const& msg) {
-		if (connector_) {
-			connector_->send(msg);
-		}
-	}
+	void send(uint32_t msgId, const char* data ,uint16_t len);
+	void recv(uint32_t msgId, const char* data, uint16_t len);
+
 	inline void setConnector(ConnectorPtr conn) { 
 		connector_ = conn;
 	}
@@ -25,8 +23,16 @@ public:
 	inline std::string const& name()const { return name_; }
 	inline void changeName(std::string const& newName) { name_ = newName; }
 private:
+	inline void send(std::string const& msg) {
+		if (connector_) {
+			connector_->send(msg);
+		}
+	}
+private:
 	uint64_t id_;
 	std::string name_;
 private:
 	ConnectorPtr connector_{};
 };
+
+using PlayerPtr = std::shared_ptr<Player>;

@@ -3,13 +3,21 @@
 #include "player.h"
 #include "playerCtrl.h"
 
+#include "proto/protocol.h"
+
+
+void PacketParser::Init() 
+{
+	registerHandler((uint32_t)MsgId::ECHO_REQ, &PacketParser::HandleEchoReq);
+}
 
 void PacketParser::registerHandler(uint32_t msgId, MessageHandler handler) 
 {
 	handleMap_.emplace(msgId, std::move(handler));
 }
 
-MessageHandler PacketParser::findHandle(uint32_t msgId) {
+MessageHandler PacketParser::findHandle(uint32_t msgId) 
+{
 	auto it = handleMap_.find(msgId);
 	if (it != handleMap_.end()) {
 		return it->second;
@@ -17,35 +25,34 @@ MessageHandler PacketParser::findHandle(uint32_t msgId) {
 	return nullptr;
 }
 
-void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session) {
+void PacketParser::HandleEchoReq(const char* data, size_t len, Player* pPlayer)
+{
+	std::cout << "Player recieve msg ["<< data << "]\n";
+	// echo
+	pPlayer->send((uint32_t)MsgId::ECHO_RESP, data, len);
+}
 
-	(void)session;
-	// TODO  message decode playerId 
-	auto playerId = 1;
-	auto pPlayer = g_playerCtrl->findPlayer(playerId);
-	if (!pPlayer) {
-		std::cerr << "PlayerId:" << playerId << " not online\n";
-		return;
+void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t client_fd)
+{
+	std::cout << "client_fd" << client_fd << " msgId:" << msgId << " data:" << data_view << " len:" << data_view.size() << "\n";
+
+	auto pPlayer = g_playerCtrl->findPlayer(client_fd, gate_session->fd());
+	if (!pPlayer) {// first login
+		pPlayer = g_playerCtrl->addPlayer(client_fd, gate_session);
 	}
-	auto pHandler = g_packetParser->findHandle(msgId);
-	if (pHandler) {
-		pHandler(data_view.data(), data_view.size(), pPlayer);
-	}
-	else {
-		std::cerr << "msgid: " << msgId << " not register handler\n";
-	}
+	pPlayer->recv(msgId, data_view.data(), data_view.size());
 }
 
 size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session) {
 	const char* recv_buf = data;
 	while (len) {
-		DecodePacket pack{};
-		if (!decode_packet(recv_buf, len, pack)) {
+		NetPacket pack{};
+		if (!decode_net_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
-		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session);
+		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session,pack.fd);
 	}
 	return len;
 }

@@ -11,9 +11,11 @@
 #include "networkEx/ioContextPool.h"
 
 #include "packetParser.h"
+#include "player.h"
+#include "playerCtrl.h"
 
 
-int main()
+int main(int argc, char** argv)
 {
 	std::cout<<"GateServer\n";
 
@@ -23,15 +25,23 @@ int main()
 
 
 	std::atomic_bool stop = false;
-	constexpr auto gate_port = static_cast<boost::asio::ip::port_type>(9527);
+	uint16_t gate_port = 9527;
 	constexpr auto game_port = 8321;
 	constexpr auto host = "127.0.0.1";
 
+	if (argc > 1) {
+		gate_port = (uint16_t)strtoul(argv[1], nullptr, 10);
+	}
+
 	try {
+
+		std::cout << "GateServer starting....\n";
 
 		auto pool = std::make_shared<IoContextPool>(IoContextPool::DefaultPoolSize(), IoContextPool::DefaultConcurrencyHint());
 		pool->run();
 
+
+		// Terminate Server SIGNAL
 		boost::asio::signal_set signals(pool->getNext(), SIGINT, SIGTERM);
 		signals.async_wait([&](boost::system::error_code const& error, int) {
 			if (error || stop.exchange(true)) {
@@ -44,27 +54,13 @@ int main()
 
 
 		// server connector to GameSever
-		auto server = std::make_unique<Server>(pool, gate_port);
-		server->start(
-			[](auto session) {// accept Handle
-				//room.join(session);
-				(void)session;
-			},
-			[](const char* data, size_t len, auto session)->size_t {// Data Process
-				return g_packetParser->onRecvClientData(data, len, session);
-			},
-			[](auto session) {// Disconnected Handle
-				//room.leave(session);
-				(void)session;
-			}
-		);
-
 		auto connector = std::make_unique<Connector>(pool->getNext());
 		connector->SetDisconnectProc([&stop](SessionPtr) {
 			stop.store(true, std::memory_order_release);
 			std::cerr << "[system] GameServer Connector disconnected\n";
 			});
 
+		//TODO repeated connector until Connected success
 		connector->asyncConnect(host, game_port, std::chrono::seconds{ 5 },
 			[](SessionPtr session) {
 				std::cout << "Connect successed:" << session->remote_ep() << "\n";
@@ -75,10 +71,27 @@ int main()
 			[&stop](tcp::endpoint ep) {
 				stop.store(false, std::memory_order_release);
 				std::cerr << "[system] Connect GameServer " << ep << " failed\n";
-			}			
+			}
 		);
 
+		// GateServer Listen Client Connect
+		auto server = std::make_unique<Server>(pool, gate_port);
+		server->start(
+			[&connector](auto session) {// accept Handle
+				g_playerCtrl->addPlayer(session, connector.get());// TODO notify player online
+			},
+			[](const char* data, size_t len, auto session)->size_t {// Data Process
+				return g_packetParser->onRecvClientData(data, len, session);
+			},
+			[](auto session) {// Disconnected Handle
+				g_playerCtrl->delPlayer(session);// TODO notify player offline
+			}
+		);
 
+		// GameServer already start Service
+		if (connector->isConnected()) {
+			std::cout << "GateServer running, listen port:[" << gate_port << "]\n";
+		}
 
 		// main thread handle
 		while (!stop.load()) {

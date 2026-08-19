@@ -11,7 +11,7 @@
 #include "player.h"
 
 
-using MessageHandler = std::function<void(const char* data, size_t len, PlayerPtr pPlayer)>;
+using MessageHandler = std::function<void(const char* data, size_t len, Player* pPlayer)>;
 
 class PacketParser : public Singleton<PacketParser> 
 {
@@ -24,12 +24,17 @@ private:
 public:
 	~PacketParser() = default;
 
-	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session);
+	void Init();
+
+	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t client_id);
 
 	static size_t onRecvData(const char* data, size_t len, SessionPtr session);
 
 	void registerHandler(uint32_t msgId, MessageHandler handler);
 	MessageHandler findHandle(uint32_t msgId);
+
+private:
+	static void HandleEchoReq(const char* data, size_t len, Player* pPlayer);
 private:
 	HandleMap handleMap_;
 };

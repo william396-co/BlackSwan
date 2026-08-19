@@ -37,6 +37,9 @@ public:
 	{
 		asyncConnect({ tcp::endpoint(boost::asio::ip::make_address(host), port) }, timeout, callback, failedCallback);
 	}
+
+	void Connect(std::string const& host, uint16_t port);
+
 	bool isConnected() const {
 		return connected_.load(std::memory_order_acquire);
 	}

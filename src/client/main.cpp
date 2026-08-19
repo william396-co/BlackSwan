@@ -5,9 +5,11 @@
 
 #include "networkEx/connector.h"
 #include "networkEx/ioContextPool.h"
+#include "proto/protocol.h"
 
 #include "player.h"
 #include "packetParser.h"
+
 
 
 using MessageList = std::deque<std::pair<SessionPtr, std::string>>;
@@ -23,7 +25,7 @@ void handleMessage(std::string_view data_view, SessionPtr session) {
 }
 
 
-int main() {
+int main(int argc,char** argv) {
 
 	std::cout << "Client....\n";   
 	auto host = "127.0.0.1";
@@ -31,9 +33,15 @@ int main() {
 
 	std::atomic_bool  stop = false;
 
-	Player player;
+
+	if (argc > 1) {
+		port = (uint16_t)strtoul(argv[1], nullptr, 10);
+	}
 
 	try {
+		
+		auto pPlayer = std::make_unique<Player>();
+
 
 		// io running pool
 		auto pool = std::make_shared<IoContextPool>(1, 1);
@@ -41,20 +49,21 @@ int main() {
 
 		// connector 
 		auto connector = std::make_shared<Connector>(pool->getNext());
-		connector->SetDisconnectProc([&stop,&player](SessionPtr) {
+		connector->SetDisconnectProc([&stop,&pPlayer](SessionPtr) {
 			stop.store(true, std::memory_order_release);
-			player.setConnector(nullptr);
+			pPlayer->setConnector(nullptr);
 			std::cout << "[system] disconnected from server\n";
 			}
 		);
 
 		connector->asyncConnect(host, port, std::chrono::seconds{ 5 },
-			[&connector, &player](SessionPtr session) {
+			[&connector, &pPlayer](SessionPtr session) {
 				std::cout << "connect successed:" << session->remote_ep() << "\n";		
-				player.setConnector(connector);
+				pPlayer->setConnector(connector);
 				
-				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
-					return g_packetParser->onRecvData(data, len, session);
+				session->SetDataProc([&pPlayer](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
+					(void)session;
+					return g_packetParser->onRecvData(data, len, pPlayer.get());
 					});
 			},
 			[](tcp::endpoint ep) {
@@ -73,6 +82,9 @@ int main() {
 			}
 		);
 
+		// ×¢²áÐ­Òé
+		g_packetParser->Init();
+
 		// main thread handle
 		std::string input;
 		while (!stop.load(std::memory_order_acquire))
@@ -85,7 +97,7 @@ int main() {
 			if (stop || !connector->isConnected()) {
 				break;
 			}
-			connector->send(input);
+			pPlayer->send((uint32_t)MsgId::ECHO_REQ, input.c_str(), input.size());
 			input.clear();
 			std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
 		}

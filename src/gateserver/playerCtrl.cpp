@@ -1,5 +1,15 @@
 #include "playerCtrl.h"
 
+void PlayerCtrl::addPlayer(SessionPtr session,Connector* game_connector) 
+{	
+	playerIdMap_.emplace(session->fd(), std::make_shared<Player>(session, game_connector));
+}
+
+void PlayerCtrl::delPlayer(SessionPtr session) 
+{
+	playerIdMap_.erase(session->fd());
+}
+
 void PlayerCtrl::addPlayer(uint64_t id, std::string const& name, PlayerPtr pPlayer)
 {
 	playerIdMap_.emplace(id, pPlayer);

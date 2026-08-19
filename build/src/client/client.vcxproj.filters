@@ -4,33 +4,30 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\client\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\client\packetParser.cpp">
-      <Filter>protocol</Filter>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\packetParser.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\client\player.cpp">
-      <Filter>core</Filter>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\packetParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\git-workspace\BlackSwan\src\client\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{48D0613D-C8E0-31A8-B6FB-F7288F492510}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{2FC176B7-A83E-361C-BD63-33644AC8EE12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="protocol">
-      <UniqueIdentifier>{9e77cdf9-2b40-471c-9d19-43893876750f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core">
-      <UniqueIdentifier>{de21a238-4515-4f94-9d01-86a21b8e9f53}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\src\client\packetParser.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\client\player.h">
-      <Filter>core</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

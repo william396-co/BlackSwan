@@ -17,6 +17,7 @@ MessageHandler PacketParser::findHandle(uint32_t msgId) {
 	return nullptr;
 }
 
+#if 0
 void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session) {
 
 	(void)session;
@@ -35,17 +36,40 @@ void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, Ses
 		std::cerr << "msgid: " << msgId << " not register handler\n";
 	}
 }
+#endif
+
+void PacketParser::forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t fd)
+{
+	(void)session;
+
+	auto pPlayer = g_playerCtrl->findPlayer(fd);
+	if (!pPlayer) {
+		std::cerr << "Player fd:" << fd << " not in this gate\n";
+		return;
+	}
+	pPlayer->forward2Client(msgId, data_view.data(), data_view.size());
+}
+
+void PacketParser::forward2Server(uint32_t msgId, std::string_view data_view, SessionPtr session)
+{
+	auto pPlayer = g_playerCtrl->findPlayer(session->fd());
+	if (!pPlayer) {
+		std::cerr << "Player fd:" << session->fd() << " not in this gate\n";
+		return;
+	}
+	pPlayer->forward2Server(msgId, data_view.data(), data_view.size(), session->fd());
+}
 
 size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr session) {
 	const char* recv_buf = data;
 	while (len) {
-		DecodePacket pack{};
+		Packet pack{};
 		if (!decode_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
-		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session);
+		forward2Server(pack.id, std::string_view(pack.data, pack.sz), session);
 	}
 	return len;
 }
@@ -53,5 +77,15 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 
 size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr session)
 {
-	return size_t();
+	const char* recv_buf = data;
+	while (len) {
+		NetPacket pack{};
+		if (!decode_net_packet(recv_buf, len, pack)) {
+			break;
+		}
+		len -= pack.size();
+		recv_buf += pack.size();
+		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);
+	}
+	return len;
 }

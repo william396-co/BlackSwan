@@ -158,7 +158,7 @@ private:
 			return;
 		}
 
-		sendQueue_.push_back(encode_packet(1, msg.c_str(), (uint32_t)msg.size()));
+		sendQueue_.push_back(std::move(msg));
 		// wake up write-coroutine by cancel timer once
 		writeTimer_.cancel_one();
 	}

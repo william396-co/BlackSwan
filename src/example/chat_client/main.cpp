@@ -6,6 +6,7 @@
 #include "networkEx/session.h"
 #include "networkEx/connector.h"
 #include "networkEx/ioContextPool.h"
+#include "proto/protocol.h"
 
 using MessageList = std::deque<std::pair<SessionPtr, std::string>>;
 
@@ -56,7 +57,7 @@ int main(int argc,char** argv){
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
 					const char* recv_buf = data;
 					while (len) {
-						DecodePacket pack{};
+						Packet pack{};
 						if (!decode_packet(recv_buf, len, pack)) {
 							break;
 						}
@@ -96,7 +97,7 @@ int main(int argc,char** argv){
 			if (stop || !connector->isConnected()) {
 				break;
 			}
-			connector->send(input);
+			connector->send(encode_packet((uint32_t)MsgId::CHAT_REQ, input.c_str(), input.size()));
 			input.clear();
 			std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
 		}

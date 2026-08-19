@@ -8,9 +8,7 @@
 
 #include "networkEx/session.h"
 
-
 class Player;
-
 using MessageHandler = std::function<void(const char* data, size_t len, Player* pPlayer)>;
 
 class PacketParser : public Singleton<PacketParser> 
@@ -23,13 +21,16 @@ private:
 
 public:
 	~PacketParser() = default;
+	void Init();
 
-	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr session);
+	static void handleMessage(uint32_t msgId, std::string_view data_view, Player* pPlayer);
 
-	static size_t onRecvData(const char* data, size_t len, SessionPtr session);
+	static size_t onRecvData(const char* data, size_t len, Player* pPlayer);
 
 	void registerHandler(uint32_t msgId, MessageHandler handler);
 	MessageHandler findHandle(uint32_t msgId);
+private:
+	static void HandleEchoResp(const char* data, size_t len, Player* pPlayer);
 private:
 	HandleMap handleMap_;
 };
