@@ -3,6 +3,7 @@
 #include "player.h"
 #include "playerCtrl.h"
 
+#include "proto/protocol.h"
 
 void PacketParser::registerHandler(uint32_t msgId, MessageHandler handler)
 {
@@ -69,6 +70,9 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
+		if (pack.id == CMD_PONG) {
+			continue;
+		}
 		forward2Server(pack.id, std::string_view(pack.data, pack.sz), session);
 	}
 	return len;
@@ -85,6 +89,12 @@ size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr s
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
+
+		if (pack.id == CMD_PING) {
+			session->send(encode_net_packet(CMD_PONG, "PONG", sizeof("PONG"), 0));
+			std::cout << "session fd:" << session->fd() << " Send PONG\n";
+			continue;
+		}
 		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);
 	}
 	return len;

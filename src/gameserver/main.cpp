@@ -5,6 +5,7 @@
 
 #include "networkEx/server.h"
 #include "networkEx/ioContextPool.h"
+#include "proto/protocol.h"
 
 #include "player.h"
 #include "packetParser.h"
@@ -38,6 +39,11 @@ int main()
 		auto server = std::make_unique<Server>(pool, port);
 		server->start(
 			[](auto session) {// accept Handle
+				session->StartHeartbeat(
+					[](SessionPtr s) {
+						std::cout << "Session fd:" << s->fd() << " Send PING\n";
+						s->send(encode_net_packet(CMD_PING, "PING", sizeof("PING"), 0));
+					});
 				//room.join(session);// gateSession
 				(void)session;
 			},

@@ -9,6 +9,8 @@
 #include "networkEx/connector.h"
 #include "networkEx/server.h"
 #include "networkEx/ioContextPool.h"
+#include "networkEx/session.h"
+#include "proto/protocol.h"
 
 #include "packetParser.h"
 #include "player.h"
@@ -78,6 +80,11 @@ int main(int argc, char** argv)
 		auto server = std::make_unique<Server>(pool, gate_port);
 		server->start(
 			[&connector](auto session) {// accept Handle
+				session->StartHeartbeat(
+					[](SessionPtr s) {
+						std::cout << "Session fd:" << s->fd() << " Send PING\n";
+						s->send(encode_packet(CMD_PING, "PING", sizeof("PING")));
+					});
 				g_playerCtrl->addPlayer(session, connector.get());// TODO notify player online
 			},
 			[](const char* data, size_t len, auto session)->size_t {// Data Process

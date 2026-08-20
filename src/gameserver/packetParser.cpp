@@ -52,6 +52,9 @@ size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
+		if (pack.id == CMD_PONG) {
+			continue;
+		}
 		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session,pack.fd);
 	}
 	return len;

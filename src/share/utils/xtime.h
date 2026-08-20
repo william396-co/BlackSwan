@@ -24,4 +24,9 @@ namespace xtime {
 		return duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
 	}
 
+	// nanosecond
+	inline time_t now_ns(){
+		return duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
+	}
+
 }

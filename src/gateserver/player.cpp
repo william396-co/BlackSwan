@@ -20,7 +20,6 @@ void Player::forward2Server(uint32_t msgId, const char* data, uint16_t len,uint3
 	if (!game_connector_)return;
 
 	std::cout << __FUNCTION__ << " fd:" << fd << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
-	auto msg = encode_net_packet(msgId, data, len, fd);
-	send(std::move(msg));// encode by user
-	game_connector_->send(std::move(msg));// encode by user
+	auto msg = encode_net_packet(msgId, data, len, fd);// encode by user
+	game_connector_->send(std::move(msg));
 }

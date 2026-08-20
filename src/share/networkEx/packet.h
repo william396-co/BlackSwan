@@ -24,7 +24,7 @@
 #pragma pack(push, 1)
 struct MsgHeader 
 {
-    uint16_t id;// msgId
+    uint32_t id;// msgId
     uint16_t sz;// data size
 };
 #pragma pack(pop)
@@ -33,7 +33,7 @@ constexpr auto MsgHeaderSize = sizeof(MsgHeader);
 #pragma pack(push,1)
 struct NetMsgHeader {
 
-    uint16_t id;// msgId
+    uint32_t id;// msgId
     uint16_t sz;// data size
 	uint32_t fd;// origin client id
 };
@@ -43,7 +43,7 @@ constexpr auto NetMsgHeaderSize = sizeof(NetMsgHeader);
 // Packet Data to Client
 struct Packet {
 
-    uint16_t id;// msgId
+    uint32_t id;// msgId
     uint16_t sz;// data size
     const char* data{};
 
@@ -52,7 +52,7 @@ struct Packet {
 
 // Packet Data Transfer between Servers
 struct NetPacket {
-	uint16_t id;// msgId
+	uint32_t id;// msgId
 	uint16_t sz;// data size
 	uint32_t fd;// origin client fd
 	const char* data{};
