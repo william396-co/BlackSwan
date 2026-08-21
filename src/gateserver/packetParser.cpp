@@ -70,7 +70,13 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
+		if (pack.id == CMD_PING) {
+			std::cout << "Session fd:" << session->fd() << " reply Client PONG\n";
+			session->send(encode_packet(CMD_PONG, "PONG", sizeof("PONG")));
+			continue;
+		}
 		if (pack.id == CMD_PONG) {
+			std::cout << "Session fd:" << session->fd() << " received Client PONG\n";
 			continue;
 		}
 		forward2Server(pack.id, std::string_view(pack.data, pack.sz), session);
@@ -91,8 +97,12 @@ size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr s
 		recv_buf += pack.size();
 
 		if (pack.id == CMD_PING) {
+			std::cout << "Session fd:" << session->fd() << " reply GameServer PONG\n";
 			session->send(encode_net_packet(CMD_PONG, "PONG", sizeof("PONG"), 0));
-			std::cout << "session fd:" << session->fd() << " Send PONG\n";
+			continue;
+		}
+		if (pack.id == CMD_PONG) {
+			std::cout << "Session fd:" << session->fd() << " received GameServer PONG\n";
 			continue;
 		}
 		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);

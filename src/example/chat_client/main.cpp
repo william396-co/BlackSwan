@@ -51,7 +51,7 @@ int main(int argc,char** argv){
 			}
 		);
 
-		connector->asyncConnect(host, port, std::chrono::seconds{ 5 },
+		connector->asyncConnect(host, port,
 			[](SessionPtr session) {
 				std::cout << "connect successed:" << session->remote_ep() << "\n";
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back

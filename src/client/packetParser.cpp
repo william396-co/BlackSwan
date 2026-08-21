@@ -48,7 +48,12 @@ size_t PacketParser::onRecvData(const char* data, size_t len, Player* pPlayer)
 		recv_buf += pack.size();
 
 		if (pack.id == CMD_PING) {
+			std::cout << "Player reply GateServer PONG\n";
 			pPlayer->send(CMD_PONG, "PONG", sizeof("PONG"));
+			continue;
+		}
+		if (pack.id == CMD_PONG) {
+			std::cout << "Player received GateServer PONG\n";
 			continue;
 		}
 		handleMessage(pack.id, std::string_view(pack.data, pack.sz),  pPlayer);

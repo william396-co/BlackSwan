@@ -52,7 +52,13 @@ size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
+		if (pack.id == CMD_PING) {
+			std::cout << "Session fd:" << session->fd() << " reply GateServer PONG\n";
+			session->send(encode_net_packet(CMD_PONG, "PONG", sizeof("PONG"), 0));
+			continue;
+		}
 		if (pack.id == CMD_PONG) {
+			std::cout << "Session fd:" << session->fd() << " received GateServer PONG\n";
 			continue;
 		}
 		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session,pack.fd);

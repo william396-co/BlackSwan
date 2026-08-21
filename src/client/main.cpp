@@ -56,11 +56,15 @@ int main(int argc,char** argv) {
 			}
 		);
 
-		connector->asyncConnect(host, port, std::chrono::seconds{ 5 },
+		connector->asyncConnect(host, port,
 			[&connector, &pPlayer](SessionPtr session) {
 				std::cout << "connect successed:" << session->remote_ep() << "\n";		
 				pPlayer->setConnector(connector);
-				
+				session->StartHeartbeat(
+					[](SessionPtr s) {
+						std::cout << "Player Send GateServer PING\n";
+						s->send(encode_packet(CMD_PING, "PING", sizeof("PING")));
+					});
 				session->SetDataProc([&pPlayer](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
 					(void)session;
 					return g_packetParser->onRecvData(data, len, pPlayer.get());

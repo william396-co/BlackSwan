@@ -57,21 +57,24 @@ int main(int argc, char** argv)
 
 		// server connector to GameSever
 		auto connector = std::make_unique<Connector>(pool->getNext());
-		connector->SetDisconnectProc([&stop](SessionPtr) {
-			stop.store(true, std::memory_order_release);
+		connector->SetDisconnectProc([](SessionPtr) {
 			std::cerr << "[system] GameServer Connector disconnected\n";
 			});
 
 		//TODO repeated connector until Connected success
-		connector->asyncConnect(host, game_port, std::chrono::seconds{ 5 },
+		connector->asyncConnect(host, game_port,
 			[](SessionPtr session) {
 				std::cout << "Connect successed:" << session->remote_ep() << "\n";
+				session->StartHeartbeat(
+					[](SessionPtr s) {
+						std::cout << "Session fd:" << s->fd() << " Send GameServer PING\n";
+						s->send(encode_net_packet(CMD_PING, "PING", sizeof("PING"), 0));
+					});
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvServerData(data, len, session);
 					});
 			},
-			[&stop](tcp::endpoint ep) {
-				stop.store(false, std::memory_order_release);
+			[](tcp::endpoint ep) {
 				std::cerr << "[system] Connect GameServer " << ep << " failed\n";
 			}
 		);
@@ -82,7 +85,7 @@ int main(int argc, char** argv)
 			[&connector](auto session) {// accept Handle
 				session->StartHeartbeat(
 					[](SessionPtr s) {
-						std::cout << "Session fd:" << s->fd() << " Send PING\n";
+						std::cout << "Session fd:" << s->fd() << " Send Client PING\n";
 						s->send(encode_packet(CMD_PING, "PING", sizeof("PING")));
 					});
 				g_playerCtrl->addPlayer(session, connector.get());// TODO notify player online

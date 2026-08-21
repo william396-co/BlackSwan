@@ -41,7 +41,7 @@ int main()
 			[](auto session) {// accept Handle
 				session->StartHeartbeat(
 					[](SessionPtr s) {
-						std::cout << "Session fd:" << s->fd() << " Send PING\n";
+						std::cout << "Session fd:" << s->fd() << " Send GateServer PING\n";
 						s->send(encode_net_packet(CMD_PING, "PING", sizeof("PING"), 0));
 					});
 				//room.join(session);// gateSession
