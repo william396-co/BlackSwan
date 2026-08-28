@@ -1,32 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\main.cpp">
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\packetParser.cpp">
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\packetParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.cpp">
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\packetParser.h">
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\packetParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.h">
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\git-workspace\BlackSwan\src\gateserver\CMakeLists.txt" />
+    <CustomBuild Include="D:\git-workspace\BlackSwan\src\client\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -34,6 +34,7 @@ add_subdirectory(src/share/networkEx)
 add_subdirectory(src/worldserver)
 add_subdirectory(src/gateserver)
 add_subdirectory(src/gameserver)
+add_subdirectory(src/client)
 
 if(BLACKSWAN_BUILD_EXAMPLES)
     add_subdirectory(src/example/boost)

@@ -20,6 +20,8 @@
 #include "networkEx/ioContextPool.h"
 #include "networkEx/server.h"
 
+#include "proto/protocol.h"
+
 using boost::asio::awaitable;
 using boost::asio::ip::tcp;
 using boost::asio::use_awaitable;
@@ -68,9 +70,10 @@ public:
 			curr_sessions = session_map_;
 		}
 
+		auto data = encode_packet((uint32_t)MsgId::CHAT_RESP, msg.c_str(), msg.size());
 		for (auto& it : curr_sessions) {
 			(void)sender;
-			it.second->send(msg);
+			it.second->send(data);
 		}
 	}
 
@@ -129,7 +132,7 @@ int main() {
 				size_t remaining = len;
 
 				while (remaining > 0) {
-					DecodePacket packet{};
+					Packet packet{};
 					if (!decode_packet(recv_buf, remaining, packet)) {
 						break;
 					}
@@ -144,7 +147,8 @@ int main() {
 			},
 			[&room](auto session) {// Disconnected Handle
 				room.leave(session);
-			});
+			}
+		);
 
 		boost::asio::signal_set signals(pool->getNext(), SIGINT, SIGTERM);
 		signals.async_wait([&](boost::system::error_code const& error, int) {
@@ -153,8 +157,10 @@ int main() {
 			}
 
 			std::cout << "\n[system] received signal, stopping server\n";
-			});
+			}
+		);
 
+		// main thread handle
 		while (!stop.load()) {
 			MessageList current_messages;
 			{
