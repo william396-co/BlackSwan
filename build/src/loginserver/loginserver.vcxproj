@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BB931774-FF64-3A95-954A-6AC088E69F73}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>loginserver</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loginserver.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loginserver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loginserver.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loginserver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">loginserver.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">loginserver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">loginserver.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">loginserver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\share\Debug\blackswan_share.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\libprotobuf-lited.lib;C:\boost_1_87_0\stage\lib\libboost_system-vc143-mt-gd-x64-1_87.lib;ws2_32.lib;mswsock.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_base.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_base_cpu_detect.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_city.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_civil_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_clock_interface.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cord.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cord_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cordz_functions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cordz_handle.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cordz_info.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_cordz_sample_token.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_crc32c.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_crc_cord_state.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_crc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_debugging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_decode_rust_punycode.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_demangle_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_demangle_rust.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_die_if_null.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_examine_stack.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_exponential_biased.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_failure_signal_handler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_commandlineflag.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_commandlineflag_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_config.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_marshalling.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_parse.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_private_handle_accessor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_program_name.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_reflection.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_usage.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_flags_usage_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_generic_printer_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_graphcycles_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_hash.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_hashtable_profiler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_hashtablez_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_int128.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_kernel_timeout_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_leak_check.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_entry.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_flags.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_initialize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_check_op.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_conditions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_fnmatch.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_format.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_log_sink_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_message.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_nullguard.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_internal_structured_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_severity.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_log_sink.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_malloc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_periodic_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_poison.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_profile_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_distributions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_distribution_test_util.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_entropy_pool.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_platform.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_randen.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_randen_hwaes.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_randen_hwaes_impl.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_randen_slow.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_internal_seed_material.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_seed_gen_exception.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_random_seed_sequences.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_raw_hash_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_raw_logging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_scoped_set_env.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_source_location.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_spinlock_wait.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_stacktrace.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_status.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_status_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_statusor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_str_format_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_strerror.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_strings.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_strings_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_symbolize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_synchronization.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_throw_delegate.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_time_zone.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_tracing_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_utf8_for_code_point.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\absl_vlog_config_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\debug\libutf8_validity.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/loginserver/Debug/loginserver.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/loginserver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\share\Release\blackswan_share.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libprotobuf-lite.lib;C:\boost_1_87_0\stage\lib\libboost_system-vc143-mt-x64-1_87.lib;ws2_32.lib;mswsock.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base_cpu_detect.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_city.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_civil_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_clock_interface.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_functions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_handle.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_info.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_sample_token.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc32c.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_cord_state.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_debugging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_decode_rust_punycode.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_rust.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_die_if_null.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_examine_stack.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_exponential_biased.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_failure_signal_handler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_config.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_marshalling.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_parse.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_private_handle_accessor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_program_name.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_reflection.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_generic_printer_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_graphcycles_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hash.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtable_profiler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtablez_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_int128.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_kernel_timeout_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_leak_check.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_entry.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_flags.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_initialize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_check_op.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_conditions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_fnmatch.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_format.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_log_sink_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_message.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_nullguard.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_structured_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_severity.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_sink.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_malloc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_periodic_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_poison.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_profile_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_distributions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_distribution_test_util.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_entropy_pool.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_platform.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes_impl.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_slow.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_seed_material.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_gen_exception.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_sequences.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_hash_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_logging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_scoped_set_env.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_source_location.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_spinlock_wait.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_stacktrace.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_statusor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_str_format_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strerror.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_symbolize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_synchronization.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_throw_delegate.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time_zone.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_tracing_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_utf8_for_code_point.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_vlog_config_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libutf8_validity.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/loginserver/Release/loginserver.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/loginserver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\share\MinSizeRel\blackswan_share.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libprotobuf-lite.lib;C:\boost_1_87_0\stage\lib\libboost_system-vc143-mt-x64-1_87.lib;ws2_32.lib;mswsock.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base_cpu_detect.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_city.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_civil_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_clock_interface.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_functions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_handle.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_info.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_sample_token.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc32c.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_cord_state.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_debugging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_decode_rust_punycode.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_rust.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_die_if_null.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_examine_stack.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_exponential_biased.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_failure_signal_handler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_config.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_marshalling.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_parse.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_private_handle_accessor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_program_name.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_reflection.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_generic_printer_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_graphcycles_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hash.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtable_profiler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtablez_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_int128.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_kernel_timeout_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_leak_check.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_entry.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_flags.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_initialize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_check_op.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_conditions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_fnmatch.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_format.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_log_sink_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_message.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_nullguard.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_structured_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_severity.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_sink.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_malloc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_periodic_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_poison.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_profile_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_distributions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_distribution_test_util.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_entropy_pool.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_platform.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes_impl.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_slow.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_seed_material.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_gen_exception.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_sequences.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_hash_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_logging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_scoped_set_env.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_source_location.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_spinlock_wait.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_stacktrace.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_statusor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_str_format_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strerror.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_symbolize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_synchronization.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_throw_delegate.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time_zone.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_tracing_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_utf8_for_code_point.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_vlog_config_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libutf8_validity.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/loginserver/MinSizeRel/loginserver.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/loginserver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\share\RelWithDebInfo\blackswan_share.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libprotobuf-lite.lib;C:\boost_1_87_0\stage\lib\libboost_system-vc143-mt-x64-1_87.lib;ws2_32.lib;mswsock.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_base_cpu_detect.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_city.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_civil_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_clock_interface.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cord_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_functions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_handle.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_info.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_cordz_sample_token.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc32c.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_cord_state.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_crc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_debugging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_decode_rust_punycode.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_demangle_rust.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_die_if_null.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_examine_stack.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_exponential_biased.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_failure_signal_handler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_commandlineflag_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_config.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_marshalling.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_parse.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_private_handle_accessor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_program_name.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_reflection.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_flags_usage_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_generic_printer_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_graphcycles_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hash.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtable_profiler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_hashtablez_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_int128.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_kernel_timeout_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_leak_check.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_entry.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_flags.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_initialize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_check_op.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_conditions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_fnmatch.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_format.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_globals.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_log_sink_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_message.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_nullguard.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_internal_structured_proto.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_severity.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_log_sink.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_malloc_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_periodic_sampler.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_poison.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_profile_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_distributions.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_distribution_test_util.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_entropy_pool.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_platform.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_hwaes_impl.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_randen_slow.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_internal_seed_material.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_gen_exception.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_random_seed_sequences.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_hash_set.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_raw_logging_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_scoped_set_env.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_source_location.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_spinlock_wait.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_stacktrace.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_status_builder.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_statusor.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_str_format_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strerror.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_strings_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_symbolize.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_synchronization.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_throw_delegate.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_time_zone.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_tracing_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_utf8_for_code_point.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\absl_vlog_config_internal.lib;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\lib\release\libutf8_validity.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/git-workspace/BlackSwan/build/src/loginserver/RelWithDebInfo/loginserver.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/loginserver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\git-workspace\BlackSwan\src\loginserver\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/git-workspace/BlackSwan/src/loginserver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/git-workspace/BlackSwan -BD:/git-workspace/BlackSwan/build --check-stamp-file D:/git-workspace/BlackSwan/build/src/loginserver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\build\src\loginserver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/git-workspace/BlackSwan/src/loginserver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/git-workspace/BlackSwan -BD:/git-workspace/BlackSwan/build --check-stamp-file D:/git-workspace/BlackSwan/build/src/loginserver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\build\src\loginserver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/git-workspace/BlackSwan/src/loginserver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/git-workspace/BlackSwan -BD:/git-workspace/BlackSwan/build --check-stamp-file D:/git-workspace/BlackSwan/build/src/loginserver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\build\src\loginserver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/git-workspace/BlackSwan/src/loginserver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/git-workspace/BlackSwan -BD:/git-workspace/BlackSwan/build --check-stamp-file D:/git-workspace/BlackSwan/build/src/loginserver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\build\src\loginserver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.h" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\constdefs.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\gateSession.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\gateSession.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\gateSessionMgr.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\gateSessionMgr.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\main.cpp" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\packetParser.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\packetParser.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\player.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\player.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.h" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="D:\git-workspace\BlackSwan\build\ZERO_CHECK.vcxproj">
+      <Project>{F55C6A23-6380-3DBD-9B66-9934627A5F51}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\git-workspace\BlackSwan\build\src\share\blackswan_share.vcxproj">
+      <Project>{80EA7657-9511-3DB6-8AE4-47527DCC3EBB}</Project>
+      <Name>blackswan_share</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

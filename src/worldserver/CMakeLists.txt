@@ -7,5 +7,5 @@ add_executable(worldserver ${WORLDSERVER_SOURCES})
 
 target_link_libraries(worldserver
     PRIVATE
-        blackswan_build_options
+        blackswan_share
 )

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <memory>
 #include <deque>
 #include <atomic>
@@ -15,6 +15,8 @@
 #include "packetParser.h"
 #include "player.h"
 #include "playerCtrl.h"
+#include "clientSession.h"
+#include "clientSessionMgr.h"
 
 
 int main(int argc, char** argv)
@@ -29,6 +31,7 @@ int main(int argc, char** argv)
 	std::atomic_bool stop = false;
 	uint16_t gate_port = 9527;
 	constexpr auto game_port = 8321;
+	constexpr auto login_port = 8600;
 	constexpr auto host = "127.0.0.1";
 
 	if (argc > 1) {
@@ -56,19 +59,19 @@ int main(int argc, char** argv)
 
 
 		// server connector to GameSever
-		auto connector = std::make_unique<Connector>(pool->getNext());
-		connector->SetDisconnectProc([](SessionPtr) {
+		auto server_connector = std::make_unique<Connector>(pool->getNext());
+		server_connector->SetDisconnectProc([](SessionPtr) {
 			std::cerr << "[system] GameServer Connector disconnected\n";
 			});
 
-		//TODO repeated connector until Connected success
-		connector->asyncConnect(host, game_port,
+		// Async Connector to GameSever
+		server_connector->asyncConnect(host, game_port,
 			[](SessionPtr session) {
 				std::cout << "Connect successed:" << session->remote_ep() << "\n";
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send GameServer PING\n";
-						s->send(encode_net_packet(CMD_PING, "PING", sizeof("PING"), 0));
+						s->sendPing(0);
 					});
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvServerData(data, len, session);
@@ -79,27 +82,54 @@ int main(int argc, char** argv)
 			}
 		);
 
+
+		// loginServer connector to LoginServer
+		auto login_connector = std::make_unique<Connector>(pool->getNext());
+		login_connector->SetDisconnectProc([](SessionPtr) {
+			std::cerr << "[system] LoginServer Connector disconnected\n";
+			});
+
+		// Async Connector to LoginServer
+		login_connector->asyncConnect(host, login_port,
+			[](SessionPtr session) {
+				std::cout << "Connect successed:" << session->remote_ep() << "\n";
+				session->StartHeartbeat(
+					[](SessionPtr s) {
+						std::cout << "Session fd:" << s->fd() << " Send LoginServer PING\n";
+						s->sendPing(0);
+					});
+				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
+					return g_packetParser->onRecvLoginData(data, len, session);
+					});
+			},
+			[](tcp::endpoint ep) {
+				std::cerr << "[system] Connect LoginServer " << ep << " failed\n";
+			}
+		);
+
 		// GateServer Listen Client Connect
 		auto server = std::make_unique<Server>(pool, gate_port);
 		server->start(
-			[&connector](auto session) {// accept Handle
+			[game_conn = server_connector.get(),login_conn = login_connector.get()](auto session) {// accept Handle
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send Client PING\n";
-						s->send(encode_packet(CMD_PING, "PING", sizeof("PING")));
+						s->sendPing();
 					});
-				g_playerCtrl->addPlayer(session, connector.get());// TODO notify player online
+				g_clientSessionMgr->addSession(session, game_conn, login_conn);
+				//g_playerCtrl->addPlayer(session, connector.get());// TODO notify player online	
 			},
 			[](const char* data, size_t len, auto session)->size_t {// Data Process
 				return g_packetParser->onRecvClientData(data, len, session);
 			},
 			[](auto session) {// Disconnected Handle
-				g_playerCtrl->delPlayer(session);// TODO notify player offline
+				//g_playerCtrl->delPlayer(session);// TODO notify player offline
+				g_clientSessionMgr->delSession(session);
 			}
 		);
 
 		// GameServer already start Service
-		if (connector->isConnected()) {
+		if (server_connector->isConnected() && login_connector->isConnected()) {
 			std::cout << "GateServer running, listen port:[" << gate_port << "]\n";
 		}
 
@@ -121,7 +151,8 @@ int main(int argc, char** argv)
 		}
 
 		server->stop();
-		connector->Stop();
+		server_connector->Stop();
+		login_connector->Stop();
 		pool->stop();
 
 	}

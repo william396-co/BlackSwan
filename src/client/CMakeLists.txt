@@ -7,5 +7,5 @@ add_executable(client ${CLIENT_SOURCES})
 
 target_link_libraries(client
     PRIVATE
-        blackswan_network_ex
+        blackswan_share
 )

@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <memory>
 #include <atomic>
 #include <deque>
@@ -9,6 +9,8 @@
 
 #include "player.h"
 #include "packetParser.h"
+#include "gateSession.h"
+#include "gateSessionMgr.h"
 
 using MessageList = std::deque<std::pair<SessionPtr, std::string>>;
 MessageList message_list;
@@ -42,17 +44,15 @@ int main()
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send GateServer PING\n";
-						s->send(encode_net_packet(CMD_PING, "PING", sizeof("PING"), 0));
+						s->sendPing(0);
 					});
-				//room.join(session);// gateSession
-				(void)session;
+				g_gateSessionMgr->addSession(session);
 			},
 			[](const char* data, size_t len, auto session)->size_t {// Data Process
 				return g_packetParser->onRecvData(data, len, session);
 			},
 			[](auto session) {// Disconnected Handle
-				//room.leave(session);// gateSession
-				(void)session;
+				g_gateSessionMgr->delSession(session->fd());
 			}
 		);
 
@@ -66,7 +66,7 @@ int main()
 			}
 		);
 
-		// ×¢²áÐ­Òé
+		// æ³¨å†Œåè®®
 		g_packetParser->Init();
 
 

@@ -52,12 +52,12 @@ size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
-		if (pack.id == CMD_PING) {
+		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply GateServer PONG\n";
-			session->send(encode_net_packet(CMD_PONG, "PONG", sizeof("PONG"), 0));
+			session->replyPing(0);
 			continue;
 		}
-		if (pack.id == CMD_PONG) {
+		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received GateServer PONG\n";
 			continue;
 		}

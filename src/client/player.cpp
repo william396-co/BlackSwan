@@ -9,6 +9,15 @@ void Player::send(uint32_t msgId, const char* data, uint16_t len)
 	send(std::move(msg));
 }
 
+void Player::replyPing()
+{
+	if (connector_) {
+		if (auto session = connector_->session()) {
+			session->replyPing();
+		}
+	}
+}
+
 
 void Player::recv(uint32_t msgId, const char* data, uint16_t len)
 {

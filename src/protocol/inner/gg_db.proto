@@ -1,0 +1,3 @@
+syntax = "proto3";
+package GateDBCmd;
+option optimize_for = LITE_RUNTIME;

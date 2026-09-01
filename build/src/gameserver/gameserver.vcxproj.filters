@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\gateSession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\gateSessionMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -15,6 +21,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\gateSession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\gateSessionMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\packetParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -15,7 +15,7 @@ add_executable(example_asion_server session.cpp server.cpp main.cpp)
 
 target_link_libraries(example_asion_server
     PRIVATE
-        blackswan_build_options
+        blackswan_share
         Boost::system
         Threads::Threads
 )

@@ -106,6 +106,10 @@ public:
 				self->deliver(std::move(msg));
 			});
 	}
+	void sendPing();
+	void sendPing(uint32_t fd);
+	void replyPing();
+	void replyPing(uint32_t fd);
 	void SetDataProc(DataProcess data_proc) { data_proc_ = std::move(data_proc); }
 	void SetDisconnectProc(DisconnectProcess disconnect_proc) { disconnect_proc_ = std::move(disconnect_proc); }
 	void StartHeartbeat(HeartbeatSend send_ping,
@@ -305,4 +309,13 @@ private:
 	std::atomic<time_t> last_recv_time_;
 	std::atomic<time_t> last_send_time_;
 	static std::atomic_uint32_t id_seed_;
+};
+
+
+//===========通用网络响应速度测量消息==========================
+enum EN_CommDefs_MessageID
+{
+    CS_Network_BenchMark_Msg = 19999,
+    CS_HeartBeat_Req = 20000,
+    CS_HeartBeat_Ack = 20001,
 };

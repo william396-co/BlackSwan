@@ -19,10 +19,10 @@ class PlayerCtrl : public Singleton<PlayerCtrl>
 
 private:
 	PlayerCtrl() = default;
-public:
-	void addPlayer(SessionPtr session, Connector* game_connector);
-	void delPlayer(SessionPtr session);
-	void addPlayer(uint64_t id, std::string const& name, PlayerPtr pPlayer);
+public:	
+
+	PlayerPtr fetchPlayer();
+
 	PlayerPtr findPlayer(uint64_t id);
 	PlayerPtr findPlayer(std::string_view name);
 	void delPlayer(uint64_t id);
@@ -31,6 +31,8 @@ public:
 private:
 	PlayerIDMap playerIdMap_;
 	PlayerNameMap playerNameMap_;
+
+	static uint64_t player_idx_;
 };
 
 #define g_playerCtrl PlayerCtrl::InstancePtr()

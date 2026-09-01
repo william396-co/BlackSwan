@@ -7,5 +7,5 @@ add_executable(gameserver ${GAMESERVER_SOURCES})
 
 target_link_libraries(gameserver
     PRIVATE
-        blackswan_network_ex
+        blackswan_share
 )

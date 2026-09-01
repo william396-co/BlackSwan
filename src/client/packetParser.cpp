@@ -47,12 +47,12 @@ size_t PacketParser::onRecvData(const char* data, size_t len, Player* pPlayer)
 		len -= pack.size();
 		recv_buf += pack.size();
 
-		if (pack.id == CMD_PING) {
+		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Player reply GateServer PONG\n";
-			pPlayer->send(CMD_PONG, "PONG", sizeof("PONG"));
+			pPlayer->replyPing();
 			continue;
 		}
-		if (pack.id == CMD_PONG) {
+		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Player received GateServer PONG\n";
 			continue;
 		}

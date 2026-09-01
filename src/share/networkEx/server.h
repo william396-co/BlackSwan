@@ -78,10 +78,10 @@ public:
 private:
 	awaitable<void> listener() {
 
+		auto& session_io = pool_->getNext();
 		for (;;) {
 
 			boost::system::error_code error;
-			auto& session_io = pool_->getNext();
 			auto socket = co_await acceptor_.async_accept(session_io,boost::asio::redirect_error(use_awaitable, error));
 			if (error == boost::asio::error::operation_aborted) {
 				std::cout << "[system] listener stopped\n";

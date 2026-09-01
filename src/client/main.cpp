@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <memory>
 #include <atomic>
 
@@ -63,7 +63,7 @@ int main(int argc,char** argv) {
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Player Send GateServer PING\n";
-						s->send(encode_packet(CMD_PING, "PING", sizeof("PING")));
+						s->sendPing();
 					});
 				session->SetDataProc([&pPlayer](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
 					(void)session;
@@ -86,7 +86,7 @@ int main(int argc,char** argv) {
 			}
 		);
 
-		// ×¢²áÐ­Òé
+		// æ³¨å†Œåè®®
 		g_packetParser->Init();
 
 		// main thread handle

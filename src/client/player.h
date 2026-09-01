@@ -14,6 +14,7 @@ public:
 	}
 
 	void send(uint32_t msgId, const char* data ,uint16_t len);
+	void replyPing();
 	void recv(uint32_t msgId, const char* data, uint16_t len);
 
 	inline void setConnector(ConnectorPtr conn) { 

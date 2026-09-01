@@ -61,6 +61,16 @@ void PacketParser::forward2Server(uint32_t msgId, std::string_view data_view, Se
 	pPlayer->forward2Server(msgId, data_view.data(), data_view.size(), session->fd());
 }
 
+void PacketParser::forward2Login(uint32_t msgId, std::string_view data_view, SessionPtr session)
+{
+	auto pPlayer = g_playerCtrl->findPlayer(session->fd());
+	if (!pPlayer) {
+		std::cerr << "Player fd:" << session->fd() << " not in this gate\n";
+		return;
+	}
+	pPlayer->forward2Login(msgId, data_view.data(), data_view.size(), session->fd());
+}
+
 size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr session) {
 	const char* recv_buf = data;
 	while (len) {
@@ -70,12 +80,12 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
-		if (pack.id == CMD_PING) {
+		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply Client PONG\n";
-			session->send(encode_packet(CMD_PONG, "PONG", sizeof("PONG")));
+			session->replyPing();
 			continue;
 		}
-		if (pack.id == CMD_PONG) {
+		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received Client PONG\n";
 			continue;
 		}
@@ -83,8 +93,6 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 	}
 	return len;
 }
-
-
 size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr session)
 {
 	const char* recv_buf = data;
@@ -96,13 +104,37 @@ size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr s
 		len -= pack.size();
 		recv_buf += pack.size();
 
-		if (pack.id == CMD_PING) {
+		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply GameServer PONG\n";
-			session->send(encode_net_packet(CMD_PONG, "PONG", sizeof("PONG"), 0));
+			session->replyPing(0);
 			continue;
 		}
-		if (pack.id == CMD_PONG) {
+		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received GameServer PONG\n";
+			continue;
+		}
+		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);
+	}
+	return len;
+}
+size_t PacketParser::onRecvLoginData(const char* data, size_t len, SessionPtr session)
+{
+	const char* recv_buf = data;
+	while (len) {
+		NetPacket pack{};
+		if (!decode_net_packet(recv_buf, len, pack)) {
+			break;
+		}
+		len -= pack.size();
+		recv_buf += pack.size();
+
+		if (pack.id == CS_HeartBeat_Req) {
+			std::cout << "Session fd:" << session->fd() << " reply LoginServer PONG\n";
+			session->replyPing(0);
+			continue;
+		}
+		if (pack.id == CS_HeartBeat_Ack) {
+			std::cout << "Session fd:" << session->fd() << " received LoginServer PONG\n";
 			continue;
 		}
 		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);

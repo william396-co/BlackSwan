@@ -1,0 +1,32 @@
+syntax = "proto3";
+package InnerCmd;
+option optimize_for = LITE_RUNTIME;
+
+enum ProtoId
+{
+	CS_NULL = 0;
+	
+	//=============GateServer to Login 1-20 ===================
+	GG_LS_Login_REQ = 1; // GG向LS发送登陆请求
+	LS_GG_Login_ACK = 2; // 登录请求返回
+	
+	GG_LS_Logoff_NTF = 3;  // GG向LS发送踢人下线消息
+	LS_GG_Kickoff_NTF = 4; // LS向GG发送踢人下线消息
+	
+	// LS向GG发送踢人下线消息
+	GG_LS_ReportPlayerNum_NTF = 5;
+	
+	GG_LS_SetPasswordTemp_REQ = 6;
+	LS_GG_SetPasswordTemp_ACK = 7;
+}
+
+message SIPAddr
+{
+	uint32 IP = 1;
+	uint32 Port = 2;
+}
+
+message SErrCode
+{
+	uint32 ErrCode = 1;
+}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <numeric>
+#include <cstdint>
 
 enum class MsgId : uint32_t
 {
@@ -10,6 +10,3 @@ enum class MsgId : uint32_t
     CHAT_REQ = 3,
     CHAT_RESP = 4,
 };
-
-constexpr auto CMD_PING = std::numeric_limits<uint32_t>::max() - 1;// PING
-constexpr auto CMD_PONG = std::numeric_limits<uint32_t>::max();    //PONG

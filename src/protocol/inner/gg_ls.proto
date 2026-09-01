@@ -1,0 +1,53 @@
+syntax = "proto3";
+package GG_LS_Cmd;
+option optimize_for = LITE_RUNTIME;
+
+import "commdef.proto";
+
+message PKG_GG_LS_Login_REQ
+{
+	string AuthAct = 1;
+	string AuthStr = 2;
+	uint32 APType = 3;
+	uint32 ClientVersion = 4;
+	uint32 AreaGroup = 5;
+	uint32 Ip = 6;
+	string InviteCode = 7;
+	uint32 Reserve = 8;
+}
+
+
+message PKG_LS_GG_Login_ACK
+{
+	message LoginInfo{
+		uint32 wPlatType = 1;
+	}
+
+	message LoginData{
+		string abyDataInfo = 1;
+	}
+
+	message PKG_LS_GG_Login_SUC
+	{
+		string PTID = 1;
+		LoginInfo loginInfo = 2;
+		LoginData loginData = 3;
+	}
+	message PKG_LS_GG_Login_UN
+	{
+		PKG_LS_GG_Login_SUC  Succ = 1;
+		InnerCmd.SErrCode Fail = 2;
+	};
+	uint32 Result = 1;
+	PKG_LS_GG_Login_UN Reply = 2;
+}
+		
+message PKG_GG_LS_Logoff_NTF
+{
+	string PTID = 1;
+}
+
+message PKG_LS_GG_Kickoff_NTF
+{
+	string PTID = 1;
+}
