@@ -9,4 +9,5 @@ blackswan_set_output_directory(client)
 target_link_libraries(client
     PRIVATE
         blackswan_share
+        blackswan_protobuf_lite
 )

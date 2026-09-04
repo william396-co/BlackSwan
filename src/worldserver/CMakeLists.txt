@@ -9,4 +9,5 @@ blackswan_set_output_directory(worldserver)
 target_link_libraries(worldserver
     PRIVATE
         blackswan_share
+        blackswan_protobuf_lite
 )

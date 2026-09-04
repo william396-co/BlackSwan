@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\client\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -10,12 +13,21 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\client\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\client\service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\client\packetParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\client\player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\client\service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

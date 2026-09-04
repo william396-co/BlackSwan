@@ -7,6 +7,9 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -22,12 +25,18 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\packetParser.h">
@@ -40,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

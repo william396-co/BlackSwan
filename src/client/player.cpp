@@ -18,16 +18,3 @@ void Player::replyPing()
 	}
 }
 
-
-void Player::recv(uint32_t msgId, const char* data, uint16_t len)
-{
-	std::cout << __FUNCTION__ << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
-
-	auto pHandler = g_packetParser->findHandle(msgId);
-	if (!pHandler) {
-		std::cerr << "msgid: " << msgId << " not register handler\n";
-		return;
-	}
-
-	pHandler(data, len, this);
-}

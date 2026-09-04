@@ -31,8 +31,9 @@ bool Config::LoadCfg()
 		bOpenWhitePt_ = config["Server"]["openwhitept"].value_or(false);
 
 	}
-	catch (toml::parse_error const& err) {
-		LOG_ERROR("exception:{}", err.description());
+	catch (toml::parse_error const& err) 
+	{
+		LOG_CRITICAL("exception:{}", err.description());
 		return false;
 	}
 	return true;

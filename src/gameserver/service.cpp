@@ -1,36 +1,36 @@
 #include "service.h"
 
-#include <stdexcept>
+#include <memory>
+#include <atomic>
+#include <deque>
 #include <exception>
-
-#include <google/protobuf/stubs/common.h>
+#include <stdexcept>
 
 #include "networkEx/server.h"
 #include "networkEx/ioContextPool.h"
 #include "proto/protocol.h"
-#include "log/log.h"
-
+#include "share/log/log.h"
 
 #include "player.h"
-#include "playerCtrl.h"
 #include "packetParser.h"
 #include "gateSession.h"
 #include "gateSessionMgr.h"
-#include "apMgr.h"
 #include "config.h"
 
-constexpr auto listen_port = 8600;
 
-bool LoginService::start()
+constexpr auto listen_port = 8321;
+constexpr auto port = static_cast<boost::asio::ip::port_type>(listen_port);
+
+bool GameService::start() 
 {
-	LOG_INFO("LoginServer starting....");	
-	constexpr auto port = static_cast<boost::asio::ip::port_type>(listen_port);
 
-	try {
+	LOG_INFO("GameService starting....");
 
-		// Config Init
+	try
+	{	
+
 		if (!g_Config->Init()) {
-			LOG_ERROR("Init Config failed");
+			LOG_ERROR("config init failed");
 			return false;
 		}
 
@@ -47,7 +47,7 @@ bool LoginService::start()
 			[](auto session) {// accept Handle
 				session->StartHeartbeat(
 					[](SessionPtr s) {
-						LOG_DEBUG("Session fd {} Send LoginServer PING", s->fd());
+						LOG_DEBUG("Session fd:{} Send GateServer PING", s->fd());
 						s->sendInnerPing();
 					});
 				g_gateSessionMgr->addSession(session);
@@ -66,13 +66,12 @@ bool LoginService::start()
 				return;
 			}
 
-			LOG_INFO("received signal, stopping LoginServer");
+			LOG_INFO("received signal, stopping server");
 			}
 		);
-		
 
 		if (!stop_) {
-			LOG_INFO("LoginServer running, listen port:[{}]", listen_port);
+			LOG_INFO("GameServer running, listen port:[{}]", listen_port);
 
 			// packetParser Init
 			g_packetParser->Init();
@@ -82,24 +81,20 @@ bool LoginService::start()
 		LOG_CRITICAL("Exception:{} ", e.what());
 		return false;
 	}
-
-	return !stop_;
+	return true;
 }
 
-void LoginService::run()
-{			// main thread handle
+void GameService::run()
+{
+	// main thread handle
 	while (!stop_.load())
 	{
-		g_playerCtrl->onUpdate();
-		g_packetParser->onUpdate();
-		g_apmgr->onUpdate();
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));// avoid busy loop
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
-
-void LoginService::stop()
+void GameService::stop()
 {
-	stop_.store(true, std::memory_order_release);
+	stop_.store(true);
 	// IO Level
 	server_->stop();
 	pool_->stop();

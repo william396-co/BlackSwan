@@ -9,4 +9,5 @@ blackswan_set_output_directory(gateserver)
 target_link_libraries(gateserver
     PRIVATE
         blackswan_share
+        blackswan_protobuf_lite
 )

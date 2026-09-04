@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\gateSession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -19,8 +22,14 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\playerCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gameserver\service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\gateSession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -34,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\playerCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gameserver\service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
