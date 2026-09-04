@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include "log/log.h"
+#include "player.h"
+#include "playerCtrl.h"
+#include "constdefs.h"
 
 APMgr::~APMgr()
 {
@@ -19,8 +22,6 @@ void APMgr::processApMsg(APMsg const& msg)
 		LOG_ERROR(" operation:{} result: {}", msg.getOperation(), msg.getResult());
 		return;
 	}
-	/// PT返回数据存活时间
-	constexpr auto Default_Packet_In_Queue_Time_Long = 1000 * 10;
 
 	auto now = xtime::now();
 	if (now - msg.getTimeStamp() > Default_Packet_In_Queue_Time_Long) {
@@ -31,7 +32,7 @@ void APMgr::processApMsg(APMsg const& msg)
 	case OPERATION::regist:
 		break;
 	case OPERATION::authen_ap: {
-		checkLoginToken(msg);
+		onAPAuthResult(msg.getAuth(), msg.getResult(), msg.getErrorCode());
 		break;
 	}
 	default:
@@ -66,7 +67,53 @@ void APMgr::operateResult(AuthInfoPtr pAuth, OPERATION operation, RESULT result,
 	pushApMsg(APMsg{ pAuth,operation,result,nErrorCode });
 }
 
-void APMgr::checkLoginToken(APMsg const& msg)
+void APMgr::checkApLoginData(Player* pPlayer)
 {
-	(void)msg;
+	auto pAuth = std::make_shared<AuthInfo>();
+	
+	pAuth->setKV(gl_csAuthenID, pPlayer->getAuthenID());
+}
+
+void APMgr::onAPAuthResult(AuthInfoPtr pAuth, RESULT result, int errorCode)
+{
+	switch (result) {
+	case RESULT::success:
+		onAPSucc(pAuth);
+		break;
+	default:
+		onAPError(pAuth, errorCode);
+		break;
+	}
+}
+
+void APMgr::onAPSucc(AuthInfoPtr pAuth)
+{
+	auto pPlayer = g_playerCtrl->findPlayer(strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10));
+	if (!pPlayer) {
+		return;
+	}
+
+	PT_LS_Succ_Callback ptCallback(pAuth);
+	FsmEvent event;
+	event.callbackType = EFsmLsCallbackType::ELCT_AP_Succ;
+	event.isLsInternalCall = true;
+	event.isGlobalEvent = false;
+	event.ptSuccCb = &ptCallback;
+	pPlayer->onEvent(event);
+}
+
+void APMgr::onAPError(AuthInfoPtr pAuth, int error)
+{
+	auto pPlayer = g_playerCtrl->findPlayer(strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10));
+	if (!pPlayer) {
+		return;
+	}
+
+	PT_LS_Error_Callback stCallback(pAuth, error);
+	FsmEvent event;
+	event.callbackType = EFsmLsCallbackType::ELCT_AP_Error;
+	event.isLsInternalCall = true;
+	event.isGlobalEvent = false;	
+	event.ptErrorCb = &stCallback;
+	pPlayer->onEvent(event);
 }

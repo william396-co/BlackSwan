@@ -4,6 +4,7 @@ file(GLOB_RECURSE DBSERVER_SOURCES CONFIGURE_DEPENDS
 )
 
 add_executable(dbserver ${DBSERVER_SOURCES})
+blackswan_set_output_directory(dbserver)
 
 target_link_libraries(dbserver
     PRIVATE

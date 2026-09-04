@@ -27,20 +27,20 @@ void Player::forward2Client(uint32_t msgId, const char* data, uint16_t len)
 #endif
 }
 
-void Player::forward2Login(uint32_t msgId, const char* data, uint16_t len, uint32_t fd)
+void Player::forward2Login(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
 {
 	if (auto s = session_) {
-		std::cout << __FUNCTION__ << " fd:" << fd << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
-		auto msg = encode_net_packet(msgId, data, len, fd);// encode by user
+		std::cout << __FUNCTION__ << " transID:" << transID << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
+		auto msg = encode_inner_packet(msgId, data, len, transID);// encode by user
 		s->forward2Login(std::move(msg));
 	}
 }
 
-void Player::forward2Server(uint32_t msgId, const char* data, uint16_t len, uint32_t fd)
+void Player::forward2Server(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
 {
 	if (auto s = session_) {
-		std::cout << __FUNCTION__ << " fd:" << fd << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
-		auto msg = encode_net_packet(msgId, data, len, fd);// encode by user
+		std::cout << __FUNCTION__ << " transID:" << transID << " msgId:" << msgId << " data: [" << data << "]  len:" << len << "\n";
+		auto msg = encode_inner_packet(msgId, data, len, transID);// encode by user
 		s->forward2Server(std::move(msg));
 	}
 }

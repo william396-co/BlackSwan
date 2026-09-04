@@ -4,6 +4,10 @@
 #include <type_traits>
 
 #include "gateSession.h"
+#include "proto/gg_ls.pb.h"
+#include "authInfo.h"
+
+using namespace GG_LS_Cmd;
 
 enum class FsmStateType
 {
@@ -26,24 +30,53 @@ enum class GlobalStateType
 	EGET_Normal,
 };
 
+enum class EFsmLsCallbackType
+{
+	ELCT_AP_Error,
+	ELCT_AP_Succ,
+
+	ELCT_MYCHECK_RET,
+
+	EGCT_Dummy
+};
+
+struct PT_LS_Error_Callback 
+{
+	AuthInfoPtr auth_{};
+	int error_{};
+};
+struct PT_LS_Succ_Callback 
+{
+	AuthInfoPtr auth_{};
+};
+
 class Player;
 using PlayerPtr = Player*;
 struct FsmEvent
 {
 	uint32_t msgID{};
 	uint32_t errorCode{};
-	uint32_t transID{};
+	uint32_t transID{};// Transparent ID
 	bool isGlobalEvent{};
+	bool isLsInternalCall{};
 
-	GateSessionPtr session_{};
-	uint32_t session_id_{};
-	// TODO message use std::variant<>
+	union
+	{
+		GlobalStateType  globalEvtType;
+		EFsmLsCallbackType callbackType;
+	};
+	union {
+		PT_LS_Error_Callback* ptErrorCb;
+		PT_LS_Succ_Callback* ptSuccCb;
+	};
+
+	uint32_t gate_session_fd{};
 };
 
 class NoneState {
 
 public:
-	inline FsmStateType getType()const { return FsmStateType::EFST_Destroy; }
+	inline FsmStateType getType()const { return FsmStateType::EFST_Dummy; }
 	void onEnter(Player* pPlayer) { (void)pPlayer; }
 	bool onEvent(Player* pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
 	void onLeave(Player* pPlayer) { (void)pPlayer; }
@@ -82,17 +115,6 @@ public:
 	void onLeave(Player* pPlayer);
 };
 
-// Logout GameServer
-class LogoutGame
-{
-public:
-	inline FsmStateType getType()const { return FsmStateType::EFST_Logout; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
-};
-
-
 // Global State
 class GlobalState {
 public:
@@ -102,7 +124,7 @@ public:
 	void onLeave(Player* pPlayer);
 };
 
-using PlayerState = std::variant<NoneState, LoginState, OnlineState, LogoutState, GlobalState>;
+using PlayerState = std::variant<NoneState, LoginState, OnlineState, GlobalState>;
 
 #if __cplusplus > 202306
 // helper type for the visitor #4
@@ -133,13 +155,13 @@ public:
 	{
 	}
 
-	//void reset();
 	bool changeState(FsmStateType state);
 	FsmStateType getCurStateType()const { return getFsmStateType(getCurrentState()); }
 	FsmStateType getPrevStateType()const { return getFsmStateType(getPreviousState()); }
-	bool onEvent(FsmEvent const& event);
+	bool onEvent(FsmEvent const& event);	
 private:
 	void setState(PlayerState state);
+	void notifyOwnerDestroy();
 private:
 	inline void setCurrentState(PlayerState state) {
 		current_state_ = state;

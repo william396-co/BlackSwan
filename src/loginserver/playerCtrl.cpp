@@ -1,6 +1,10 @@
 #include "playerCtrl.h"
 
 #include "share/utils/xtime.h"
+#include "proto/commdef.pb.h"
+#include "proto/gg_ls.pb.h"
+using namespace InnerCmd;
+using namespace GG_LS_Cmd;
 
 uint64_t  PlayerCtrl::player_idx_ = {};
 
@@ -13,7 +17,7 @@ PlayerCtrl::~PlayerCtrl()
 
 PlayerPtr PlayerCtrl::fetchPlayer()
 {
-	auto p = new Player(++player_idx_, "");
+	auto p = new Player(++player_idx_);
 	if (!p)return nullptr;
 
 	playerIdMap_.emplace(p->id(), p);
@@ -46,6 +50,21 @@ PlayerPtr PlayerCtrl::findPlayer(std::string const& ptid_name)
 	}
 
 	return it->second;
+}
+
+void PlayerCtrl::kickOffPlayer(std::string const& ptid_name)
+{
+	auto it = ptid2IdMap_.find(ptid_name);
+	if (it != ptid2IdMap_.end()) {
+
+		auto pPlayer = findPlayer(it->second);
+		if (pPlayer) {
+			PKG_LS_GG_Kickoff_NTF ntf;
+			ntf.set_ptid(ptid_name);
+			pPlayer->send(ProtoId::LS_GG_Kickoff_NTF, ntf);
+			pPlayer->changeState(FsmStateType::EFST_Logout);
+		}
+	}
 }
 
 void PlayerCtrl::addPtid2Map(std::string const& ptid_name, uint64_t id)

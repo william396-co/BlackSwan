@@ -26,16 +26,36 @@ namespace spdlog {
 namespace sinks {
 
 
-	std::string time_to_string(time_t tp)
+	inline std::string time_to_string(std::time_t time)
 	{
-		// 转换为本地时间结构体 tm（线程不安全，需用 localtime_r 替代）
-		std::tm tm = *std::localtime(&tp); // Windows 用 localtime_s											 
-		std::ostringstream oss;// 格式化输出
-		oss << std::put_time(&tm, "%Y-%m-%d_%H_%M_%S");
-		return oss.str();
+		std::tm local_time{};
+
+#if defined(_WIN32)
+		if (::localtime_s(&local_time, &time) != 0)
+		{
+			SPDLOG_THROW(spdlog_ex(
+				"daily_rotating_file_sink: failed to convert time"));
+		}
+#else
+		if (::localtime_r(&time, &local_time) == nullptr)
+		{
+			SPDLOG_THROW(spdlog_ex(
+				"daily_rotating_file_sink: failed to convert time"));
+		}
+#endif
+
+		return fmt::format(
+			"{:04d}-{:02d}-{:02d}_{:02d}-{:02d}-{:02d}",
+			local_time.tm_year + 1900,
+			local_time.tm_mon + 1,
+			local_time.tm_mday,
+			local_time.tm_hour,
+			local_time.tm_min,
+			local_time.tm_sec);
 	}
 
-	std::string transform_to_filename(filename_t const& app_name, time_t date_time) {
+
+	inline std::string transform_to_filename(filename_t const& app_name, time_t date_time) {
 		auto dateTime = time_to_string(date_time);
 		return fmt::format("./logs/{}_{}.log", app_name, dateTime);
 	}

@@ -16,15 +16,15 @@
 
 #include "player.h"
 
-using MessageHandler = std::function<void(const void* data, size_t len, uint32_t session_fd)>;
+using MessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, uint32_t transID)>;
 
-class MessageData
+class MessageParam
 {
 public:	
-	MessageData(uint32_t id, uint32_t client_fd, uint32_t session_fd, std::string_view data_view)
+	MessageParam(uint32_t id, uint32_t transID, uint32_t gate_session_fd, std::string_view data_view)
 		:msg_id{ id },
-		client_fd{ client_fd },
-		session_fd{ session_fd },
+		transID{ transID },
+		gate_session_fd{ gate_session_fd },
 		tick{ xtime::now() }
 	{
 		data.reserve(data_view.size());
@@ -32,12 +32,12 @@ public:
 	}
 
 	uint32_t msg_id{};
-	uint32_t client_fd{};// client fd
-	uint32_t session_fd{};// session fd
+	uint32_t transID{};// transId
+	uint32_t gate_session_fd{};// gate session fd
 	std::string data;
 	time_t tick;
 };
-using MessageDataList = std::list<MessageData>;
+using MessageParamList = std::list<MessageParam>;
 
 struct CmdMessage {
 	CmdMessage() = default;
@@ -63,7 +63,7 @@ public:
 	~PacketParser() = default;
 
 	// handle message from gate
-	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session, uint32_t fd);
+	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session, uint32_t transID);
 	// on Recv data
 	static size_t onRecvData(const char* data, size_t len, SessionPtr session);
 
@@ -77,14 +77,14 @@ public:
 	void onUpdate();
 	
 private:
-	void pushMsg(MessageData msgData);
-	void processMsg(MessageData const& msgData);
+	void pushMsg(MessageParam msgParam);
+	void processMsg(MessageParam const& msgParam);
 private:
-	static void RecvGgLoginReq(const void* pData, size_t len, uint32_t session_fd);
-	static void OnLogoffNtf(const void* pData, size_t len, uint32_t session_fd);
+	static void RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_session_fd, uint32_t transID);
+	static void OnLogoffNtf(const void* pData, size_t len, uint32_t gate_session_fd, uint32_t transID);
 private:
 	std::mutex message_list_mtx_;
-	MessageDataList message_list_;
+	MessageParamList message_list_;
 	CmdMessageMap cmd_message_map_;
 };
 

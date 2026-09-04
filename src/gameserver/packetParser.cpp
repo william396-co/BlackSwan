@@ -32,36 +32,36 @@ void PacketParser::HandleEchoReq(const char* data, size_t len, Player* pPlayer)
 	pPlayer->send((uint32_t)MsgId::ECHO_RESP, data, len);
 }
 
-void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t client_fd)
+void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t transID)
 {
-	std::cout << "client_fd" << client_fd << " msgId:" << msgId << " data:" << data_view << " len:" << data_view.size() << "\n";
+	std::cout << "transID" << transID << " msgId:" << msgId << " data:" << data_view << " len:" << data_view.size() << "\n";
 
-	auto pPlayer = g_playerCtrl->findPlayer(client_fd, gate_session->fd());
+	auto pPlayer = g_playerCtrl->findPlayer(transID, gate_session->fd());
 	if (!pPlayer) {// first login
-		pPlayer = g_playerCtrl->addPlayer(client_fd, gate_session);
+		pPlayer = g_playerCtrl->addPlayer(transID, gate_session);
 	}
 	pPlayer->recv(msgId, data_view.data(), data_view.size());
 }
 
 size_t PacketParser::onRecvData(const char* data, size_t len, SessionPtr session) {
 	const char* recv_buf = data;
+	InnerPacket pack;
 	while (len) {
-		NetPacket pack{};
-		if (!decode_net_packet(recv_buf, len, pack)) {
+		if (!decode_inner_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
 		recv_buf += pack.size();
 		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply GateServer PONG\n";
-			session->replyPing(0);
+			session->replyInnerPing();
 			continue;
 		}
 		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received GateServer PONG\n";
 			continue;
 		}
-		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session,pack.fd);
+		handleMessage(pack.id, std::string_view(pack.data, pack.sz), session,pack.transID);
 	}
 	return len;
 }

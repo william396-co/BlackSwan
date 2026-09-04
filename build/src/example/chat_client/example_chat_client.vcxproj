@@ -59,25 +59,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\git-workspace\BlackSwan\bin\example_chat_client\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">example_chat_client.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">example_chat_client</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\git-workspace\BlackSwan\bin\example_chat_client\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">example_chat_client.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">example_chat_client</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\git-workspace\BlackSwan\bin\example_chat_client\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">example_chat_client.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">example_chat_client</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\git-workspace\BlackSwan\bin\example_chat_client\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">example_chat_client.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">example_chat_client</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -109,10 +109,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -126,7 +126,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/chat_client/Debug/example_chat_client.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client/example_chat_client.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -135,7 +135,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -159,10 +159,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -176,7 +176,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/chat_client/Release/example_chat_client.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client/example_chat_client.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -185,7 +185,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -209,10 +209,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -226,7 +226,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/chat_client/MinSizeRel/example_chat_client.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client/example_chat_client.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -235,7 +235,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -258,10 +258,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_WIN32_WINNT=0x0A00;WIN32_LEAN_AND_MEAN;NOMINMAX;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;C:\boost_1_87_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -275,7 +275,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/git-workspace/BlackSwan/build/src/example/chat_client/RelWithDebInfo/example_chat_client.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>D:/git-workspace/BlackSwan/bin/example_chat_client/example_chat_client.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>

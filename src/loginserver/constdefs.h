@@ -3,36 +3,36 @@
 #include <cstdint>
 
 // Console组件的固定区域行数
-const int32_t Default_Console_Fixed_Lines = 20;
+constexpr int32_t Default_Console_Fixed_Lines = 20;
 
 /// console固定区域输出起始行位置
-const int32_t CONSOLE_FIXED_LINE_START_INDEX = 5;
+constexpr int32_t CONSOLE_FIXED_LINE_START_INDEX = 5;
 
 /// PT返回数据存活时间
-const int32_t Default_Packet_In_Queue_Time_Long = 10000;
+constexpr int32_t Default_Packet_In_Queue_Time_Long = 10000;
 
 /// Message池初始大小
-const int32_t Default_Message_Init_Size = 300;
+constexpr int32_t Default_Message_Init_Size = 300;
 
 /// Message池增量大小
-const int32_t Default_Message_Grow_Size = 300;
+constexpr int32_t Default_Message_Grow_Size = 300;
 
 // 默认Player池的增长大小为128
-const int32_t Default_PlayerPool_Grow_Size = 128;
+constexpr int32_t Default_PlayerPool_Grow_Size = 128;
 
 // 默认登录错误限制次数为5次
-const int32_t Default_Login_Failed_Limited_Times = 5;
+constexpr int32_t Default_Login_Failed_Limited_Times = 5;
 
 // 默认限制登录时间
-const int32_t Default_Limit_Login_Times = 300;
+constexpr int32_t Default_Limit_Login_Times = 300;
 
 // session超时定时器命中次数限制：30次 
-const int32_t Default_Session_Check_Timer_HitCnt = 30;
+constexpr int32_t Default_Session_Check_Timer_HitCnt = 30;
 
 // session超时定时器检测间隔：60秒
-const int32_t Default_Session_Check_Timer_Interval = 60000;
+constexpr int32_t Default_Session_Check_Timer_Interval = 60000;
 
-const int32_t TIMER_UPDATE_CONSOLE = 3000;
+constexpr int32_t TIMER_UPDATE_CONSOLE = 3000;
 
 const char gl_csHandle[] = "Handle";
 const char gl_csPTID[] = "PTID";

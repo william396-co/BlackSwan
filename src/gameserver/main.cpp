@@ -35,7 +35,7 @@ int main()
 		auto pool = std::make_shared<IoContextPool>(
 			IoContextPool::DefaultPoolSize(),
 			IoContextPool::DefaultConcurrencyHint());
-		pool->run();
+		pool->start();
 
 		// server
 		auto server = std::make_unique<Server>(pool, port);
@@ -44,7 +44,7 @@ int main()
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send GateServer PING\n";
-						s->sendPing(0);
+						s->sendInnerPing();
 					});
 				g_gateSessionMgr->addSession(session);
 			},

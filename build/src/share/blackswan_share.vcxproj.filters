@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\connector.cpp">
+      <Filter>networkEx</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\packet.cpp">
+      <Filter>networkEx</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\server.cpp">
+      <Filter>networkEx</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\session.cpp">
+      <Filter>networkEx</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\log\log.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\share\proto\errdefs.cpp">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\cl_gg.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\gg_db.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\gg_gs.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\gg_ls.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\gs_db.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\commdef.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\git-workspace\BlackSwan\src\share\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{7382fc18-8659-4e35-aa40-c800319402be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{db8e579e-bfb4-4fd3-834a-bd9dea2629b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networkEx">
+      <UniqueIdentifier>{2FC176B7-A83E-361C-BD63-33644AC8EE12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{a2cc6872-7a79-41f7-befb-39c1c324843f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\share\utils\singleton.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\utils\xtime.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\log\log.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\cl_gg.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\commdef.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\commdefs.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\errdefs.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\gg_db.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\gg_gs.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\gg_ls.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\gs_db.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\proto\protocol.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\networkEx\connector.h">
+      <Filter>networkEx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\networkEx\ioContextPool.h">
+      <Filter>networkEx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\networkEx\packet.h">
+      <Filter>networkEx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\networkEx\server.h">
+      <Filter>networkEx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\share\networkEx\session.h">
+      <Filter>networkEx</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

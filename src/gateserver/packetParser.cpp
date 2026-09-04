@@ -39,13 +39,13 @@ void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, Ses
 }
 #endif
 
-void PacketParser::forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t fd)
+void PacketParser::forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t transID)
 {
 	(void)session;
 
-	auto pPlayer = g_playerCtrl->findPlayer(fd);
+	auto pPlayer = g_playerCtrl->findPlayer(transID);
 	if (!pPlayer) {
-		std::cerr << "Player fd:" << fd << " not in this gate\n";
+		std::cerr << "Player fd:" << transID << " not in this gate\n";
 		return;
 	}
 	pPlayer->forward2Client(msgId, data_view.data(), data_view.size());
@@ -73,8 +73,8 @@ void PacketParser::forward2Login(uint32_t msgId, std::string_view data_view, Ses
 
 size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr session) {
 	const char* recv_buf = data;
+	Packet pack;
 	while (len) {
-		Packet pack{};
 		if (!decode_packet(recv_buf, len, pack)) {
 			break;
 		}
@@ -93,12 +93,13 @@ size_t PacketParser::onRecvClientData(const char* data, size_t len, SessionPtr s
 	}
 	return len;
 }
+
 size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr session)
 {
 	const char* recv_buf = data;
+	InnerPacket pack;
 	while (len) {
-		NetPacket pack{};
-		if (!decode_net_packet(recv_buf, len, pack)) {
+		if (!decode_inner_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
@@ -106,23 +107,24 @@ size_t PacketParser::onRecvServerData(const char* data, size_t len, SessionPtr s
 
 		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply GameServer PONG\n";
-			session->replyPing(0);
+			session->replyInnerPing();
 			continue;
 		}
 		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received GameServer PONG\n";
 			continue;
 		}
-		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);
+		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.transID);
 	}
 	return len;
 }
+
 size_t PacketParser::onRecvLoginData(const char* data, size_t len, SessionPtr session)
 {
 	const char* recv_buf = data;
+	InnerPacket pack;
 	while (len) {
-		NetPacket pack{};
-		if (!decode_net_packet(recv_buf, len, pack)) {
+		if (!decode_inner_packet(recv_buf, len, pack)) {
 			break;
 		}
 		len -= pack.size();
@@ -130,14 +132,14 @@ size_t PacketParser::onRecvLoginData(const char* data, size_t len, SessionPtr se
 
 		if (pack.id == CS_HeartBeat_Req) {
 			std::cout << "Session fd:" << session->fd() << " reply LoginServer PONG\n";
-			session->replyPing(0);
+			session->replyInnerPing();
 			continue;
 		}
 		if (pack.id == CS_HeartBeat_Ack) {
 			std::cout << "Session fd:" << session->fd() << " received LoginServer PONG\n";
 			continue;
 		}
-		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.fd);
+		forward2Client(pack.id, std::string_view(pack.data, pack.sz), session, pack.transID);
 	}
 	return len;
 }

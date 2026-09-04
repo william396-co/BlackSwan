@@ -5,6 +5,8 @@ file(GLOB_RECURSE LOGINSERVER_SOURCES CONFIGURE_DEPENDS
 
 add_executable(loginserver ${LOGINSERVER_SOURCES})
 
+blackswan_set_output_directory(loginserver)
+
 target_link_libraries(loginserver
     PRIVATE
         blackswan_share

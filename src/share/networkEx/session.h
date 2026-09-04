@@ -106,10 +106,12 @@ public:
 				self->deliver(std::move(msg));
 			});
 	}
+	// Client <-> Server
 	void sendPing();
-	void sendPing(uint32_t fd);
 	void replyPing();
-	void replyPing(uint32_t fd);
+	// Server <-> Server
+	void sendInnerPing();
+	void replyInnerPing();
 	void SetDataProc(DataProcess data_proc) { data_proc_ = std::move(data_proc); }
 	void SetDisconnectProc(DisconnectProcess disconnect_proc) { disconnect_proc_ = std::move(disconnect_proc); }
 	void StartHeartbeat(HeartbeatSend send_ping,

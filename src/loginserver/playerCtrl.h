@@ -26,6 +26,7 @@ public:
 
 	PlayerPtr findPlayer(uint64_t id);
 	PlayerPtr findPlayer(std::string const& ptid_name);
+	void kickOffPlayer(std::string const& ptid_name);
 
 	void addPtid2Map(std::string const& ptid_name,uint64_t id);
 public:

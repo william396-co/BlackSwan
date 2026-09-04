@@ -31,14 +31,14 @@ struct MsgHeader
 constexpr auto MsgHeaderSize = sizeof(MsgHeader);
 
 #pragma pack(push,1)
-struct NetMsgHeader {
+struct InnerMsgHeader {
 
     uint32_t id;// msgId
-    uint16_t sz;// data size
-	uint32_t fd;// origin client id
+	uint32_t transID;// Transparent ID
+    uint32_t sz;// data size
 };
 #pragma pack(pop)
-constexpr auto NetMsgHeaderSize = sizeof(NetMsgHeader);
+constexpr auto InnerMsgHeaderSize = sizeof(InnerMsgHeader);
 
 // Packet Data to Client
 struct Packet {
@@ -51,20 +51,20 @@ struct Packet {
 };
 
 // Packet Data Transfer between Servers
-struct NetPacket {
+struct InnerPacket {
 	uint32_t id;// msgId
-	uint16_t sz;// data size
-	uint32_t fd;// origin client fd
+    uint32_t transID;// Transparent ID
+	uint32_t sz;// data size
 	const char* data{};
 
-	inline size_t size() { return sz + NetMsgHeaderSize; }
+	inline size_t size() { return sz + InnerMsgHeaderSize; }
 };
 
 // encode/decode packet function
 std::string encode_packet(uint32_t msgId, const char* data, uint16_t len);
 bool decode_packet(const char* data, uint16_t len, Packet& out);
 
-// decode/encode netPacket function
-std::string encode_net_packet(uint32_t msgId, const char* data, uint16_t len, uint32_t fd);
-bool decode_net_packet(const char* data, uint16_t len, NetPacket& out);
+// decode/encode InnerPacket function
+std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
+bool decode_inner_packet(const char* data, uint32_t len, InnerPacket& out);
 

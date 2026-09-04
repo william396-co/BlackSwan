@@ -4,6 +4,7 @@ file(GLOB_RECURSE GAMESERVER_SOURCES CONFIGURE_DEPENDS
 )
 
 add_executable(gameserver ${GAMESERVER_SOURCES})
+blackswan_set_output_directory(gameserver)
 
 target_link_libraries(gameserver
     PRIVATE

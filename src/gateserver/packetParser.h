@@ -25,7 +25,7 @@ public:
 	~PacketParser() = default;
 
 	// 转发给客户端
-	static void forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t fd);
+	static void forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t transID);
 	// 消息转发给服务器
 	static void forward2Server(uint32_t msgId, std::string_view data_view, SessionPtr session);
 	// 转发给登录服

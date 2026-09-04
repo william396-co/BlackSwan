@@ -5,9 +5,9 @@ void Session::sendPing()
 	send(encode_packet(CS_HeartBeat_Req, "PING", sizeof("PING")));
 }
 
-void Session::sendPing(uint32_t fd)
+void Session::sendInnerPing()
 {
-	send(encode_net_packet(CS_HeartBeat_Req, "PING", sizeof("PING"), fd));
+	send(encode_inner_packet(CS_HeartBeat_Req, "PING", sizeof("PING"), 0));
 }
 
 void Session::replyPing()
@@ -15,9 +15,9 @@ void Session::replyPing()
 	send(encode_packet(CS_HeartBeat_Ack, "PONG", sizeof("PONG")));
 }
 
-void Session::replyPing(uint32_t fd)
+void Session::replyInnerPing()
 {
-	send(encode_net_packet(CS_HeartBeat_Ack, "PONG", sizeof("PONG"), fd));
+	send(encode_inner_packet(CS_HeartBeat_Ack, "PONG", sizeof("PONG"), 0));
 }
 
 std::atomic_uint32_t Session::id_seed_{};

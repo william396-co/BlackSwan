@@ -20,12 +20,23 @@ if(NOT EXISTS "${BLACKSWAN_PROTOBUF_ROOT}/include/google/protobuf/stubs/common.h
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-if(CMAKE_CONFIGURATION_TYPES)
-    foreach(config ${CMAKE_CONFIGURATION_TYPES})
-        string(TOUPPER ${config} config_upper)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper} ${PROJECT_SOURCE_DIR}/bin)
-    endforeach()
-endif()
+function(blackswan_set_output_directory target_name)
+    set_target_properties(${target_name} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY
+            "${PROJECT_SOURCE_DIR}/bin/${target_name}"
+    )
+
+    if(CMAKE_CONFIGURATION_TYPES)
+        foreach(config IN LISTS CMAKE_CONFIGURATION_TYPES)
+            string(TOUPPER "${config}" config_upper)
+
+            set_target_properties(${target_name} PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY_${config_upper}
+                    "${PROJECT_SOURCE_DIR}/bin/${target_name}"
+            )
+        endforeach()
+    endif()
+endfunction()
 
 add_library(blackswan_build_options INTERFACE)
 target_compile_features(blackswan_build_options INTERFACE cxx_std_20)
@@ -77,6 +88,17 @@ add_library(blackswan_spdlog INTERFACE)
 set_target_properties(blackswan_spdlog PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${BLACKSWAN_SPDLOG_ROOT}/include"
 )
+
+set(BLACKSWAN_TOML_ROOT "${PROJECT_SOURCE_DIR}/thirdparty/toml")
+if(NOT EXISTS "${BLACKSWAN_TOML_ROOT}/toml.hpp")
+    message(FATAL_ERROR "toml headers not found: ${BLACKSWAN_TOML_ROOT}")
+endif()
+
+add_library(blackswan_toml INTERFACE)
+set_target_properties(blackswan_toml PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${BLACKSWAN_TOML_ROOT}"
+)
+target_link_libraries(blackswan_build_options INTERFACE blackswan_toml)
 
 add_subdirectory(src/share)
 

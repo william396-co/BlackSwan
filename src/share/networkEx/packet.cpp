@@ -35,37 +35,37 @@ bool decode_packet(const char* data, uint16_t len, Packet& out) {
     return true;
 }
 
-std::string encode_net_packet(uint32_t msgId, const char* data, uint16_t len, uint32_t fd)
+std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
 {
     std::string out;
-    out.resize(NetMsgHeaderSize + len);
+    out.resize(InnerMsgHeaderSize + len);
 
-	auto* header = reinterpret_cast<NetMsgHeader*>(out.data());
+	auto* header = reinterpret_cast<InnerMsgHeader*>(out.data());
 	header->id = htonl(msgId);
-	header->sz = htons(len);
-	header->fd = htonl(fd);
+	header->transID = htonl(transID);
+    header->sz = htonl(len);
 
     if (len > 0) {
-        std::memcpy(out.data() + NetMsgHeaderSize, data, len);
+        std::memcpy(out.data() + InnerMsgHeaderSize, data, len);
     }
     return out;
 }
 
-bool decode_net_packet(const char* data, uint16_t len, NetPacket& out)
+bool decode_inner_packet(const char* data, uint32_t len, InnerPacket& out)
 {
-    if (len < NetMsgHeaderSize) {
+    if (len < InnerMsgHeaderSize) {
         return false;
     }
 
-    const auto* header = reinterpret_cast<const NetMsgHeader*>(data);
+    const auto* header = reinterpret_cast<const InnerMsgHeader*>(data);
     out.id = ntohl(header->id);
-    out.sz = ntohs(header->sz);
-    out.fd = ntohl(header->fd);
+    out.transID = ntohl(header->transID);
+    out.sz = ntohl(header->sz);
 
-    if (len < NetMsgHeaderSize + out.sz) {
+    if (len < InnerMsgHeaderSize + out.sz) {
         return false;
     }
 
-    out.data = data + NetMsgHeaderSize;
+    out.data = data + InnerMsgHeaderSize;
     return true;
 }

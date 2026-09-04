@@ -26,7 +26,7 @@ public:
 
 	void Init();
 
-	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t client_id);
+	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session,uint32_t transID);
 
 	static size_t onRecvData(const char* data, size_t len, SessionPtr session);
 

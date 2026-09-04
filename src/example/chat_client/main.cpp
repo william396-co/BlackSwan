@@ -41,7 +41,7 @@ int main(int argc,char** argv){
 
 		// io running pool
 		auto pool = std::make_shared<IoContextPool>(1, 1);
-		pool->run();
+		pool->start();
 
 		// connector 
 		auto connector = std::make_shared<Connector>(pool->getNext());
@@ -56,8 +56,8 @@ int main(int argc,char** argv){
 				std::cout << "connect successed:" << session->remote_ep() << "\n";
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
 					const char* recv_buf = data;
+					Packet pack;
 					while (len) {
-						Packet pack{};
 						if (!decode_packet(recv_buf, len, pack)) {
 							break;
 						}

@@ -6,7 +6,7 @@
 namespace spdlog::sinks {
 inline std::time_t GetCurrSecond()
 {
-	return xtime::now();
+	return xtime::time();
 }
 }
 

@@ -23,8 +23,8 @@ public:
 	{
 	}
 
-	void send(uint32_t msgId, const char* data, uint16_t len);
-	void recv(uint32_t msgId, const char* data, uint16_t len);
+	void send(uint32_t msgId, const char* data, uint32_t len);
+	void recv(uint32_t msgId, const char* data, uint32_t len);
 
 	inline void setSession(SessionPtr session) {
 		gateSession_ = session;

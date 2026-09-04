@@ -29,8 +29,8 @@ public:
 
 	// functions about i/o server like forward message to client/server
 public:
-	void forward2Login(uint32_t msgId, const char* data, uint16_t len, uint32_t fd);
-	void forward2Server(uint32_t msgId, const char* data, uint16_t len, uint32_t fd);
+	void forward2Login(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
+	void forward2Server(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
 	void forward2Client(uint32_t msgId, const char* data, uint16_t len);
 	inline void setSession(ClientSessionPtr session) { session_ = session; }
 	ClientSessionPtr getSession()const { return session_; }

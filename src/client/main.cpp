@@ -45,7 +45,7 @@ int main(int argc,char** argv) {
 
 		// io running pool
 		auto pool = std::make_shared<IoContextPool>(1, 1);
-		pool->run();
+		pool->start();
 
 		// connector 
 		auto connector = std::make_shared<Connector>(pool->getNext());

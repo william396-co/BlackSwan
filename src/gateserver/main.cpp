@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 		std::cout << "GateServer starting....\n";
 
 		auto pool = std::make_shared<IoContextPool>(IoContextPool::DefaultPoolSize(), IoContextPool::DefaultConcurrencyHint());
-		pool->run();
+		pool->start();
 
 
 		// Terminate Server SIGNAL
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send GameServer PING\n";
-						s->sendPing(0);
+						s->sendInnerPing();
 					});
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvServerData(data, len, session);
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						std::cout << "Session fd:" << s->fd() << " Send LoginServer PING\n";
-						s->sendPing(0);
+						s->sendInnerPing();
 					});
 				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvLoginData(data, len, session);

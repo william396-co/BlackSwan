@@ -1,11 +1,11 @@
 #include "authInfo.h"
 
-void AuthInfo::SetKV(std::string const& key, std::string const& val)
+void AuthInfo::setKV(std::string const& key, std::string const& val)
 {
 	kv_list_[key] = val;
 }
 
-void AuthInfo::SetKV(std::string const& key, int val)
+void AuthInfo::setKV(std::string const& key, int val)
 {
 	kv_list_[key] = std::to_string(val);
 }

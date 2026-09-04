@@ -12,7 +12,15 @@
 class CLog
 {
 public:
-	CLog(std::string const& appName);
+	// now allow copy and move
+	CLog(CLog const&) = delete;
+	CLog& operator=(CLog const&) = delete;
+	CLog(CLog&&) = delete;
+	CLog& operator=(CLog&&) = delete;
+
+public:
+	// constructor and destructor
+	explicit CLog(std::string const& appName);
 	~CLog();
 
 private:

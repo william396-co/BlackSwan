@@ -4,6 +4,7 @@ file(GLOB_RECURSE GATESERVER_SOURCES CONFIGURE_DEPENDS
 )
 
 add_executable(gateserver ${GATESERVER_SOURCES})
+blackswan_set_output_directory(gateserver)
 
 target_link_libraries(gateserver
     PRIVATE

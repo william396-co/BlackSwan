@@ -19,14 +19,3 @@ enum ProtoId
 	GG_LS_SetPasswordTemp_REQ = 6;
 	LS_GG_SetPasswordTemp_ACK = 7;
 }
-
-message SIPAddr
-{
-	uint32 IP = 1;
-	uint32 Port = 2;
-}
-
-message SErrCode
-{
-	uint32 ErrCode = 1;
-}

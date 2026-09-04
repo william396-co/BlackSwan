@@ -20,6 +20,7 @@ enum class OPERATION {
 	last_Operation
 };
 
+class Player;
 class APMsg
 {
 public:
@@ -55,8 +56,11 @@ public:
 	void onUpdate();
 	
 	void operateResult(AuthInfoPtr pAuth, OPERATION operation, RESULT result, int nErrorCode = 0);
-private:
-	void checkLoginToken(APMsg const& msg);
+	void checkApLoginData(Player* pPlayer);
+
+	void onAPAuthResult(AuthInfoPtr pAuth, RESULT result, int errorCode);
+	void onAPSucc(AuthInfoPtr pAuth);
+	void onAPError(AuthInfoPtr pAuth, int error);
 private:
 	void pushApMsg(APMsg msg);
 	void processApMsg(APMsg const& msg);

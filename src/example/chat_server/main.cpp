@@ -119,7 +119,7 @@ int main() {
 		auto pool = std::make_shared<IoContextPool>(
 			IoContextPool::DefaultPoolSize(),
 			IoContextPool::DefaultConcurrencyHint());
-		pool->run();
+		pool->start();
 
 		// server
 		auto server = std::make_unique<Server>(pool, port);
@@ -131,8 +131,8 @@ int main() {
 				const char* recv_buf = data;
 				size_t remaining = len;
 
+				Packet packet;
 				while (remaining > 0) {
-					Packet packet{};
 					if (!decode_packet(recv_buf, remaining, packet)) {
 						break;
 					}

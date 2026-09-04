@@ -39,8 +39,8 @@ void PacketParser::handleMessage(uint32_t msgId, std::string_view data_view, Pla
 size_t PacketParser::onRecvData(const char* data, size_t len, Player* pPlayer) 
 {
 	const char* recv_buf = data;
+	Packet pack;
 	while (len) {
-		Packet pack{};
 		if (!decode_packet(recv_buf, len, pack)) {
 			break;
 		}

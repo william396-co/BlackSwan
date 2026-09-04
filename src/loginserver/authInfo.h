@@ -19,8 +19,8 @@ class AuthInfo
 public:
 	inline void setState(AuthState state) { state_ = state; }
 	inline AuthState getState()const { return state_; }
-	void SetKV(std::string const& key, std::string const& val);
-	void SetKV(std::string const& key, int val);
+	void setKV(std::string const& key, std::string const& val);
+	void setKV(std::string const& key, int val);
 	std::string getVal(std::string const& key)const;
 private:
 	AuthState state_{};
