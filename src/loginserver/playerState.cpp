@@ -7,11 +7,11 @@
 
 #include "log/log.h"
 #include "proto/gg_ls.pb.h"
-#include "proto/commdef.pb.h"
-using namespace InnerCmd;
 using namespace GG_LS_Cmd;
-#include "proto/commdefs.h"
+#include "proto/commdef.pb.h"
+using namespace commdefCmd;
 #include "proto/errdefs.h"
+#include "proto/commdefs.h"
 #include "constdefs.h"
 
 #include <variant>

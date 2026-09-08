@@ -8,7 +8,6 @@
 #include "proto/gg_ls.pb.h"
 #include "proto/commdef.pb.h"
 #include "proto/errdefs.h"
-#include "proto/errdefs.h"
 #include "log/log.h"
 
 #include "gateSession.h"
@@ -17,7 +16,7 @@
 #include "config.h"
 
 using namespace GG_LS_Cmd;
-using namespace InnerCmd;
+using namespace commdefCmd;
 CmdMessage PacketParser::findCmdMessage(uint32_t msgId)
 {
 	auto it = cmd_message_map_.find(msgId);
@@ -64,10 +63,8 @@ void PacketParser::processMsg(MessageParam const& msgParam)
 		LOG_ERROR("message Id:{} not resiger CmdMessage", msgParam.msg_id);
 		return;
 	}
-	
-	constexpr auto buf_size = 1024 * 64;
-	static char buf[buf_size];
-	if (it->second.pMessage_ && it->second.pMessage_->ParseFromArray(buf, buf_size)) {
+
+	if (it->second.pMessage_ && it->second.pMessage_->ParseFromArray((const char*)msgParam.data.c_str(), msgParam.data.size())) {
 		if (!it->second.handler_) {
 			LOG_ERROR("message id:{} not register handler", msgParam.msg_id);
 			return;

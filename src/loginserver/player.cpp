@@ -5,9 +5,11 @@
 #include "gateSessionMgr.h"
 #include "playerMgr.h"
 #include "proto/gg_ls.pb.h"
-#include "proto/commdef.pb.h"
-using namespace InnerCmd;
 using namespace GG_LS_Cmd;
+
+#include "proto/commdef.pb.h"
+using namespace commdefCmd;
+
 #include "proto/commdefs.h"
 
 void Player::onDestroy()

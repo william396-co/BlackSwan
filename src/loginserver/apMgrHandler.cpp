@@ -1,5 +1,6 @@
 #include "apMgrHandler.h"
 #include "share/log/log.h"
+#include "utils/runningFlag.h"
 #include "config.h"
 #include "constdefs.h"
 #include "apMgr.h"

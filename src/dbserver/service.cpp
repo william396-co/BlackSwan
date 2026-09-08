@@ -3,6 +3,7 @@
 #include <deque>
 #include <exception>
 #include <stdexcept>
+#include <atomic>
 
 #include "networkEx/connector.h"
 #include "networkEx/server.h"
@@ -10,10 +11,14 @@
 #include "networkEx/session.h"
 #include "proto/protocol.h"
 #include "log/log.h"
+#include "utils/runningFlag.h"
 #include "config.h"
 
 
 constexpr auto listen_port = 8601;
+
+extern std::atomic<bool> g_stop_flag_;
+
 bool DBService::start()
 {
 	LOG_INFO("DBServer starting....");
@@ -34,7 +39,7 @@ bool DBService::start()
 		// Terminate Server SIGNAL
 		signals_  =std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -62,7 +67,7 @@ bool DBService::start()
 		);
 
 
-		if (!stop_) {
+		if (!isGameRunning()) {
 			LOG_INFO("DBServer running, listen port:[{}]", listen_port);
 
 			// packetParser Init
@@ -71,23 +76,24 @@ bool DBService::start()
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception: {}", e.what());
+		disableGameRunning();
 		return false;
 	}
 
-	return !stop_.load(std::memory_order_acquire);
+	return isGameRunning();
 }
 
 void DBService::run()
 {
 	// main thread handle
-	while (!stop_.load()) {
+	while (isGameRunning()) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
 void DBService::stop() 
 {
-	stop_.store(true, std::memory_order_acquire);
+	disableGameRunning();
 	server_->stop();
 	pool_->stop();
 }

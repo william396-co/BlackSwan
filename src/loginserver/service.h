@@ -1,6 +1,5 @@
 #pragma once
 
-#include <atomic>
 #include <memory>
 
 #include "share/networkEx/server.h"
@@ -24,8 +23,3 @@ private:
 	std::unique_ptr<Server> server_{};
 	std::unique_ptr<boost::asio::signal_set> signals_{};	
 };
-
-// test GameRunning flag
-bool isGameRunning();
-// disable gameRunning flag
-void stopGameRunning();

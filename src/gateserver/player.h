@@ -3,28 +3,36 @@
 #include <string>
 #include <variant>
 #include <type_traits>
+#include <memory>
 
 #include "networkEx/session.h"
 #include "networkEx/connector.h"
+#include "log/log.h"
 
-#include "clientSession.h"
+#include "playerSession.h"
 #include "playerState.h"
 
-class Player {
+class Player : public std::enable_shared_from_this<Player>
+{
 public:
-	Player() :fsm_{ this }
+	Player()
+		:id_{}, name_{}, fsm_{ this }
 	{
+		LOG_DEBUG("id:{}", id_);
 	}
 
 	Player(uint64_t id, std::string const& name)
 		:id_{ id }, name_{ name }, fsm_{ this }
-	{		
+	{
+		LOG_DEBUG("id:{}", id_);
 	}
 
+	void onUpdate();
+	void onDestroy();
 	// function about player attribute like id/name and so on
 public:
-	inline uint64_t id()const { return id_; }
-	inline std::string const& name()const { return name_; }
+	inline uint64_t playerID()const { return id_; }
+	inline std::string const& playerName()const { return name_; }
 	bool changeName(std::string const& newName);
 
 	// functions about i/o server like forward message to client/server
@@ -32,8 +40,8 @@ public:
 	void forward2Login(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
 	void forward2Server(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
 	void forward2Client(uint32_t msgId, const char* data, uint16_t len);
-	inline void setSession(ClientSessionPtr session) { session_ = session; }
-	ClientSessionPtr getSession()const { return session_; }
+	inline void setSession(PlayerSessionPtr session) { player_session_ = session; }
+	PlayerSessionPtr getSession()const { return player_session_; }
 private:
 	//void send(uint32_t msgId, const char* data, uint16_t len);
 
@@ -48,7 +56,5 @@ private:
 	std::string name_;
 	PlayerFSM fsm_;
 private:
-	ClientSessionPtr session_{};
+	PlayerSessionPtr player_session_{};
 };
-
-using PlayerPtr = std::shared_ptr<Player>;

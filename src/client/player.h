@@ -15,9 +15,9 @@ public:
 
 	void send(uint32_t msgId, const char* data ,uint16_t len);
 	void replyPing();
-	void recv(uint32_t msgId, const char* data, uint16_t len);
+	//void recv(uint32_t msgId, const char* data, uint16_t len);
 
-	inline void setConnector(ConnectorPtr conn) { 
+	inline void setConnector(SharedConnectorPtr conn) {
 		connector_ = conn;
 	}
 	inline uint64_t id()const { return id_; }
@@ -33,7 +33,7 @@ private:
 	uint64_t id_;
 	std::string name_;
 private:
-	ConnectorPtr connector_{};
+	SharedConnectorPtr connector_{};
 };
 
 using PlayerPtr = std::shared_ptr<Player>;

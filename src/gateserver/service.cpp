@@ -3,6 +3,8 @@
 #include <deque>
 #include <exception>
 #include <stdexcept>
+#include <string>
+#include <atomic>
 
 #include "networkEx/connector.h"
 #include "networkEx/server.h"
@@ -10,18 +12,21 @@
 #include "networkEx/session.h"
 #include "proto/protocol.h"
 #include "log/log.h"
+#include "utils/runningFlag.h"
 
 #include "packetParser.h"
 #include "player.h"
-#include "playerCtrl.h"
-#include "clientSession.h"
-#include "clientSessionMgr.h"
+#include "playerMgr.h"
+#include "playerSession.h"
+#include "playerSessionMgr.h"
 #include "config.h"
 
 uint16_t gate_port = 9527;
 constexpr auto game_port = 8321;
-constexpr auto login_port = 8600;
+constexpr auto login_port = 8601;
 constexpr auto host = "127.0.0.1";
+
+extern std::atomic<bool> g_stop_flag_;
 
 bool GateService::start() 
 {
@@ -43,7 +48,7 @@ bool GateService::start()
 		// Terminate Server SIGNAL
 		signals_  =std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -61,7 +66,7 @@ bool GateService::start()
 		// Async Connector to GameSever
 		server_connector_->asyncConnect(host, game_port,
 			[](SessionPtr session) {
-				std::cout << "Connect successed:" << session->remote_ep() << "\n";
+				LOG_INFO("Connect GameServer successed: {}:{}", session->remote_ep().address().to_string(), std::to_string(session->remote_ep().port()));
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						LOG_DEBUG("Session fd: {} Send GameServer PING", s->fd());
@@ -71,8 +76,8 @@ bool GateService::start()
 					return g_packetParser->onRecvServerData(data, len, session);
 					});
 			},
-			[](tcp::endpoint ep) {
-				//LOG_ERROR("Connect GameServer {} failed", ep);
+			[](tcp::endpoint ep) {				
+				LOG_ERROR("Connect GameServer {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));
 			}
 		);
 
@@ -86,7 +91,7 @@ bool GateService::start()
 		// Async Connector to LoginServer
 		login_connector_->asyncConnect(host, login_port,
 			[](SessionPtr session) {
-				//LOG_INFO("Connect successed:{}", session->remote_ep());
+				LOG_INFO("Connect LoginServer successed: {}:{}", session->remote_ep().address().to_string(), std::to_string(session->remote_ep().port()));
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						LOG_DEBUG("Session fd:{}  Send LoginServer PING", s->fd());
@@ -97,7 +102,7 @@ bool GateService::start()
 					});
 			},
 			[](tcp::endpoint ep) {
-				//LOG_ERROR("Connect LoginServer {} failed", ep);
+				LOG_ERROR("Connect LoginServer {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));
 			}
 		);
 
@@ -110,41 +115,45 @@ bool GateService::start()
 						LOG_DEBUG("Session fd: {} Send Client PING", s->fd());
 						s->sendPing();
 					});
-				g_clientSessionMgr->addSession(session, game_conn, login_conn);
+				g_playerSessionMgr->addSession(session, game_conn, login_conn);
 			},
 			[](const char* data, size_t len, auto session)->size_t {// Data Process
 				return g_packetParser->onRecvClientData(data, len, session);
 			},
 			[](auto session) {// Disconnected Handle
-				g_clientSessionMgr->delSession(session);
+				g_playerSessionMgr->delSession(session->fd());
 			}
 		);
 
 		// GameServer already start Service
 		if (server_connector_->isConnected() && login_connector_->isConnected()) {
 			LOG_INFO("GateServer running, listen port:{}", gate_port);
-			stop_.store(false, std::memory_order_acquire);
+			enableGameRunning();
 		}
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception: {}", e.what());
+		disableGameRunning();
 		return false;
 	}
 
-	return !stop_;
+	return isGameRunning();
 }
 
 void GateService::run() 
 {
 	// main thread handle
-	while (!stop_.load()) {
+	while (isGameRunning())
+	{
+		g_playerMgr->onUpdate();
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
 void GateService::stop() {
 
-	stop_.store(true);
+	disableGameRunning();
 	server_->stop();
 	login_connector_->Stop();
 	server_connector_->Stop();

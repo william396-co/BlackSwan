@@ -24,6 +24,107 @@ namespace _fl = ::google::protobuf::internal::field_layout;
 namespace ClientGateCmd {
 }  // namespace ClientGateCmd
 namespace ClientGateCmd {
+PROTOBUF_CONSTINIT const uint32_t ClientGateMsgID_internal_data_[] = {
+    65536u, 64u, 4294443008u, 255u, };
+static const char ClientGateMsgID_names[] = {
+    "CLI_GG_CreateRole_REQ"
+    "CLI_GG_DelRole_REQ"
+    "CLI_GG_GS_MSG"
+    "CLI_GG_Login_REQ"
+    "CLI_GG_Logout_NTF"
+    "CLI_GG_ReselRole_REQ"
+    "CLI_GG_SaveAttributeValue_REQ"
+    "CLI_GG_SelectRole_REQ"
+    "CLI_GG_UnDelRole_REQ"
+    "CLI_GG_VerifyUserName_REQ"
+    "Cli_GG_Null"
+    "GG_CLI_CreateRole_ACK"
+    "GG_CLI_DelRole_ACK"
+    "GG_CLI_KickOff_NTF"
+    "GG_CLI_Login_ACK"
+    "GG_CLI_ReselRole_ACK"
+    "GG_CLI_SaveAttributeValue_ACK"
+    "GG_CLI_SelectRole_ACK"
+    "GG_CLI_UnDelRole_ACK"
+    "GG_CLI_VerifyUserName_ACK"
+    "GG_CLI_WaitQue_ACK"
+    "GS_GG_CLI_MSG"
+};
+
+static const ::google::protobuf::internal::EnumEntry ClientGateMsgID_entries[] = {
+    {{&ClientGateMsgID_names[0], 21}, 24},
+    {{&ClientGateMsgID_names[21], 18}, 26},
+    {{&ClientGateMsgID_names[39], 13}, 35},
+    {{&ClientGateMsgID_names[52], 16}, 20},
+    {{&ClientGateMsgID_names[68], 17}, 33},
+    {{&ClientGateMsgID_names[85], 20}, 28},
+    {{&ClientGateMsgID_names[105], 29}, 39},
+    {{&ClientGateMsgID_names[134], 21}, 22},
+    {{&ClientGateMsgID_names[155], 20}, 30},
+    {{&ClientGateMsgID_names[175], 25}, 37},
+    {{&ClientGateMsgID_names[200], 11}, 0},
+    {{&ClientGateMsgID_names[211], 21}, 25},
+    {{&ClientGateMsgID_names[232], 18}, 27},
+    {{&ClientGateMsgID_names[250], 18}, 32},
+    {{&ClientGateMsgID_names[268], 16}, 21},
+    {{&ClientGateMsgID_names[284], 20}, 29},
+    {{&ClientGateMsgID_names[304], 29}, 40},
+    {{&ClientGateMsgID_names[333], 21}, 23},
+    {{&ClientGateMsgID_names[354], 20}, 31},
+    {{&ClientGateMsgID_names[374], 25}, 38},
+    {{&ClientGateMsgID_names[399], 18}, 34},
+    {{&ClientGateMsgID_names[417], 13}, 36},
+};
+
+static const int ClientGateMsgID_entries_by_number[] = {
+    10,  // 0 -> Cli_GG_Null
+    3,  // 20 -> CLI_GG_Login_REQ
+    14,  // 21 -> GG_CLI_Login_ACK
+    7,  // 22 -> CLI_GG_SelectRole_REQ
+    17,  // 23 -> GG_CLI_SelectRole_ACK
+    0,  // 24 -> CLI_GG_CreateRole_REQ
+    11,  // 25 -> GG_CLI_CreateRole_ACK
+    1,  // 26 -> CLI_GG_DelRole_REQ
+    12,  // 27 -> GG_CLI_DelRole_ACK
+    5,  // 28 -> CLI_GG_ReselRole_REQ
+    15,  // 29 -> GG_CLI_ReselRole_ACK
+    8,  // 30 -> CLI_GG_UnDelRole_REQ
+    18,  // 31 -> GG_CLI_UnDelRole_ACK
+    13,  // 32 -> GG_CLI_KickOff_NTF
+    4,  // 33 -> CLI_GG_Logout_NTF
+    20,  // 34 -> GG_CLI_WaitQue_ACK
+    2,  // 35 -> CLI_GG_GS_MSG
+    21,  // 36 -> GS_GG_CLI_MSG
+    9,  // 37 -> CLI_GG_VerifyUserName_REQ
+    19,  // 38 -> GG_CLI_VerifyUserName_ACK
+    6,  // 39 -> CLI_GG_SaveAttributeValue_REQ
+    16,  // 40 -> GG_CLI_SaveAttributeValue_ACK
+};
+
+[[nodiscard]] bool ClientGateMsgID_Parse(::absl::string_view name,
+                                  ClientGateMsgID* PROTOBUF_NONNULL value) {
+  int int_value;
+  bool success = ::google::protobuf::internal::LookUpEnumValue(
+      ClientGateMsgID_entries, 22, name, &int_value);
+  if (success) {
+    *value = static_cast<ClientGateMsgID>(int_value);
+  }
+  return success;
+}
+static ::google::protobuf::internal::ExplicitlyConstructed<::std::string>
+    ClientGateMsgID_strings[22] = {};
+
+[[nodiscard]] const ::std::string& ClientGateMsgID_Name(ClientGateMsgID value) {
+  static const bool kDummy = ::google::protobuf::internal::InitializeEnumStrings(
+      ClientGateMsgID_entries, ClientGateMsgID_entries_by_number, 22,
+      ClientGateMsgID_strings);
+  (void)kDummy;
+
+  int idx = ::google::protobuf::internal::LookUpEnumName(ClientGateMsgID_entries,
+                                  ClientGateMsgID_entries_by_number,
+                                  22, value);
+  return idx == -1 ? ::google::protobuf::internal::GetEmptyString() : ClientGateMsgID_strings[idx].get();
+}
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace ClientGateCmd
 namespace google {

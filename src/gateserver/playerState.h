@@ -3,23 +3,24 @@
 #include <variant>
 #include <type_traits>
 
-#include "clientSession.h"
 
 enum class FsmStateType 
 {
-	St_Null,
-	St_LoginLs,
-	St_LoginDB,
-	St_RoleOp,
-	St_SelRole,
-	St_LoginGs,
-	St_InGame,
-	St_JumpGs,
-	St_ReselRole,
-	St_Logout,
+	EFST_NULL,
+	EFST_LoginLs,
+	EFST_LoginDB,
+	EFST_RoleOp,
+	EFST_SelRole,
+	EFST_LoginGs,
+	EFST_InGame,
+	EFST_JumpGs,
+	EFST_ReselRole,
+	EFST_Logout,
 
-	st_Global,
-	st_Max
+	EFST_Global,
+	EFST_Destroy,
+
+	EFST_Dummy,
 };
 
 enum class GlobalStateType
@@ -28,6 +29,7 @@ enum class GlobalStateType
 };
 
 class Player;
+using PlayerPtr = Player*;
 struct FsmEvent
 {
 	uint32_t msgID{};
@@ -35,70 +37,110 @@ struct FsmEvent
 	uint32_t transID{};
 	bool isGlobalEvent{};
 
-	ClientSessionPtr session_{};
+	//ClientSessionPtr session_{};
 	// TODO message use std::variant<>
 };
 
 class NoneState {
 
 public:
-	inline FsmStateType getType()const { return FsmStateType::St_Null; }
-	void onEnter(Player* pPlayer) { (void)pPlayer; }
-	bool onEvent(Player* pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
-	void onLeave(Player* pPlayer) { (void)pPlayer; }
+	inline FsmStateType getType()const { return FsmStateType::EFST_NULL; }
+	void onEnter(PlayerPtr pPlayer) { (void)pPlayer; }
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
+	void onLeave(PlayerPtr pPlayer) { (void)pPlayer; }
 };
 
 // Login LoginServer
-class LoginLs
+class LoginLsState
 {
 public:
-	inline FsmStateType getType()const { return FsmStateType::St_LoginLs; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	inline FsmStateType getType()const { return FsmStateType::EFST_LoginLs; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 // Login DBServer
-class LoginDB
+class LoginDBState
 {
 public:
-	inline FsmStateType getType()const { return FsmStateType::St_LoginDB; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	inline FsmStateType getType()const { return FsmStateType::EFST_LoginDB; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
+};
+
+// RoleOp State
+class RoleOpState 
+{
+public:
+	inline FsmStateType getType()const { return FsmStateType::EFST_RoleOp; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
+};
+
+// SelRole State
+class SelRoleState {
+public:
+	inline FsmStateType getType()const { return FsmStateType::EFST_SelRole; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
+};
+
+// ReselRole State
+class ReselRoleState 
+{
+public:
+	inline FsmStateType getType()const { return FsmStateType::EFST_ReselRole; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 // Login GameServer
-class LoginGame
+class LoginGameState
 {
 public:
-	inline FsmStateType getType()const { return FsmStateType::St_LoginGs; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	inline FsmStateType getType()const { return FsmStateType::EFST_LoginGs; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
+};
+
+// InGame State
+class InGameState 
+{
+public:
+	inline FsmStateType getType()const { return FsmStateType::EFST_InGame; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 // Logout GameServer
-class LogoutGame
+class LogoutGameState
 {
 public:
-	inline FsmStateType getType()const { return FsmStateType::St_Logout; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	inline FsmStateType getType()const { return FsmStateType::EFST_Logout; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 
 // Global State
 class GlobalState {
 public:
-	inline FsmStateType getType()const { return FsmStateType::st_Global; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	inline FsmStateType getType()const { return FsmStateType::EFST_Global; }
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
-using PlayerState = std::variant<NoneState, LoginLs, LoginDB, LoginGame, LogoutGame, GlobalState>;
+using PlayerState = std::variant<NoneState, LoginLsState, LoginDBState, LoginGameState,InGameState,
+	LogoutGameState, RoleOpState, SelRoleState, ReselRoleState, GlobalState>;
 
 #if __cplusplus > 202306
 // helper type for the visitor #4
@@ -109,6 +151,7 @@ template<class... Ts>
 overloaded(Ts...) -> overloaded<Ts...>;
 #else
 // helper type for the visitor
+
 template<class... Ts>
 struct overloads : Ts... { using Ts::operator()...; };
 #endif
@@ -121,10 +164,10 @@ inline FsmStateType getFsmStateType(PlayerState const& state)
 class PlayerFSM
 {
 public:
-	explicit PlayerFSM(Player* owner) 
+	explicit PlayerFSM(PlayerPtr owner)
 		:owner_{ owner },
-		current_state_(LoginLs{}),
-		previous_state_(LoginLs{}),
+		current_state_(LoginLsState{}),
+		previous_state_(LoginLsState{}),
 		global_state_(GlobalState{})
 	{
 	}
@@ -136,6 +179,7 @@ public:
 	bool onEvent(FsmEvent const& event);
 private:
 	void setState(PlayerState state);
+	void notifyOwnerDestroy();
 private:
 	inline void setCurrentState(PlayerState state) {
 		current_state_ = state;
@@ -156,7 +200,7 @@ private:
 		global_state_ = state;
 	}
 private:
-	Player* owner_{};
+	PlayerPtr owner_{};
 
 	PlayerState current_state_{};
 	PlayerState previous_state_{};

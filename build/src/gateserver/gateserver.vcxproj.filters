@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientSession.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -19,7 +13,13 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.cpp">
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerSession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerSessionMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.cpp">
@@ -30,12 +30,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSession.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,7 +39,13 @@
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.h">
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerSession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerSessionMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.h">

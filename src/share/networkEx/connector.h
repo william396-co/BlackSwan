@@ -193,4 +193,4 @@ private:
 	std::atomic_uint64_t connect_attempt_ = 0;
 };
 
-using ConnectorPtr = std::shared_ptr<Connector>;
+using SharedConnectorPtr = std::shared_ptr<Connector>;

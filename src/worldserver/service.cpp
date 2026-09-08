@@ -3,6 +3,7 @@
 #include <deque>
 #include <exception>
 #include <stdexcept>
+#include <atomic>
 
 #include "networkEx/connector.h"
 #include "networkEx/server.h"
@@ -10,15 +11,18 @@
 #include "networkEx/session.h"
 #include "proto/protocol.h"
 #include "log/log.h"
+#include "utils/runningFlag.h"
 
 
 #include "config.h"
 
 constexpr auto listen_port = 8542;
 
+extern std::atomic<bool> g_stop_flag_;
+
 bool WorldService::start()
 {
-	LOG_INFO("GateServer starting....");
+	LOG_INFO("WorldServer starting....");
 
 	try {
 
@@ -36,7 +40,7 @@ bool WorldService::start()
 		// Terminate Server SIGNAL
 		signals_  =std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -63,7 +67,9 @@ bool WorldService::start()
 			}
 		);
 
-		if (!stop_) {
+		if (!isGameRunning()) 
+		{
+
 			LOG_INFO("WorldServer running, listen port:[{}]", listen_port);
 		}
 	}
@@ -72,20 +78,20 @@ bool WorldService::start()
 		return false;
 	}
 
-	return !stop_;
+	return isGameRunning();
 }
 
 void WorldService::run()
 {
 	// main thread handle
-	while (!stop_.load()) {
+	while (isGameRunning()) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
-void WorldService::stop() {
-
-	stop_.store(true);
+void WorldService::stop()
+{
+	disableGameRunning();
 	server_->stop();
 	pool_->stop();
 }

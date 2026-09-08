@@ -1,91 +1,161 @@
 #include "playerState.h"
 
 #include "player.h"
+#include "playerMgr.h"
+#include "share/log/log.h"
 
 #include <variant>
 #include <utility>
 
-void LoginLs::onEnter(Player* pPlayer)
+void LoginLsState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool LoginLs::onEvent(Player* pPlayer, FsmEvent const& event)
-{
-	(void)pPlayer;
-	(void)event;
-	return false;
-}
-
-void LoginLs::onLeave(Player* pPlayer)
-{
-	(void)pPlayer;
-}
-
-void LoginDB::onEnter(Player* pPlayer)
-{
-	(void)pPlayer;
-}
-
-bool LoginDB::onEvent(Player* pPlayer, FsmEvent const& event)
+bool LoginLsState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
 	(void)pPlayer;
 	(void)event;
 	return false;
 }
 
-void LoginDB::onLeave(Player* pPlayer)
+void LoginLsState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-void LoginGame::onEnter(Player* pPlayer)
+void LoginDBState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool LoginGame::onEvent(Player* pPlayer, FsmEvent const& event)
-{
-	(void)pPlayer;
-	(void)event;
-	return false;
-}
-
-void LoginGame::onLeave(Player* pPlayer)
-{
-	(void)pPlayer;
-}
-
-void LogoutGame::onEnter(Player* pPlayer)
-{
-	(void)pPlayer;
-}
-
-bool LogoutGame::onEvent(Player* pPlayer, FsmEvent const& event)
+bool LoginDBState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
 	(void)pPlayer;
 	(void)event;
 	return false;
 }
 
-void LogoutGame::onLeave(Player* pPlayer)
+void LoginDBState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-void GlobalState::onEnter(Player* pPlayer)
+void ReselRoleState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool GlobalState::onEvent(Player* pPlayer, FsmEvent const& event)
+bool ReselRoleState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
 	(void)pPlayer;
 	(void)event;
 	return false;
 }
 
-void GlobalState::onLeave(Player* pPlayer)
+void ReselRoleState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+
+void SelRoleState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool SelRoleState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void SelRoleState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+void RoleOpState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool RoleOpState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void RoleOpState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+void LoginGameState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool LoginGameState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void LoginGameState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+void InGameState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool InGameState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void InGameState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+void LogoutGameState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool LogoutGameState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void LogoutGameState::onLeave(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+void GlobalState::onEnter(PlayerPtr pPlayer)
+{
+	(void)pPlayer;
+}
+
+bool GlobalState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	(void)pPlayer;
+	(void)event;
+	return false;
+}
+
+void GlobalState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
@@ -93,13 +163,17 @@ void GlobalState::onLeave(Player* pPlayer)
 
 void PlayerFSM::setState(PlayerState state)
 {
-	if (getFsmStateType(state) == FsmStateType::St_Null)return;
+	if (getFsmStateType(state) == FsmStateType::EFST_NULL)
+		return;
 
+	// previous = current;
 	setPreviousState(current_state_);
+	
 	std::visit([player = owner_](auto&& arg) {
 		return arg.onLeave(player);},
 		current_state_);
 
+	// current = state
 	setCurrentState(state);
 	std::visit([player = owner_](auto&& arg) {
 		return arg.onEnter(player);},
@@ -108,7 +182,8 @@ void PlayerFSM::setState(PlayerState state)
 
 bool PlayerFSM::changeState(FsmStateType state)
 {
-	if (state <= FsmStateType::St_Null || state >= FsmStateType::st_Max) {
+	if (state < FsmStateType::EFST_LoginLs || state >= FsmStateType::EFST_Dummy) {
+		LOG_ERROR("invalid State:{}", state);
 		return false;
 	}
 
@@ -116,21 +191,39 @@ bool PlayerFSM::changeState(FsmStateType state)
 		return false;
 	}
 
-    switch (state) {
-    case FsmStateType::St_Null:
+	switch (state) {
+	case FsmStateType::EFST_NULL:
+		break;
+	case FsmStateType::EFST_LoginLs:
+		setState(LoginLsState{});
+		break;
+	case FsmStateType::EFST_LoginDB:
+		setState(LoginDBState{});
+		break;
+	case FsmStateType::EFST_RoleOp:
+		setState(RoleOpState{});
+		break;
+	case FsmStateType::EFST_SelRole:
+		setState(SelRoleState{});
+		break;
+	case FsmStateType::EFST_LoginGs:
+		setState(LoginGameState{});
+		break;
+	case FsmStateType::EFST_InGame:
+		setState(InGameState{});
+		break;
+	case FsmStateType::EFST_ReselRole:
+		setState(ReselRoleState{});
+		break;
+	case FsmStateType::EFST_Logout:
+        setState(LogoutGameState{});
         break;
-    case FsmStateType::St_LoginLs:
-        setState(LoginLs{});
-        break;
-    case FsmStateType::St_LoginGs:
-        setState(LoginGame{});
-        break;
-    case FsmStateType::St_LoginDB:
-        setState(LoginDB{});
-        break;
-    case FsmStateType::St_Logout:
-        setState(LogoutGame{});
-        break;
+	case FsmStateType::EFST_Destroy:
+		notifyOwnerDestroy();
+		break;
+	case FsmStateType::EFST_Dummy:
+	default:
+		setState(LoginLsState{});
     }
     return true;
 }
@@ -148,4 +241,10 @@ bool PlayerFSM::onEvent(FsmEvent const& event)
 			current_state_);
 	}
 	return true;
+}
+
+void PlayerFSM::notifyOwnerDestroy()
+{
+	owner_->onDestroy();
+	owner_ = {};
 }

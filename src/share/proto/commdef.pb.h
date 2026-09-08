@@ -38,19 +38,19 @@
 struct TableStruct_commdef_2eproto {
   static const ::uint32_t offsets[];
 };
-namespace InnerCmd {
+namespace commdefCmd {
 enum ProtoId : int;
 extern const uint32_t ProtoId_internal_data_[];
-}  // namespace InnerCmd
+}  // namespace commdefCmd
 namespace google {
 namespace protobuf {
 template <>
-internal::EnumTraitsT<::InnerCmd::ProtoId_internal_data_>
-    internal::EnumTraitsImpl::value<::InnerCmd::ProtoId>;
+internal::EnumTraitsT<::commdefCmd::ProtoId_internal_data_>
+    internal::EnumTraitsImpl::value<::commdefCmd::ProtoId>;
 }  // namespace protobuf
 }  // namespace google
 
-namespace InnerCmd {
+namespace commdefCmd {
 enum ProtoId : int {
   CS_NULL = 0,
   GG_LS_Login_REQ = 1,
@@ -109,19 +109,19 @@ using ::google::protobuf::internal::generated_enum::AbslUnparseFlag;
 #endif  // __GNUC__
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace InnerCmd
+}  // namespace commdefCmd
 
 
 namespace google {
 namespace protobuf {
 
 template <>
-struct is_proto_enum<::InnerCmd::ProtoId> : std::true_type {};
+struct is_proto_enum<::commdefCmd::ProtoId> : std::true_type {};
 template <>
-struct internal::LiteEnumFuncs<::InnerCmd::ProtoId> {
+struct internal::LiteEnumFuncs<::commdefCmd::ProtoId> {
   static constexpr bool kIsDefined = true;
-  static constexpr auto kParseFunc = ::InnerCmd::ProtoId_Parse;
-  static constexpr auto kNameFunc = ::InnerCmd::ProtoId_Name<int>;
+  static constexpr auto kParseFunc = ::commdefCmd::ProtoId_Parse;
+  static constexpr auto kNameFunc = ::commdefCmd::ProtoId_Name<int>;
 };
 
 }  // namespace protobuf

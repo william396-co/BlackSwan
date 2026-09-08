@@ -21,9 +21,9 @@ PROTOBUF_PRAGMA_INIT_SEG
 namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
-namespace InnerCmd {
-}  // namespace InnerCmd
-namespace InnerCmd {
+namespace commdefCmd {
+}  // namespace commdefCmd
+namespace commdefCmd {
 PROTOBUF_CONSTINIT const uint32_t ProtoId_internal_data_[] = {
     524288u, 0u, };
 static const char ProtoId_names[] = {
@@ -84,7 +84,7 @@ static ::google::protobuf::internal::ExplicitlyConstructed<::std::string>
   return idx == -1 ? ::google::protobuf::internal::GetEmptyString() : ProtoId_strings[idx].get();
 }
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace InnerCmd
+}  // namespace commdefCmd
 namespace google {
 namespace protobuf {
 }  // namespace protobuf

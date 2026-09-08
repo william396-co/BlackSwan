@@ -26,6 +26,7 @@
 #include "google/protobuf/metadata_lite.h"
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
+#include "google/protobuf/generated_enum_util.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -37,12 +38,69 @@
 struct TableStruct_cl_5fgg_2eproto {
   static const ::uint32_t offsets[];
 };
+namespace ClientGateCmd {
+enum ClientGateMsgID : int;
+extern const uint32_t ClientGateMsgID_internal_data_[];
+}  // namespace ClientGateCmd
 namespace google {
 namespace protobuf {
+template <>
+internal::EnumTraitsT<::ClientGateCmd::ClientGateMsgID_internal_data_>
+    internal::EnumTraitsImpl::value<::ClientGateCmd::ClientGateMsgID>;
 }  // namespace protobuf
 }  // namespace google
 
 namespace ClientGateCmd {
+enum ClientGateMsgID : int {
+  Cli_GG_Null = 0,
+  CLI_GG_Login_REQ = 20,
+  GG_CLI_Login_ACK = 21,
+  CLI_GG_SelectRole_REQ = 22,
+  GG_CLI_SelectRole_ACK = 23,
+  CLI_GG_CreateRole_REQ = 24,
+  GG_CLI_CreateRole_ACK = 25,
+  CLI_GG_DelRole_REQ = 26,
+  GG_CLI_DelRole_ACK = 27,
+  CLI_GG_ReselRole_REQ = 28,
+  GG_CLI_ReselRole_ACK = 29,
+  CLI_GG_UnDelRole_REQ = 30,
+  GG_CLI_UnDelRole_ACK = 31,
+  GG_CLI_KickOff_NTF = 32,
+  CLI_GG_Logout_NTF = 33,
+  GG_CLI_WaitQue_ACK = 34,
+  CLI_GG_GS_MSG = 35,
+  GS_GG_CLI_MSG = 36,
+  CLI_GG_VerifyUserName_REQ = 37,
+  GG_CLI_VerifyUserName_ACK = 38,
+  CLI_GG_SaveAttributeValue_REQ = 39,
+  GG_CLI_SaveAttributeValue_ACK = 40,
+  ClientGateMsgID_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  ClientGateMsgID_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t ClientGateMsgID_internal_data_[];
+inline constexpr ClientGateMsgID ClientGateMsgID_MIN =
+    static_cast<ClientGateMsgID>(0);
+inline constexpr ClientGateMsgID ClientGateMsgID_MAX =
+    static_cast<ClientGateMsgID>(40);
+[[nodiscard]] inline bool ClientGateMsgID_IsValid(int value) {
+  return 0 <= value && value <= 40 && ((2199022206977u >> value) & 1) != 0;
+}
+inline constexpr int ClientGateMsgID_ARRAYSIZE = 40 + 1;
+[[nodiscard]] const ::std::string& ClientGateMsgID_Name(ClientGateMsgID value);
+template <typename T>
+[[nodiscard]] const ::std::string& ClientGateMsgID_Name(T value) {
+  static_assert(::std::is_same<T, ClientGateMsgID>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to ClientGateMsgID_Name().");
+  return ClientGateMsgID_Name(static_cast<ClientGateMsgID>(value));
+}
+[[nodiscard]] bool ClientGateMsgID_Parse(
+    ::absl::string_view name, ClientGateMsgID* PROTOBUF_NONNULL value);
+using ::google::protobuf::internal::generated_enum::AbslParseFlag;
+using ::google::protobuf::internal::generated_enum::AbslUnparseFlag;
 
 // ===================================================================
 
@@ -67,6 +125,21 @@ namespace ClientGateCmd {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace ClientGateCmd
 
+
+namespace google {
+namespace protobuf {
+
+template <>
+struct is_proto_enum<::ClientGateCmd::ClientGateMsgID> : std::true_type {};
+template <>
+struct internal::LiteEnumFuncs<::ClientGateCmd::ClientGateMsgID> {
+  static constexpr bool kIsDefined = true;
+  static constexpr auto kParseFunc = ::ClientGateCmd::ClientGateMsgID_Parse;
+  static constexpr auto kNameFunc = ::ClientGateCmd::ClientGateMsgID_Name<int>;
+};
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

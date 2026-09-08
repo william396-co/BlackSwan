@@ -10,8 +10,10 @@
 
 #include "player.h"
 
+class PlayerSession;
+using PlayerSessionPtr = std::shared_ptr<PlayerSession>;
 
-using MessageHandler = std::function<void(const char* data, size_t len, Player* pPlayer)>;
+using MessageHandler = std::function<void(const char* data, size_t len, PlayerSessionPtr pPlayerSession)>;
 
 class PacketParser : public Singleton<PacketParser> 
 {
@@ -24,6 +26,8 @@ private:
 public:
 	~PacketParser() = default;
 
+
+	static void handleClientPacket(uint32_t msgId, std::string_view data_view, SessionPtr session);
 	// 转发给客户端
 	static void forward2Client(uint32_t msgId, std::string_view data_view, SessionPtr session, uint32_t transID);
 	// 消息转发给服务器

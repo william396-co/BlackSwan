@@ -340,10 +340,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientSession.cpp" />
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSession.h" />
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.cpp" />
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientSessionMgr.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\config.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\config.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\main.cpp" />
@@ -351,8 +347,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\packetParser.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\player.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\player.h" />
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.cpp" />
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerCtrl.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerMgr.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerMgr.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerSession.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerSession.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerSessionMgr.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerSessionMgr.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\playerState.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\service.cpp" />

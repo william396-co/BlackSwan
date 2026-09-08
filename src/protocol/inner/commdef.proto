@@ -1,5 +1,5 @@
 syntax = "proto3";
-package InnerCmd;
+package commdefCmd;
 option optimize_for = LITE_RUNTIME;
 
 enum ProtoId

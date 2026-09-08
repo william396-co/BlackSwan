@@ -2,8 +2,8 @@
 
 #include "share/utils/xtime.h"
 #include "proto/commdef.pb.h"
+using namespace commdefCmd;
 #include "proto/gg_ls.pb.h"
-using namespace InnerCmd;
 using namespace GG_LS_Cmd;
 
 PlayerID  PlayerMgr::player_idx_ = {};

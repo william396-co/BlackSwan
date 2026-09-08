@@ -8,6 +8,7 @@
 #include "networkEx/ioContextPool.h"
 #include "proto/protocol.h"
 #include "share/log/log.h"
+#include "utils/runningFlag.h"
 
 #include "player.h"
 #include "packetParser.h"
@@ -15,6 +16,8 @@
 
 auto host = "127.0.0.1";
 uint16_t port = 9527;
+
+extern std::atomic<bool> g_stop_flag_;
 
 bool ClientService::start()
 {
@@ -35,15 +38,15 @@ bool ClientService::start()
 		// connector 
 		connector_ = std::make_unique<Connector>(pool_->getNext());
 		connector_->SetDisconnectProc([this](SessionPtr) {
-			stop_.store(true, std::memory_order_release);
-			LOG_ERROR("disconnected from server");
+			disableGameRunning();
+			LOG_ERROR("disconnected from GateServer");
 			}
 		);
 
 		connector_->asyncConnect(host, port,
 			[this](SessionPtr session) {
-				//LOG_INFO("connect successed:{}", session->remote_ep());
-				stop_.store(false, std::memory_order_acquire);
+				LOG_INFO("connect successed: {}:{}", session->remote_ep().address().to_string(), std::to_string(session->remote_ep().port()));
+				enableGameRunning();
 				session->StartHeartbeat(
 					[](SessionPtr s) {
 						LOG_DEBUG("Client fd:{} Send GateServer PING", s->fd());
@@ -54,7 +57,7 @@ bool ClientService::start()
 					});
 			},
 			[](tcp::endpoint ep) {
-				//LOG_ERROR("connect {} failed", ep);
+				LOG_ERROR("connect {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));
 			}
 		);
 
@@ -62,7 +65,7 @@ bool ClientService::start()
 		// elegant close io_context
 		signals_ = std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -70,7 +73,7 @@ bool ClientService::start()
 			}
 		);
 
-		if (!stop_) {
+		if (!isGameRunning()) {
 			LOG_INFO("ClientService running....");
 
 			g_packetParser->Init();
@@ -78,24 +81,25 @@ bool ClientService::start()
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception: {}", e.what());
+		disableGameRunning();
 		return false;
 	}
 
-	return !stop_;
+	return isGameRunning();
 }
 
 void ClientService::run()
 {
 	// main thread handle
 	std::string input;	
-	while (!stop_.load(std::memory_order_acquire))
+	while (isGameRunning())
 	{
 		// send message in main_thread
 		if (!(std::cin >> input)) {
-			stop_.store(true, std::memory_order_release);
+			disableGameRunning();
 			break;
 		}
-		if (stop_ || !connector_->isConnected()) {
+		if (!isGameRunning() || !connector_->isConnected()) {
 			break;
 		}		
 		connector_->send(encode_packet((uint32_t)MsgId::ECHO_REQ, input.c_str(), input.size()));
@@ -107,7 +111,7 @@ void ClientService::run()
 
 void ClientService::stop() {
 
-	stop_.store(true, std::memory_order_release);
+	disableGameRunning();
 	connector_->Stop();
 	pool_->stop();
 }

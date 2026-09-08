@@ -10,6 +10,7 @@
 #include "networkEx/ioContextPool.h"
 #include "proto/protocol.h"
 #include "share/log/log.h"
+#include "utils/runningFlag.h"
 
 #include "player.h"
 #include "packetParser.h"
@@ -20,6 +21,8 @@
 
 constexpr auto listen_port = 8321;
 constexpr auto port = static_cast<boost::asio::ip::port_type>(listen_port);
+
+extern std::atomic<bool> g_stop_flag_;
 
 bool GameService::start() 
 {
@@ -62,7 +65,7 @@ bool GameService::start()
 
 		signals_ = std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -70,7 +73,7 @@ bool GameService::start()
 			}
 		);
 
-		if (!stop_) {
+		if (isGameRunning()) {
 			LOG_INFO("GameServer running, listen port:[{}]", listen_port);
 
 			// packetParser Init
@@ -79,22 +82,23 @@ bool GameService::start()
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception:{} ", e.what());
+		disableGameRunning();
 		return false;
 	}
-	return true;
+	return isGameRunning();
 }
 
 void GameService::run()
 {
 	// main thread handle
-	while (!stop_.load())
+	while (isGameRunning())
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 void GameService::stop()
 {
-	stop_.store(true);
+	disableGameRunning();
 	// IO Level
 	server_->stop();
 	pool_->stop();

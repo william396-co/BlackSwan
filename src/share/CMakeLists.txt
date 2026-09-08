@@ -13,14 +13,22 @@ find_package(Threads REQUIRED)
 
 file(GLOB PROTOCOL_SOURCES CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/src/share/proto/*.pb.cc"
+    "${PROJECT_SOURCE_DIR}/src/share/proto/*.cpp"
 )
 
+file(GLOB LOG_SOURCES CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/src/share/log/*.cpp")
+
+file(GLOB NET_WORK_EX_SOURCES CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/src/share/networkEx/*.cpp")
+
+ file(GLOB UTILS_SOURCES CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/src/share/utils/*.cpp")
+
 add_library(blackswan_share STATIC
-    log/log.cpp
-    networkEx/connector.cpp
-    networkEx/packet.cpp
-    networkEx/server.cpp
-    networkEx/session.cpp
+    ${LOG_SOURCES}
+    ${NET_WORK_EX_SOURCES}
+    ${UTILS_SOURCES}
     ${PROTOCOL_SOURCES}
 )
 

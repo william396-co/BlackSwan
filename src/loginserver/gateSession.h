@@ -1,8 +1,9 @@
 #pragma once
 
 #include <memory>
-#include <iostream>
-#include "share/networkEx/session.h"
+
+#include "networkEx/session.h"
+#include "log/log.h"
 
 #include <google/protobuf/message_lite.h>
 
@@ -10,13 +11,14 @@ constexpr auto MAX_SEND_PACKET_LEN = 64 * 1024 - InnerMsgHeaderSize;    //·¢ËÍ°ü
 
 class GateSession {
 public:
-	GateSession(SessionPtr s)
+	explicit GateSession(SessionPtr s)
 		: session_{ s }
 	{
-		std::cout << __FUNCTION__ << " fd:" << session_->fd() << "\n";
+		LOG_DEBUG("fd:{}", fd());
 	}
-	~GateSession() {
-		std::cout << __FUNCTION__ << " fd:" << session_->fd() << "\n";
+	~GateSession() 
+	{
+		LOG_DEBUG("fd:{}", fd());
 	}
 
 	inline uint32_t fd()const { return session_ ? session_->fd() : 0; }	
@@ -25,7 +27,6 @@ public:
 	void send(uint32_t transID, uint32_t msgId, ::google::protobuf::MessageLite& refMsg);
 private:
 	SessionPtr session_{};
-	char m_szBuf_[MAX_SEND_PACKET_LEN];
 };
 
 using GateSessionPtr = GateSession*;

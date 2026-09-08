@@ -10,6 +10,7 @@
 #include "networkEx/ioContextPool.h"
 #include "proto/protocol.h"
 #include "log/log.h"
+#include "utils/runningFlag.h"
 
 
 #include "player.h"
@@ -21,9 +22,9 @@
 #include "apMgrHandler.h"
 #include "config.h"
 
-constexpr auto listen_port = 8600;
+constexpr auto listen_port = 8601;
 
-std::atomic<bool> game_stop_{};
+extern std::atomic<bool> g_stop_flag_;
 bool LoginService::start()
 {
 	LOG_INFO("LoginServer starting....");	
@@ -70,7 +71,7 @@ bool LoginService::start()
 
 		signals_ = std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || game_stop_.exchange(true)) {
+			if (error || g_stop_flag_.exchange(true)) {
 				return;
 			}
 
@@ -88,8 +89,8 @@ bool LoginService::start()
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception:{} ", e.what());		
-		stopGameRunning();
-		return isGameRunning();
+		disableGameRunning();
+		return false;
 	}
 
 	return isGameRunning();
@@ -110,18 +111,8 @@ void LoginService::run()
 void LoginService::stop()
 {
 	g_apmgrhandler->stop();
-	stopGameRunning();
+	disableGameRunning();
 	// IO Level
 	server_->stop();
 	pool_->stop();
-}
-
-bool isGameRunning() 
-{
-	return !game_stop_.load(std::memory_order_acquire);
-}
-
-void stopGameRunning()
-{
-	game_stop_.store(true, std::memory_order_release);
 }
