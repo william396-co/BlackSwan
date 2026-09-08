@@ -1,7 +1,7 @@
 #include "packetParser.h"
 
 #include "player.h"
-#include "playerCtrl.h"
+#include "playerMgr.h"
 
 #include "proto/protocol.h"
 #include "share/utils/xtime.h"
@@ -89,7 +89,7 @@ void PacketParser::RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_s
 		return;
 	}
 
-	auto pPlayer = g_playerCtrl->fetchPlayer();
+	auto pPlayer = g_playerMgr->fetchPlayer();
 	if (!pPlayer) {
 		auto pGateSession = g_gateSessionMgr->getGateSession(gate_session_fd);
 		if (pGateSession) {
@@ -141,7 +141,7 @@ void PacketParser::OnLogoffNtf(const void* pData, size_t len, uint32_t gate_sess
 		return;
 	}
 
-	auto pPlayer = g_playerCtrl->findPlayer(pReq->ptid());
+	auto pPlayer = g_playerMgr->findPlayer(pReq->ptid());
 	if (!pPlayer) {
 		LOG_ERROR("player PTID:{} not found",pReq->ptid());
 		return;

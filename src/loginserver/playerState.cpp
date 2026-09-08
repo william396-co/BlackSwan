@@ -1,7 +1,7 @@
 #include "playerState.h"
 
 #include "player.h"
-#include "playerCtrl.h"
+#include "playerMgr.h"
 #include "apMgr.h"
 #include "config.h"
 
@@ -12,17 +12,18 @@ using namespace InnerCmd;
 using namespace GG_LS_Cmd;
 #include "proto/commdefs.h"
 #include "proto/errdefs.h"
+#include "constdefs.h"
 
 #include <variant>
 #include <utility>
 #include <cassert>
 
-void LoginState::onEnter(Player* pPlayer)
+void LoginState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool LoginState::onEvent(Player* pPlayer, FsmEvent const& event)
+bool LoginState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
 	assert(pPlayer);
 	
@@ -34,8 +35,22 @@ bool LoginState::onEvent(Player* pPlayer, FsmEvent const& event)
 			pPlayer->sendGateLoginFail(event.ptErrorCb->error_);
 			break;
 		case EFsmLsCallbackType::ELCT_AP_Succ:
+		{
+			// check Callback Invalid
+			auto pAuth = event.ptErrorCb->auth_;
+			auto old_uuid = pAuth->getVal(gl_csAuthenID);
+			if (pPlayer->getAuthenID() != old_uuid) {
+				LOG_ERROR("PTID do not match ,old uuid:{} return uuid:{}", pPlayer->getAuthenID(), old_uuid);
+				return false;
+			}
+
+			if (pPlayer->getAuthID() != pAuth->getAuthID()) {
+				LOG_ERROR("PTID do not match ,old id:{} return id:{}", pPlayer->getAuthenID(), pAuth->getAuthID());
+				return false;
+			}
 			HandleAPSuccCallback(pPlayer, event);
 			break;
+		}
 		default:
 			break;
 		}
@@ -53,7 +68,7 @@ bool LoginState::onEvent(Player* pPlayer, FsmEvent const& event)
 	return true;
 }
 
-void LoginState::onLeave(Player* pPlayer)
+void LoginState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
@@ -70,7 +85,7 @@ void LoginState::HandleAPLoginReq(PlayerPtr pPlayer, FsmEvent const& event)
 			strPTID = szPTID;
 		}
 
-		g_playerCtrl->kickOffPlayer(strPTID);
+		g_playerMgr->kickOffPlayer(strPTID);
 		pPlayer->setPTID(strPTID);
 
 		pPlayer->sendGateLoginSucc();
@@ -90,40 +105,40 @@ void LoginState::HandleAPSuccCallback(PlayerPtr pPlayer, FsmEvent const& event)
 
 	// TODO
 	pPlayer->setLoginData(event.ptSuccCb->auth_);
-	pPlayer->setAuth(event.ptSuccCb->auth_);
+	//pPlayer->setAuth(event.ptSuccCb->auth_); // todo need to check if need this
 	
 	char szPTID[64];
 	snprintf(szPTID, sizeof(szPTID), "%d_%d_%s", pPlayer->getAreaGroup(), pPlayer->getApType(), pPlayer->getAuthenID().c_str());
 
-	g_playerCtrl->kickOffPlayer(szPTID);
+	g_playerMgr->kickOffPlayer(szPTID);
 	pPlayer->setPTID(szPTID);
 
 	pPlayer->sendGateLoginSucc();
 }
 
-void OnlineState::onEnter(Player* pPlayer)
+void OnlineState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool OnlineState::onEvent(Player* pPlayer, FsmEvent const& event)
-{
-	(void)pPlayer;
+bool OnlineState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
+{	
 	(void)event;
+	LOG_INFO("{} is Online now", pPlayer->getPTID());
 	return false;
 }
 
-void OnlineState::onLeave(Player* pPlayer)
+void OnlineState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-void GlobalState::onEnter(Player* pPlayer)
+void GlobalState::onEnter(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
 
-bool GlobalState::onEvent(Player* pPlayer, FsmEvent const& event)
+bool GlobalState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
 	if (!event.isGlobalEvent)return false;
 	switch (event.globalEvtType) {
@@ -137,7 +152,7 @@ bool GlobalState::onEvent(Player* pPlayer, FsmEvent const& event)
 	return true;
 }
 
-void GlobalState::onLeave(Player* pPlayer)
+void GlobalState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
 }
@@ -207,4 +222,12 @@ bool PlayerFSM::onEvent(FsmEvent const& event)
 			current_state_);
 	}
 	return true;
+}
+
+PlayerFSM::PlayerFSM(Player* owner) 
+	:owner_{ owner },
+	current_state_(LoginState{}),
+	previous_state_(LoginState{}),
+	global_state_(GlobalState{})
+{
 }

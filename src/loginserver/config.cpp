@@ -16,7 +16,7 @@ bool Config::Init() {
 bool Config::LoadCfg()
 {
 	constexpr auto cfg_file = "loginserver.toml";
-
+	
 	try {
 
 		auto config = toml::parse_file(cfg_file);

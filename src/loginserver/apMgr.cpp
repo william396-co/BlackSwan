@@ -1,10 +1,12 @@
 #include  "apMgr.h"
 
 #include <iostream>
-#include "log/log.h"
+#include "share/log/log.h"
+#include "share/utils/xtime.h"
 #include "player.h"
-#include "playerCtrl.h"
+#include "playerMgr.h"
 #include "constdefs.h"
+#include "apMgrHandler.h"
 
 APMgr::~APMgr()
 {
@@ -32,7 +34,7 @@ void APMgr::processApMsg(APMsg const& msg)
 	case OPERATION::regist:
 		break;
 	case OPERATION::authen_ap: {
-		onAPAuthResult(msg.getAuth(), msg.getResult(), msg.getErrorCode());
+		onAPAuthenResult(msg.getAuth(), msg.getResult(), msg.getErrorCode());
 		break;
 	}
 	default:
@@ -52,6 +54,7 @@ void APMgr::processApMsg(APMsg const& msg)
 
 void APMgr::onUpdate() 
 {
+	// running on main-thread
 	APMsgList cur_list;
 	{
 		std::lock_guard lk(apg_list_mtx_);
@@ -70,11 +73,23 @@ void APMgr::operateResult(AuthInfoPtr pAuth, OPERATION operation, RESULT result,
 void APMgr::checkApLoginData(Player* pPlayer)
 {
 	auto pAuth = std::make_shared<AuthInfo>();
-	
-	pAuth->setKV(gl_csAuthenID, pPlayer->getAuthenID());
+	pAuth->setKV(gl_csHandle, std::to_string(pPlayer->playerID()));
+	pAuth->setKV(gl_csTime, std::to_string(xtime::time()));	
+	pPlayer->setAuthID(pAuth->getAuthID());
+	pAuth->setKV(gl_csReservePwd, pPlayer->getPwd());
+	pAuth->setAPType(pPlayer->getApType());
+	pAuth->setReserve(pPlayer->getReserve());
+	pAuth->setAreaGroup(pPlayer->getAreaGroup());
+	pAuth->setKV(gl_csInviteCode, pPlayer->getInviteCode());
+	pAuth->setKV(gl_csClientIP, pPlayer->getClientIP());
+	pAuth->setKV(gl_csTime, std::to_string(xtime::now()));
+
+	LOG_DEBUG("APAccountLogin AP:{} ID:{} token:{}", pPlayer->getApType(), pPlayer->getAuthenID(), pPlayer->getPwd());
+
+	g_apmgrhandler->pushMsg(APMsg{ pAuth,OPERATION::authen_ap,RESULT::success,0 });
 }
 
-void APMgr::onAPAuthResult(AuthInfoPtr pAuth, RESULT result, int errorCode)
+void APMgr::onAPAuthenResult(AuthInfoPtr pAuth, RESULT result, int errorCode)
 {
 	switch (result) {
 	case RESULT::success:
@@ -88,7 +103,8 @@ void APMgr::onAPAuthResult(AuthInfoPtr pAuth, RESULT result, int errorCode)
 
 void APMgr::onAPSucc(AuthInfoPtr pAuth)
 {
-	auto pPlayer = g_playerCtrl->findPlayer(strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10));
+	auto playerID = strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10);
+	auto pPlayer = g_playerMgr->findPlayer(playerID);
 	if (!pPlayer) {
 		return;
 	}
@@ -104,7 +120,8 @@ void APMgr::onAPSucc(AuthInfoPtr pAuth)
 
 void APMgr::onAPError(AuthInfoPtr pAuth, int error)
 {
-	auto pPlayer = g_playerCtrl->findPlayer(strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10));
+	auto playerID = strtoull(pAuth->getVal(gl_csHandle).c_str(), nullptr, 10);
+	auto pPlayer = g_playerMgr->findPlayer(playerID);
 	if (!pPlayer) {
 		return;
 	}

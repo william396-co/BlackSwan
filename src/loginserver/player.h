@@ -3,6 +3,7 @@
 #include <string>
 #include <variant>
 #include <type_traits>
+#include <memory>
 #include <google/protobuf/message_lite.h>
 
 #include "networkEx/session.h"
@@ -12,12 +13,12 @@
 #include "gateSession.h"
 #include "playerState.h"
 
-class Player
+class Player: public std::enable_shared_from_this<Player>
 {
-public:
+public:	
 	explicit Player(uint64_t id)
-		:fsm_{ this }, id_{ id }
-	{		
+		: fsm_{ this }, id_{ id }// TODO  this or shared_from_this().get()
+	{
 		LOG_DEBUG("id:{}", id_);
 	}
 	~Player() {
@@ -28,7 +29,7 @@ public:
 
 	// function about player attribute like id/name and so on
 public:
-	inline uint64_t id()const { return id_; }
+	inline uint64_t playerID()const { return id_; }
 	inline std::string const& getPTID()const { return szPTID_; }
 	void setPTID(std::string const& szPTID);
 
@@ -42,6 +43,7 @@ public:
 	inline std::string const& getClientIP()const { return client_IP_; }
 
 	inline void setPwd(std::string const& pwd) { szPwd_ = pwd; }
+	inline std::string getPwd()const { return szPwd_; }
 	inline void setClientVer(uint32_t clientVer) { clientVersion_ = clientVer; }
 	inline int getClientVer()const { return clientVersion_; }
 	inline void setAreaGroup(uint32_t areaGroup) { areaGroup_ = areaGroup; }
@@ -51,9 +53,12 @@ public:
 	inline uint16_t getApType()const { return apType_; }
 	inline void setGateSessionFd(uint32_t fd) { gate_session_fd_ = fd; }
 	inline void setInviteCode(std::string const& code) { inviteCode_ = code; }
+	inline std::string getInviteCode()const { return inviteCode_; }
 	inline void setReserve(uint32_t reserve) { reserve_ = reserve; }
+	inline uint32_t getReserve()const { return reserve_; }
 	void setLoginData(AuthInfoPtr pAuth);
-	void setAuth(AuthInfoPtr pAuth) { pAuth_ = pAuth; }
+	inline void setAuthID(uint32_t authID) { auth_ID_ = authID; }
+	inline uint32_t getAuthID()const { return auth_ID_; }
 	// functions about i/o server like forward message to client/server
 public:
 	//inline void setGateSessionFd(uint32_t fd) { gate_session_fd_ = fd; }
@@ -89,7 +94,7 @@ private:
 	uint16_t clientType_{};
 	uint16_t apType_{};
 	uint32_t trans_id_{};
-	AuthInfoPtr pAuth_{};
+	uint32_t auth_ID_{};
 };
 
-using PlayerPtr = Player*;
+using SharedPlayerPtr = std::shared_ptr<Player>;

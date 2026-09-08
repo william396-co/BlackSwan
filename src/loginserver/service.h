@@ -20,8 +20,12 @@ public:
 	void run();
 	void stop();
 private:
-	std::atomic<bool> stop_{};
 	std::shared_ptr<IoContextPool> pool_{};
 	std::unique_ptr<Server> server_{};
-	std::unique_ptr<boost::asio::signal_set> signals_{};
+	std::unique_ptr<boost::asio::signal_set> signals_{};	
 };
+
+// test GameRunning flag
+bool isGameRunning();
+// disable gameRunning flag
+void stopGameRunning();

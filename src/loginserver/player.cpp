@@ -3,7 +3,7 @@
 #include "networkEx/packet.h"
 #include "gateSession.h"
 #include "gateSessionMgr.h"
-#include "playerCtrl.h"
+#include "playerMgr.h"
 #include "proto/gg_ls.pb.h"
 #include "proto/commdef.pb.h"
 using namespace InnerCmd;
@@ -12,21 +12,22 @@ using namespace GG_LS_Cmd;
 
 void Player::onDestroy()
 {
-	g_playerCtrl->releasePlayer(this);
-	delete this;// be careful about this use
+	g_playerMgr->releasePlayer(shared_from_this());
 }
 
 void Player::onUpdate()
 {
+	// running on main-thread
 	if (getCurStateType() == FsmStateType::EFST_Login)
 		return;
-	// TODO
+
+	// TODO timeout check
 }
 
 void Player::setPTID(std::string const& szPTID)
 {
 	szPTID_ = szPTID;
-	g_playerCtrl->addPtid2Map(szPTID_, id());
+	g_playerMgr->addPtid2Map(szPTID_, playerID());
 }
 
 void Player::setLoginData(AuthInfoPtr pAuth)

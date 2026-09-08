@@ -2,6 +2,7 @@
 
 #include <variant>
 #include <type_traits>
+#include <memory>
 
 #include "gateSession.h"
 #include "proto/gg_ls.pb.h"
@@ -77,9 +78,9 @@ class NoneState {
 
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_Dummy; }
-	void onEnter(Player* pPlayer) { (void)pPlayer; }
-	bool onEvent(Player* pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
-	void onLeave(Player* pPlayer) { (void)pPlayer; }
+	void onEnter(PlayerPtr pPlayer) { (void)pPlayer; }
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
+	void onLeave(PlayerPtr pPlayer) { (void)pPlayer; }
 };
 
 // Login
@@ -87,9 +88,9 @@ class LoginState
 {
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_Login; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 
 	void HandleAPLoginReq(PlayerPtr pPlayer, FsmEvent const& event);
 	void HandleAPSuccCallback(PlayerPtr pPlayer, FsmEvent const& event);
@@ -100,9 +101,9 @@ class OnlineState
 {
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_Online; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 // Logout
@@ -110,18 +111,18 @@ class LogoutState
 {
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_Logout; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 // Global State
 class GlobalState {
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_Global; }
-	void onEnter(Player* pPlayer);
-	bool onEvent(Player* pPlayer, FsmEvent const& event);
-	void onLeave(Player* pPlayer);
+	void onEnter(PlayerPtr pPlayer);
+	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
+	void onLeave(PlayerPtr pPlayer);
 };
 
 using PlayerState = std::variant<NoneState, LoginState, OnlineState, GlobalState>;
@@ -147,13 +148,7 @@ inline FsmStateType getFsmStateType(PlayerState const& state)
 class PlayerFSM
 {
 public:
-	explicit PlayerFSM(Player* owner) 
-		:owner_{ owner },
-		current_state_(LoginState{}),
-		previous_state_(LoginState{}),
-		global_state_(GlobalState{})
-	{
-	}
+	explicit PlayerFSM(PlayerPtr owner);
 
 	bool changeState(FsmStateType state);
 	FsmStateType getCurStateType()const { return getFsmStateType(getCurrentState()); }
@@ -182,7 +177,7 @@ private:
 		global_state_ = state;
 	}
 private:
-	Player* owner_{};
+	PlayerPtr owner_{};
 
 	PlayerState current_state_{};
 	PlayerState previous_state_{};

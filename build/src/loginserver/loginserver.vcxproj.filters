@@ -4,6 +4,9 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\apMgrHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -25,7 +28,7 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.cpp">
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.cpp">
@@ -37,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\apMgrHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.h">
@@ -60,7 +66,7 @@
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.h">
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.h">

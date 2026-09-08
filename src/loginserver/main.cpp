@@ -13,7 +13,9 @@ int main()
 		LOG_ERROR("start service failed");
 		return 0;
 	}
+
 	service.run();
+
 	service.stop();
 
 	// elegant shutdown protobuf

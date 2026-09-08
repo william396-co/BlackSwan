@@ -48,7 +48,7 @@ bool DBService::start()
 			[](auto session) {// accept Handle
 				session->StartHeartbeat(
 					[](SessionPtr s) {
-						LOG_DEBUG("Session fd:{} Send GateServer PING", s->fd());
+						LOG_DEBUG("Session fd:{} Send GameServer PING", s->fd());
 						s->sendInnerPing();
 					});
 				//g_gateSessionMgr->addSession(session);

@@ -342,6 +342,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\apMgr.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\apMgrHandler.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\apMgrHandler.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\authInfo.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\config.cpp" />
@@ -356,8 +358,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\packetParser.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\player.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\player.h" />
-    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.cpp" />
-    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerCtrl.h" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerMgr.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerMgr.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\loginserver\playerState.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\loginserver\service.cpp" />

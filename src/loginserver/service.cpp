@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <exception>
 
+
 #include <google/protobuf/stubs/common.h>
 
 #include "networkEx/server.h"
@@ -12,15 +13,17 @@
 
 
 #include "player.h"
-#include "playerCtrl.h"
+#include "playerMgr.h"
 #include "packetParser.h"
 #include "gateSession.h"
 #include "gateSessionMgr.h"
 #include "apMgr.h"
+#include "apMgrHandler.h"
 #include "config.h"
 
 constexpr auto listen_port = 8600;
 
+std::atomic<bool> game_stop_{};
 bool LoginService::start()
 {
 	LOG_INFO("LoginServer starting....");	
@@ -60,18 +63,23 @@ bool LoginService::start()
 			}
 		);
 
+		if (!g_apmgrhandler->start()) {
+			LOG_ERROR("APMgrHandler start failed");
+			return false;
+		}
+
 		signals_ = std::make_unique<boost::asio::signal_set>(pool_->getNext(), SIGINT, SIGTERM);
 		signals_->async_wait([&](boost::system::error_code const& error, int) {
-			if (error || stop_.exchange(true)) {
+			if (error || game_stop_.exchange(true)) {
 				return;
 			}
 
 			LOG_INFO("received signal, stopping LoginServer");
 			}
 		);
-		
 
-		if (!stop_) {
+
+		if (isGameRunning()) {
 			LOG_INFO("LoginServer running, listen port:[{}]", listen_port);
 
 			// packetParser Init
@@ -79,18 +87,20 @@ bool LoginService::start()
 		}
 	}
 	catch (std::exception const& e) {
-		LOG_CRITICAL("Exception:{} ", e.what());
-		return false;
+		LOG_CRITICAL("Exception:{} ", e.what());		
+		stopGameRunning();
+		return isGameRunning();
 	}
 
-	return !stop_;
+	return isGameRunning();
 }
 
 void LoginService::run()
-{			// main thread handle
-	while (!stop_.load())
+{
+	// main thread handle
+	while (isGameRunning())
 	{
-		g_playerCtrl->onUpdate();
+		g_playerMgr->onUpdate();
 		g_packetParser->onUpdate();
 		g_apmgr->onUpdate();
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));// avoid busy loop
@@ -99,8 +109,19 @@ void LoginService::run()
 
 void LoginService::stop()
 {
-	stop_.store(true, std::memory_order_release);
+	g_apmgrhandler->stop();
+	stopGameRunning();
 	// IO Level
 	server_->stop();
 	pool_->stop();
+}
+
+bool isGameRunning() 
+{
+	return !game_stop_.load(std::memory_order_acquire);
+}
+
+void stopGameRunning()
+{
+	game_stop_.store(true, std::memory_order_release);
 }
