@@ -18,7 +18,7 @@ add_executable(example_echo_server
 
 target_link_libraries(example_echo_server
     PRIVATE
-        blackswan_build_options
+        blackswan_share
         Boost::system
         Threads::Threads
 )

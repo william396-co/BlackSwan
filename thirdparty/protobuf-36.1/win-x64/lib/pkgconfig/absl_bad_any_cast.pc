@@ -1,0 +1,12 @@
+prefix=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64
+exec_prefix=${prefix}
+libdir=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/lib
+includedir=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include
+
+Name: absl_bad_any_cast
+Description: Abseil bad_any_cast library
+URL: https://abseil.io/
+Version: head
+Requires:
+Libs: -L${libdir}  
+Cflags: -I${includedir}

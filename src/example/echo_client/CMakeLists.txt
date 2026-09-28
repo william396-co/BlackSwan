@@ -15,7 +15,7 @@ add_executable(example_echo_client main.cpp)
 
 target_link_libraries(example_echo_client
     PRIVATE
-        blackswan_build_options
+        blackswan_share
         Boost::system
         Threads::Threads
 )

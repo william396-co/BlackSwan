@@ -1,0 +1,99 @@
+#pragma once
+
+#include <string>
+#include <variant>
+#include <type_traits>
+#include <memory>
+#include <google/protobuf/message_lite.h>
+
+#include "networkEx/session.h"
+#include "networkEx/connector.h"
+#include "share/log/log.h"
+
+#include "gateSession.h"
+#include "playerState.h"
+
+class Player: public std::enable_shared_from_this<Player>
+{
+public:	
+	explicit Player(uint64_t id)
+		: fsm_{ this }, id_{ id }// TODO  this or shared_from_this().get()
+	{
+		LOG_DEBUG("id:{}", id_);
+	}
+	~Player() {
+		LOG_DEBUG("id:{}", id_);
+	}
+	void onDestroy();
+	void onUpdate();
+
+	// function about player attribute like id/name and so on
+public:
+	inline uint64_t playerID()const { return id_; }
+	inline std::string const& getPTID()const { return szPTID_; }
+	void setPTID(std::string const& szPTID);
+
+	inline std::string const& getAuthenID()const { return szAuthenID_; }
+	inline void setAuthenID(std::string const& szAuthenID) { szAuthenID_ = szAuthenID; }
+
+	inline void setTransID(TransID transId) { trans_id_ = transId; }
+	inline TransID getTransID()const { return trans_id_; }
+
+	inline void setClientIP(std::string const& clientIP) { client_IP_ = clientIP; }
+	inline std::string const& getClientIP()const { return client_IP_; }
+
+	inline void setPwd(std::string const& pwd) { szPwd_ = pwd; }
+	inline std::string getPwd()const { return szPwd_; }
+	inline void setClientVer(uint32_t clientVer) { clientVersion_ = clientVer; }
+	inline int getClientVer()const { return clientVersion_; }
+	inline void setAreaGroup(uint32_t areaGroup) { areaGroup_ = areaGroup; }
+	inline uint32_t getAreaGroup()const { return areaGroup_; }
+	inline void setClientType(uint16_t clientType) { clientType_ = clientType; }
+	inline void setApType(uint16_t apType) { apType_ = apType; }
+	inline uint16_t getApType()const { return apType_; }
+	inline void setGateSessionFd(uint32_t fd) { gate_session_fd_ = fd; }
+	inline void setInviteCode(std::string const& code) { inviteCode_ = code; }
+	inline std::string getInviteCode()const { return inviteCode_; }
+	inline void setReserve(uint32_t reserve) { reserve_ = reserve; }
+	inline uint32_t getReserve()const { return reserve_; }
+	void setLoginData(AuthInfoPtr pAuth);
+	inline void setAuthID(uint32_t authID) { auth_ID_ = authID; }
+	inline uint32_t getAuthID()const { return auth_ID_; }
+	// functions about i/o server like forward message to client/server
+public:
+	//inline void setGateSessionFd(uint32_t fd) { gate_session_fd_ = fd; }
+	void send(uint32_t msgId, ::google::protobuf::MessageLite& refMsg);
+
+	// Send Gate LoginFail
+	void sendGateLoginFail(uint32_t errorCode);
+	// Send Gate LoginSucc
+	void sendGateLoginSucc();
+
+	// functions about playerState
+public:
+	bool changeState(FsmStateType state) { return fsm_.changeState(state); }
+	FsmStateType getCurStateType()const { return fsm_.getCurStateType(); }
+	FsmStateType getPrevStateType()const { return fsm_.getPrevStateType(); }
+	bool onEvent(FsmEvent const& event) { return fsm_.onEvent(event); }
+private:
+	PlayerFSM fsm_;
+	uint32_t gate_session_fd_{};
+
+private:
+	uint64_t id_{};
+
+	std::string szPTID_{};// verfied account
+	std::string szAuthenID_{};//authened Id
+	std::string szPwd_{};//authened pwd
+	std::string client_IP_{};
+	uint32_t clientVersion_{};
+	uint32_t areaGroup_{};
+	std::string inviteCode_{};
+	uint32_t reserve_{};
+	uint16_t clientType_{};
+	uint16_t apType_{};
+	TransID trans_id_{};
+	uint32_t auth_ID_{};
+};
+
+using SharedPlayerPtr = std::shared_ptr<Player>;

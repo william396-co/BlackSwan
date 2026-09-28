@@ -1,0 +1,200 @@
+// Copyright(c) 2015-present, Gabi Melman & spdlog contributors.
+// Distributed under the MIT License (http://opensource.org/licenses/MIT)
+
+#pragma once
+
+#ifndef SPDLOG_HEADER_ONLY
+#include <spdlog/sinks/daily_rotating_sink.h>
+#endif
+
+#include <spdlog/common.h>
+
+#include <spdlog/details/file_helper.h>
+#include <spdlog/details/null_mutex.h>
+#include <spdlog/fmt/fmt.h>
+
+#include <cerrno>
+#include <chrono>
+#include <ctime>
+#include <mutex>
+#include <string>
+#include <tuple>
+#include <sstream>
+#include <iomanip>
+
+namespace spdlog {
+namespace sinks {
+
+
+	inline std::string time_to_string(std::time_t time)
+	{
+		std::tm local_time{};
+
+#if defined(_WIN32)
+		if (::localtime_s(&local_time, &time) != 0)
+		{
+			SPDLOG_THROW(spdlog_ex(
+				"daily_rotating_file_sink: failed to convert time"));
+		}
+#else
+		if (::localtime_r(&time, &local_time) == nullptr)
+		{
+			SPDLOG_THROW(spdlog_ex(
+				"daily_rotating_file_sink: failed to convert time"));
+		}
+#endif
+
+		return fmt::format(
+			"{:04d}-{:02d}-{:02d}_{:02d}-{:02d}-{:02d}",
+			local_time.tm_year + 1900,
+			local_time.tm_mon + 1,
+			local_time.tm_mday,
+			local_time.tm_hour,
+			local_time.tm_min,
+			local_time.tm_sec);
+	}
+
+
+	inline std::string transform_to_filename(filename_t const& app_name, time_t date_time) {
+		auto dateTime = time_to_string(date_time);
+		return fmt::format("./logs/{}_{}.log", app_name, dateTime);
+	}
+
+template<typename Mutex>
+SPDLOG_INLINE daily_rotating_sink<Mutex>::daily_rotating_sink(
+	filename_t const& app_name, std::size_t max_size, std::size_t max_files, bool rotate_on_open)
+	:app_name_{app_name}
+    //: base_filename_(std::move(base_filename))
+    , max_size_(max_size)
+    , max_files_(max_files)
+{
+	base_filename_ = transform_to_filename(app_name_, (time_t)GetCurrSecond());
+    file_helper_.open(calc_filename(base_filename_, 0));
+    current_size_ = file_helper_.size(); // expensive. called only once
+    if (rotate_on_open && current_size_ > 0)
+    {
+        rotate_();
+    }
+	set_next_rotate_(false);
+}
+
+// calc filename according to index and file extension if exists.
+// e.g. calc_filename("logs/mylog.txt, 3) => "logs/mylog.3.txt".
+template<typename Mutex>
+SPDLOG_INLINE filename_t daily_rotating_sink<Mutex>::calc_filename(const filename_t &filename, std::size_t index)
+{
+    if (index == 0u)
+    {
+        return filename;
+    }
+
+    filename_t basename, ext;
+    std::tie(basename, ext) = details::file_helper::split_by_extension(filename);
+    return fmt::format(SPDLOG_FILENAME_T("{}.{}{}"), basename, index, ext);
+}
+
+template<typename Mutex>
+SPDLOG_INLINE const filename_t &daily_rotating_sink<Mutex>::filename() const
+{
+    return file_helper_.filename();
+}
+
+template<typename Mutex>
+SPDLOG_INLINE void daily_rotating_sink<Mutex>::sink_it_(const details::log_msg &msg)
+{
+    memory_buf_t formatted;
+    base_sink<Mutex>::formatter_->format(msg, formatted);
+    current_size_ += formatted.size();
+    if (current_size_ > max_size_)
+    {
+        rotate_();
+        current_size_ = formatted.size();
+    }
+
+	// 检查是否是新的一天
+	auto now = std::chrono::system_clock::now();
+	auto now_time = std::chrono::system_clock::to_time_t(now);
+	if (now_time >= next_rotate_time_) {				
+		set_next_rotate_(true);		
+	}
+
+	file_helper_.write(formatted);
+}
+
+template<typename Mutex>
+SPDLOG_INLINE void daily_rotating_sink<Mutex>::flush_()
+{
+    file_helper_.flush();
+}
+
+template<typename Mutex>
+SPDLOG_INLINE void spdlog::sinks::daily_rotating_sink<Mutex>::set_next_rotate_(bool change_base_file)
+{
+	auto now_time = (time_t)GetCurrSecond();
+	tm now_tm = *localtime(&now_time);
+
+	if (change_base_file) {
+		file_helper_.close();
+		base_filename_ = transform_to_filename(app_name_, next_rotate_time_);
+		file_helper_.open(calc_filename(base_filename_, 0));
+	}
+
+	// 设置为后一天凌晨
+	now_tm.tm_mday += 1;
+	now_tm.tm_hour = 0;
+	now_tm.tm_min = 0;
+	now_tm.tm_sec = 0;
+
+	next_rotate_time_ = mktime(&now_tm);	
+}
+
+// Rotate files:
+// log.txt -> log.1.txt
+// log.1.txt -> log.2.txt
+// log.2.txt -> log.3.txt
+// log.3.txt -> delete
+template<typename Mutex>
+SPDLOG_INLINE void daily_rotating_sink<Mutex>::rotate_()
+{
+    using details::os::filename_to_str;
+    using details::os::path_exists;
+    file_helper_.close();
+    for (auto i = max_files_; i > 0; --i)
+    {
+        filename_t src = calc_filename(base_filename_, i - 1);
+        if (!path_exists(src))
+        {
+            continue;
+        }
+        filename_t target = calc_filename(base_filename_, i);
+
+        if (!rename_file(src, target))
+        {
+            // if failed try again after a small delay.
+            // this is a workaround to a windows issue, where very high rotation
+            // rates can cause the rename to fail with permission denied (because of antivirus?).
+            details::os::sleep_for_millis(100);
+            if (!rename_file(src, target))
+            {
+                file_helper_.reopen(true); // truncate the log file anyway to prevent it to grow beyond its limit!
+                current_size_ = 0;
+                SPDLOG_THROW(
+                    spdlog_ex("rotating_file_sink: failed renaming " + filename_to_str(src) + " to " + filename_to_str(target), errno));
+            }
+        }
+    }
+    file_helper_.reopen(true);
+}
+
+// delete the target if exists, and rename the src file  to target
+// return true on success, false otherwise.
+template<typename Mutex>
+SPDLOG_INLINE bool daily_rotating_sink<Mutex>::rename_file(const filename_t &src_filename, const filename_t &target_filename)
+{
+    // try to delete the target file in case it already exists.
+    (void)details::os::remove(target_filename);
+    return details::os::rename(src_filename, target_filename) == 0;
+}
+
+} // namespace sinks
+} // namespace spdlog

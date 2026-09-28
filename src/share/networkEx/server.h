@@ -78,10 +78,10 @@ public:
 private:
 	awaitable<void> listener() {
 
+		auto& session_io = pool_->getNext();
 		for (;;) {
 
 			boost::system::error_code error;
-			auto& session_io = pool_->getNext();
 			auto socket = co_await acceptor_.async_accept(session_io,boost::asio::redirect_error(use_awaitable, error));
 			if (error == boost::asio::error::operation_aborted) {
 				std::cout << "[system] listener stopped\n";
@@ -94,16 +94,16 @@ private:
 			std::cout << "[system] new connection: " << socket.remote_endpoint() << "\n";
 
 			auto session = std::make_shared<Session>(std::move(socket));
-			session->SetDisconnectProc(
+			session->setDisconnectProc(
 				[this](auto s) {
 					disconnect_proc_(s);
 					delSession(s);
 				}
 			); 
-			session->SetDataProc(data_proc_);
+			session->setDataProc(data_proc_);
 			accept_handle_(session);
 			addSession(session);
-			session->Start();
+			session->start();
 		}
 	}
 

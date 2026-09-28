@@ -1,0 +1,11 @@
+prefix=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64
+exec_prefix=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64
+libdir=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/lib
+includedir=D:/git-workspace/BlackSwan/thirdparty/protobuf-36.1/win-x64/include
+
+Name: UTF8 Range
+Description: Google's UTF8 Library
+Version: 1.0
+Requires: absl_strings
+Libs: -L${libdir} -lutf8_validity -lutf8_range 
+Cflags: -I${includedir}

@@ -1,0 +1,91 @@
+#pragma once
+
+#include <functional>
+#include <unordered_map>
+#include <string_view>
+#include <list>
+#include <mutex>
+#include <string>
+#include <utility>
+#include <memory>
+
+#include <google/protobuf/message_lite.h>
+
+#include "utils/singleton.h"
+#include "networkEx/session.h"
+
+#include "player.h"
+
+using MessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, TransID transID)>;
+
+class MessageParam
+{
+public:	
+	MessageParam(uint32_t id, TransID transID, uint32_t gate_session_fd, std::string_view data_view)
+		:msg_id{ id },
+		transID{ transID },
+		gate_session_fd{ gate_session_fd },
+		tick{ xtime::now() }
+	{
+		data.reserve(data_view.size());
+		data = data_view;
+	}
+
+	uint32_t msg_id{};
+	TransID transID{};// transId
+	uint32_t gate_session_fd{};// gate session fd
+	std::string data;
+	time_t tick;
+};
+using MessageParamList = std::list<MessageParam>;
+
+struct CmdMessage {
+	CmdMessage() = default;
+	CmdMessage(::google::protobuf::MessageLite* pMsg, MessageHandler handler)
+		:pMessage_{pMsg },
+		handler_{std::move(handler)}
+	{
+	}
+	~CmdMessage() {
+		delete pMessage_;
+	}
+	::google::protobuf::MessageLite* pMessage_{};
+	MessageHandler handler_{};
+};
+
+class PacketParser : public Singleton<PacketParser> 
+{
+	friend class Singleton<PacketParser>;
+	using CmdMessageMap = std::unordered_map<uint32_t, CmdMessage>;
+
+	PacketParser() = default;
+public:
+	~PacketParser() = default;
+
+	// handle message from gate
+	static void handleMessage(uint32_t msgId, std::string_view data_view, SessionPtr gate_session, uint32_t transID);
+	// on Recv data
+	static size_t onRecvData(const char* data, size_t len, SessionPtr session);
+
+public:
+	void Init();
+private:
+	CmdMessage findCmdMessage(uint32_t msgId);
+	// Register Command
+	void registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, MessageHandler handler);
+public:
+	void onUpdate();
+	
+private:
+	void pushMsg(MessageParam msgParam);
+	void processMsg(MessageParam const& msgParam);
+private:
+	static void RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_session_fd, uint32_t transID);
+	static void OnLogoffNtf(const void* pData, size_t len, uint32_t gate_session_fd, uint32_t transID);
+private:
+	std::mutex message_list_mtx_;
+	MessageParamList message_list_;
+	CmdMessageMap cmd_message_map_;
+};
+
+#define g_packetParser PacketParser::InstancePtr()

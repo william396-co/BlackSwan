@@ -1,0 +1,70 @@
+syntax = "proto3";
+package ClientGateCmd;
+option optimize_for = LITE_RUNTIME;
+
+
+enum ClientGateMsgID
+{
+	Cli_GG_Null                   = 0;	
+	
+	CLI_GG_Login_REQ              = 20;
+	GG_CLI_Login_ACK              = 21;
+	
+	CLI_GG_SelectRole_REQ         = 22;
+	GG_CLI_SelectRole_ACK         = 23;
+	
+	CLI_GG_CreateRole_REQ         = 24;
+	GG_CLI_CreateRole_ACK         = 25;
+	
+	CLI_GG_DelRole_REQ            = 26;
+	GG_CLI_DelRole_ACK            = 27;
+	
+	CLI_GG_ReselRole_REQ          = 28;
+	GG_CLI_ReselRole_ACK          = 29;
+	
+	CLI_GG_UnDelRole_REQ          = 30;
+	GG_CLI_UnDelRole_ACK          = 31;
+	
+	GG_CLI_KickOff_NTF            = 32;
+	CLI_GG_Logout_NTF             = 33;
+	GG_CLI_WaitQue_ACK            = 34;
+	
+	CLI_GG_GS_MSG                 = 35;
+	GS_GG_CLI_MSG                 = 36;
+	
+	CLI_GG_VerifyUserName_REQ     = 37;
+	GG_CLI_VerifyUserName_ACK     = 38;
+	
+	CLI_GG_SaveAttributeValue_REQ = 39;
+	GG_CLI_SaveAttributeValue_ACK = 40;
+};
+
+message PKG_CLI_GG_Login_REQ
+{
+	string authAct = 1;
+	string authStr = 2;
+	uint32 apType = 3;
+	uint32 clientVersion = 4;
+	uint32 clientType = 5;
+	uint32 serverID = 6;
+	string inviteCode = 7;
+	uint32 reserve = 8;
+}
+
+
+message PKG_GG_CLI_Login_ACK
+{
+	uint32 Result = 1;
+	string PTID = 2;
+	uint32 wPlatType = 3;// loginInfo
+	string abyDataInfo = 4;// loginData
+	uint32 error = 5;
+}
+
+message PKG_CLI_TO_SERVER
+{
+	uint32 msgType = 1;
+	uint32 MsgID = 2;
+	uint32 msgLen = 3;
+	string msgData = 4;
+}

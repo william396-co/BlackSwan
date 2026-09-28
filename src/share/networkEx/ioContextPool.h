@@ -13,9 +13,9 @@
 
 using PostEvent = std::function<void()>;
 
-class IoContextPool {
+class IoContextPool: public std::enable_shared_from_this<IoContextPool> {
 public:
-	static size_t DefaultPoolSize(double multi_core = 1.0) {// multi_core=1.5 or 2,default is 1.0
+	static size_t DefaultPoolSize(uint32_t multi_core = 1) {// multi_core= 2 or 1,default is 1
 		auto const count = std::thread::hardware_concurrency();
 		return count == 0 ? 1u : count * multi_core;
 	}
@@ -38,7 +38,7 @@ public:
 	}
 
 	// start all threads
-	void run() {
+	void start() {
 		for (auto& ctx : contexts_) {
 			threads_.emplace_back([ctx = ctx.get()]() {
 				//std::cout<<__func__ <<" threadId:"<<std::this_thread::get_id()<<"\n";

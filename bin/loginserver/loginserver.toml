@@ -1,0 +1,15 @@
+[Server]
+openwhitept=false
+
+[Plat]
+CheckLoginUrl='https://tzly-webserver-v1.yofijoy.com/account/user/loginverify/index.php'
+
+[Limit]
+CheckTime=60
+CheckCount=3
+
+[Client]
+ClientVersion=20120101
+
+[Debug]
+IsLocalTest=true
