@@ -38,3 +38,33 @@ enum ClientGateMsgID
 	CLI_GG_SaveAttributeValue_REQ = 39;
 	GG_CLI_SaveAttributeValue_ACK = 40;
 };
+
+message PKG_CLI_GG_Login_REQ
+{
+	string authAct = 1;
+	string authStr = 2;
+	uint32 apType = 3;
+	uint32 clientVersion = 4;
+	uint32 clientType = 5;
+	uint32 serverID = 6;
+	string inviteCode = 7;
+	uint32 reserve = 8;
+}
+
+
+message PKG_GG_CLI_Login_ACK
+{
+	uint32 Result = 1;
+	string PTID = 2;
+	uint32 wPlatType = 3;// loginInfo
+	string abyDataInfo = 4;// loginData
+	uint32 error = 5;
+}
+
+message PKG_CLI_TO_SERVER
+{
+	uint32 msgType = 1;
+	uint32 MsgID = 2;
+	uint32 msgLen = 3;
+	string msgData = 4;
+}

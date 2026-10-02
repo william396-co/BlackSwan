@@ -2,12 +2,12 @@
 MaxClientNum=2000
 
 [GameGate]
-ListenPort=8700
-ListenIP=127.0.0.1
+ListenPort=9527
+ListenIP='127.0.0.1'
 GroupName=0
-GatePipeID=250-2-4-0
+GatePipeID='250-2-4-0'
 
-AdapterSrvIP=192.168.6.18
+AdapterSrvIP='192.168.6.18'
 AdapterSrvPort=8800
 
 Latest=0
@@ -16,11 +16,11 @@ LatestArea=0
 [GameServer]
 GsNum=1
 
-GS_0_IP=127.0.0.1
+GS_0_IP='127.0.0.1'
 GS_0_Port=8600
 GS_0_No=0
 
-GS_1_IP=127.0.0.1
+GS_1_IP='127.0.0.1'
 GS_1_Port=8601
 GS_1_No=1
 
@@ -30,7 +30,7 @@ GS_1_No=1
 IsNeedDynamicCode=0
 IsCliNeedStaticCode=0
 
-CreateRoleOnlyMsg=本服务器目前尚未开放游戏功能。敬请耐心等待，新区期待您的光临！
+CreateRoleOnlyMsg='本服务器目前尚未开放游戏功能。敬请耐心等待，新区期待您的光临！'
 IsCreateRoleOnly=0
 
 #心跳次数

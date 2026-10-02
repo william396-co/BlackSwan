@@ -1,0 +1,40 @@
+# Server Type  Listen Port
+# LOGIN_GATE   1 : 8100 7500
+# LOGIN_SERVER 2 : 8200
+# DB_SERVER    3 : 8300
+# GAME_GATE    4 : 8700
+# M_SERVER     5 : 8500
+# GAME_SERVER  6 : 8600
+
+[connections]
+# Region-Group-Type-Index
+[connections.server]
+id = "250-2-4-0"
+
+# 只连接一个 login server 等，这里用表数组表示 connection，方便扩展
+[[connections.connection]]
+mode = "connect"
+
+# 连接到 login server (端口 8200)
+[[connections.connection.item]]
+id = "250-2-2-0"
+remoteip = "127.0.0.1"
+remoteport = 8200
+recvbuf = 10485760
+sendbuf = 10485760
+
+# 连接到 dbserver (端口 8300)
+[[connections.connection.item]]
+id = "250-2-3-0"
+remoteip = "127.0.0.1"
+remoteport = 8300
+recvbuf = 10485760
+sendbuf = 10485760
+
+# 连接到 mserver (端口 8500)
+[[connections.connection.item]]
+id = "250-2-5-0"
+remoteip = "127.0.0.1"
+remoteport = 8500
+recvbuf = 10485760
+sendbuf = 10485760

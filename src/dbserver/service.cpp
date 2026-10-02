@@ -51,7 +51,7 @@ bool DBService::start()
 		server_ = std::make_unique<Server>(pool_, listen_port);
 		server_->start(
 			[](auto session) {// accept Handle
-				session->StartHeartbeat(
+				session->startHeartbeat(
 					[](SessionPtr s) {
 						LOG_DEBUG("Session fd:{} Send GameServer PING", s->fd());
 						s->sendInnerPing();

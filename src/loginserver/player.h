@@ -36,8 +36,8 @@ public:
 	inline std::string const& getAuthenID()const { return szAuthenID_; }
 	inline void setAuthenID(std::string const& szAuthenID) { szAuthenID_ = szAuthenID; }
 
-	inline void setTransID(uint32_t transId) { trans_id_ = transId; }
-	inline uint32_t getTransID()const { return trans_id_; }
+	inline void setTransID(TransID transId) { trans_id_ = transId; }
+	inline TransID getTransID()const { return trans_id_; }
 
 	inline void setClientIP(std::string const& clientIP) { client_IP_ = clientIP; }
 	inline std::string const& getClientIP()const { return client_IP_; }
@@ -78,7 +78,6 @@ public:
 private:
 	PlayerFSM fsm_;
 	uint32_t gate_session_fd_{};
-	uint32_t client_fd_{};
 
 private:
 	uint64_t id_{};
@@ -93,7 +92,7 @@ private:
 	uint32_t reserve_{};
 	uint16_t clientType_{};
 	uint16_t apType_{};
-	uint32_t trans_id_{};
+	TransID trans_id_{};
 	uint32_t auth_ID_{};
 };
 

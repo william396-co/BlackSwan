@@ -340,6 +340,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\clientPacketHandler.cpp" />
+    <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\clientPacketHandler.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\config.cpp" />
     <ClInclude Include="D:\git-workspace\BlackSwan\src\gateserver\config.h" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\gateserver\main.cpp" />

@@ -87,7 +87,7 @@ public:
 		stop();
 	}
 	// for Server Start Session(start read/write coroutine)
-	void Start() {
+	void start() {
 		// active write and read coroutine
 		boost::asio::co_spawn(
 			socket_.get_executor(),
@@ -112,9 +112,9 @@ public:
 	// Server <-> Server
 	void sendInnerPing();
 	void replyInnerPing();
-	void SetDataProc(DataProcess data_proc) { data_proc_ = std::move(data_proc); }
-	void SetDisconnectProc(DisconnectProcess disconnect_proc) { disconnect_proc_ = std::move(disconnect_proc); }
-	void StartHeartbeat(HeartbeatSend send_ping,
+	void setDataProc(DataProcess data_proc) { data_proc_ = std::move(data_proc); }
+	void setDisconnectProc(DisconnectProcess disconnect_proc) { disconnect_proc_ = std::move(disconnect_proc); }
+	void startHeartbeat(HeartbeatSend send_ping,
 		std::chrono::seconds interval = std::chrono::seconds{ 10 },
 		std::chrono::seconds timeout = std::chrono::seconds{ 30 })
 	{
@@ -159,6 +159,9 @@ public:
 	}
 	time_t last_send_time() const noexcept {
 		return last_send_time_.load(std::memory_order_relaxed);
+	}
+	bool isConnected()const noexcept {
+		return !stopped_.load(std::memory_order_acquire);
 	}
 private:
 	std::string peerName() const {

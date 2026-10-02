@@ -85,9 +85,14 @@ if(NOT EXISTS "${BLACKSWAN_SPDLOG_ROOT}/include/spdlog/spdlog.h")
 endif()
 
 add_library(blackswan_spdlog INTERFACE)
-set_target_properties(blackswan_spdlog PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${BLACKSWAN_SPDLOG_ROOT}/include"
-)
+target_include_directories(blackswan_spdlog SYSTEM INTERFACE
+    "${BLACKSWAN_SPDLOG_ROOT}/include"
+ )
+if(MSVC)
+    # Keep /W4 for project code, but do not report warnings from spdlog/fmt.
+    target_compile_options(blackswan_spdlog INTERFACE /external:W0)
+endif()
+
 
 set(BLACKSWAN_TOML_ROOT "${PROJECT_SOURCE_DIR}/thirdparty/toml")
 if(NOT EXISTS "${BLACKSWAN_TOML_ROOT}/toml.hpp")

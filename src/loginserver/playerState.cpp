@@ -7,7 +7,7 @@
 
 #include "log/log.h"
 #include "proto/gg_ls.pb.h"
-using namespace GG_LS_Cmd;
+using namespace GateLoginCmd;
 #include "proto/commdef.pb.h"
 using namespace commdefCmd;
 #include "proto/errdefs.h"
@@ -59,7 +59,7 @@ bool LoginState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 
 	// handle Gate message
 	switch (event.msgID) {
-	case ProtoId::GG_LS_Login_REQ:
+	case GateLoginMsgID::GG_LS_Login_REQ:
 		HandleAPLoginReq(pPlayer, event);
 		break;
 	default:
@@ -164,12 +164,24 @@ void PlayerFSM::setState(PlayerState state)
 
 	setPreviousState(current_state_);
 	std::visit([player = owner_](auto&& arg) {
-		return arg.onLeave(player);},
+		using T = std::decay_t<decltype(arg)>;
+		if constexpr (std::is_same_v<T, std::monostate>) {
+			return;
+		}
+		else {
+			return arg.onLeave(player);
+		}},
 		current_state_);
 
 	setCurrentState(state);
 	std::visit([player = owner_](auto&& arg) {
-		return arg.onEnter(player);},
+		using T = std::decay_t<decltype(arg)>;
+		if constexpr (std::is_same_v<T, std::monostate>) {
+			return;
+		}
+		else {
+			return arg.onEnter(player);
+		}},
 		current_state_);
 }
 
@@ -213,12 +225,24 @@ bool PlayerFSM::onEvent(FsmEvent const& event)
 {
 	if (event.isGlobalEvent) {
 		std::visit([player = owner_, &event](auto&& arg) {
-			return arg.onEvent(player, event);},
+			using T = std::decay_t<decltype(arg)>;
+			if constexpr (std::is_same_v<T, std::monostate>) {
+				return false;
+			}
+			else {
+				return arg.onEvent(player, event);
+			}},
 			global_state_);
 	}
 	else {
 		std::visit([player = owner_, &event](auto&& arg) {
-			return arg.onEvent(player, event);},
+			using T = std::decay_t<decltype(arg)>;
+			if constexpr (std::is_same_v<T, std::monostate>) {
+				return false;
+			}
+			else {
+				return arg.onEvent(player, event);
+			}},
 			current_state_);
 	}
 	return true;

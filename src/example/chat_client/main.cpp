@@ -45,7 +45,7 @@ int main(int argc,char** argv){
 
 		// connector 
 		auto connector = std::make_shared<Connector>(pool->getNext());
-		connector->SetDisconnectProc([&stop](SessionPtr) {
+		connector->setDisconnectProc([&stop](SessionPtr) {
 			stop.store(true, std::memory_order_release);
 			std::cout << "[system] disconnected from server\n";
 			}
@@ -54,7 +54,7 @@ int main(int argc,char** argv){
 		connector->asyncConnect(host, port,
 			[](SessionPtr session) {
 				std::cout << "connect successed:" << session->remote_ep() << "\n";
-				session->SetDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
+				session->setDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back
 					const char* recv_buf = data;
 					Packet pack;
 					while (len) {
@@ -102,7 +102,7 @@ int main(int argc,char** argv){
 			std::this_thread::sleep_for(std::chrono::milliseconds{ 2 });
 		}
 
-		connector->Stop();
+		connector->stop();
 		pool->stop();
 
     }

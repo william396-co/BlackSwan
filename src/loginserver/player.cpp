@@ -5,7 +5,7 @@
 #include "gateSessionMgr.h"
 #include "playerMgr.h"
 #include "proto/gg_ls.pb.h"
-using namespace GG_LS_Cmd;
+using namespace GateLoginCmd;
 
 #include "proto/commdef.pb.h"
 using namespace commdefCmd;
@@ -49,7 +49,7 @@ void Player::sendGateLoginFail(uint32_t errorCode)
 	PKG_LS_GG_Login_ACK resp;
 	resp.set_result(PROTO_FAILURE);
 	resp.set_error(errorCode);
-	send(ProtoId::LS_GG_Login_ACK, resp);
+	send(GateLoginCmd::LS_GG_Login_ACK, resp);
 
 	// change state to Logout
 	changeState(FsmStateType::EFST_Logout);
@@ -62,7 +62,7 @@ void Player::sendGateLoginSucc()
 	resp.set_ptid(getPTID());
 	resp.set_wplattype(0);// TODO loginInfo
 	resp.set_abydatainfo("");// TODO loginData
-	send(ProtoId::LS_GG_Login_ACK, resp);
+	send(GateLoginCmd::LS_GG_Login_ACK, resp);
 
 	// change state to Online
 	changeState(FsmStateType::EFST_Online);

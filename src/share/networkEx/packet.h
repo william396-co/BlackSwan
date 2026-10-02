@@ -21,6 +21,8 @@
 #include <WS2tcpip.h>
 #endif
 
+using TransID = uint64_t;
+
 #pragma pack(push, 1)
 struct MsgHeader 
 {
@@ -34,7 +36,7 @@ constexpr auto MsgHeaderSize = sizeof(MsgHeader);
 struct InnerMsgHeader {
 
     uint32_t id;// msgId
-	uint32_t transID;// Transparent ID
+    TransID transID;// Transparent ID
     uint32_t sz;// data size
 };
 #pragma pack(pop)
@@ -53,7 +55,7 @@ struct Packet {
 // Packet Data Transfer between Servers
 struct InnerPacket {
 	uint32_t id;// msgId
-    uint32_t transID;// Transparent ID
+    TransID transID;// Transparent ID
 	uint32_t sz;// data size
 	const char* data{};
 
@@ -65,6 +67,6 @@ std::string encode_packet(uint32_t msgId, const char* data, uint16_t len);
 bool decode_packet(const char* data, uint16_t len, Packet& out);
 
 // decode/encode InnerPacket function
-std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
+std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, TransID transID);
 bool decode_inner_packet(const char* data, uint32_t len, InnerPacket& out);
 

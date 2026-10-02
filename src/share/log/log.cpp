@@ -32,6 +32,7 @@ CLog::~CLog()
 {
 	spdlog::default_logger()->flush();
 }
+#if 0
 std::string time_to_string(time_t tp)
 {
 	// transform local time
@@ -40,6 +41,7 @@ std::string time_to_string(time_t tp)
 	oss << std::put_time(&tm, "%Y-%m-%d_%H_%M_%S");
 	return oss.str();
 }
+#endif
 
 void CLog::Init_Logger(std::string const&appName)
 {

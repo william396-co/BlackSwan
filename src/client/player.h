@@ -1,11 +1,14 @@
 #pragma once
 
 #include <string>
+#include <memory>
+
+#include <google/protobuf/message_lite.h>
 
 #include "networkEx/session.h"
 #include "networkEx/connector.h"
 
-class Player {
+class Player: std::enable_shared_from_this<Player> {
 public:
 	Player() = default;
 	Player(uint64_t id, std::string const& name)
@@ -13,6 +16,7 @@ public:
 	{
 	}
 
+	void send(uint32_t msgId, ::google::protobuf::MessageLite& refMsg);
 	void send(uint32_t msgId, const char* data ,uint16_t len);
 	void replyPing();
 	//void recv(uint32_t msgId, const char* data, uint16_t len);
@@ -29,6 +33,18 @@ private:
 			connector_->send(msg);
 		}
 	}
+
+public:
+	void sendLoginReq();
+	void sendAttack(uint32_t skillId);
+	void sendMove(uint16_t x, uint16_t y);
+
+	// Fill player data
+	void fillData();
+
+public:
+	uint64_t getPlayerID()const { return id_; }
+	std::string getPlayerName()const { return name_; }
 private:
 	uint64_t id_;
 	std::string name_;

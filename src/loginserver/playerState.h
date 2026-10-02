@@ -3,12 +3,13 @@
 #include <variant>
 #include <type_traits>
 #include <memory>
+#include <utility>
 
 #include "gateSession.h"
 #include "proto/gg_ls.pb.h"
+using namespace GateLoginCmd;
 #include "authInfo.h"
 
-using namespace GG_LS_Cmd;
 
 enum class FsmStateType
 {
@@ -57,7 +58,7 @@ struct FsmEvent
 {
 	uint32_t msgID{};
 	uint32_t errorCode{};
-	uint32_t transID{};// Transparent ID
+	TransID transID{};// Transparent ID
 	bool isGlobalEvent{};
 	bool isLsInternalCall{};
 
@@ -72,15 +73,6 @@ struct FsmEvent
 	};
 
 	uint32_t gate_session_fd{};
-};
-
-class NoneState {
-
-public:
-	inline FsmStateType getType()const { return FsmStateType::EFST_Dummy; }
-	void onEnter(PlayerPtr pPlayer) { (void)pPlayer; }
-	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
-	void onLeave(PlayerPtr pPlayer) { (void)pPlayer; }
 };
 
 // Login
@@ -125,7 +117,7 @@ public:
 	void onLeave(PlayerPtr pPlayer);
 };
 
-using PlayerState = std::variant<NoneState, LoginState, OnlineState, GlobalState>;
+using PlayerState = std::variant<std::monostate, LoginState, OnlineState, GlobalState>;
 
 #if __cplusplus > 202306
 // helper type for the visitor #4
@@ -142,7 +134,14 @@ struct overloads : Ts... { using Ts::operator()...; };
 
 inline FsmStateType getFsmStateType(PlayerState const& state)
 {
-	return std::visit([](auto&& arg) {return arg.getType();}, state);
+	return std::visit([](auto&& arg) {
+		using T = std::decay_t<decltype(arg)>;
+		if constexpr (std::is_same_v<T, std::monostate>) {
+			return FsmStateType::EFST_Dummy;
+		}
+		else {
+			return arg.getType();
+		}}, state);
 }
 
 class PlayerFSM

@@ -6,7 +6,9 @@
 #include "proto/protocol.h"
 #include "share/utils/xtime.h"
 #include "proto/gg_ls.pb.h"
+using namespace GateLoginCmd;
 #include "proto/commdef.pb.h"
+using namespace commdefCmd;
 #include "proto/errdefs.h"
 #include "log/log.h"
 
@@ -15,8 +17,6 @@
 #include "constdefs.h"
 #include "config.h"
 
-using namespace GG_LS_Cmd;
-using namespace commdefCmd;
 CmdMessage PacketParser::findCmdMessage(uint32_t msgId)
 {
 	auto it = cmd_message_map_.find(msgId);
@@ -28,13 +28,13 @@ CmdMessage PacketParser::findCmdMessage(uint32_t msgId)
 
 void PacketParser::Init() 
 {
-	registerCommand(ProtoId::GG_LS_Login_REQ, new PKG_GG_LS_Login_REQ,&PacketParser::RecvGgLoginReq);
-	registerCommand(ProtoId::GG_LS_Logoff_NTF, new PKG_GG_LS_Logoff_NTF, &PacketParser::OnLogoffNtf);
+	registerCommand(GateLoginMsgID::GG_LS_Login_REQ, new PKG_GG_LS_Login_REQ,&PacketParser::RecvGgLoginReq);
+	registerCommand(GateLoginMsgID::GG_LS_Logoff_NTF, new PKG_GG_LS_Logoff_NTF, &PacketParser::OnLogoffNtf);
 }
 
 void PacketParser::registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, MessageHandler handler)
 {
-	cmd_message_map_[msgId] = CmdMessage{ std::move(pMsg),std::move(handler) };
+	cmd_message_map_[msgId] = CmdMessage{ pMsg,std::move(handler) };
 }
 
 void PacketParser::onUpdate()
@@ -60,7 +60,7 @@ void PacketParser::processMsg(MessageParam const& msgParam)
 {
 	auto it = cmd_message_map_.find(msgParam.msg_id);
 	if (it == cmd_message_map_.end()) {
-		LOG_ERROR("message Id:{} not resiger CmdMessage", msgParam.msg_id);
+		LOG_ERROR("message Id:{} not register CmdMessage", msgParam.msg_id);
 		return;
 	}
 
@@ -93,7 +93,7 @@ void PacketParser::RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_s
 			PKG_LS_GG_Login_ACK resp;
 			resp.set_result(COMMErr_system_error);
 			resp.set_error(LSERR_Sys_Failure);
-			pGateSession->send(transID, ProtoId::LS_GG_Login_ACK, resp);
+			pGateSession->send(transID, GateLoginMsgID::LS_GG_Login_ACK, resp);
 		}
 		return;
 	}
@@ -123,7 +123,7 @@ void PacketParser::RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_s
 
 	FsmEvent event{};
 	event.transID = transID;
-	event.msgID = ProtoId::GG_LS_Login_REQ;
+	event.msgID = GateLoginMsgID::GG_LS_Login_REQ;
 	event.gate_session_fd = gate_session_fd;
 	event.isGlobalEvent = false;
 	pPlayer->onEvent(event);

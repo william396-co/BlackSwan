@@ -29,7 +29,7 @@ public:
 	}
 
 	~Connector() {
-		Stop();
+		stop();
 	}
 	void asyncConnect(std::string const& host,
 		uint16_t port,
@@ -43,7 +43,7 @@ public:
 	bool isConnected() const {
 		return connected_.load(std::memory_order_acquire);
 	}
-	void SetDisconnectProc(DisconnectProcess disconnect_proc) {
+	void setDisconnectProc(DisconnectProcess disconnect_proc) {
 		disconnect_proc_ = std::move(disconnect_proc);
 	}
 
@@ -60,7 +60,7 @@ public:
 		session->send(msg);
 	}
 
-	void Stop() {
+	void stop() {
 		auto_reconnect_.store(false, std::memory_order_release);
 		connected_.store(false, std::memory_order_release);
 		connectTimer_.cancel();
@@ -90,7 +90,7 @@ private:
 	{
 		connected_.store(true, std::memory_order_release);
 		retry_delay_ = initial_retry_delay_;
-		connectedSession->SetDisconnectProc(
+		connectedSession->setDisconnectProc(
 			[this](SessionPtr disconnectedSession) {
 				if (session_ != disconnectedSession) {
 					return;
@@ -106,7 +106,7 @@ private:
 		if (connected_callback_) {
 			connected_callback_(connectedSession);
 		}
-		connectedSession->Start();
+		connectedSession->start();
 	}
 
 	void startConnect()

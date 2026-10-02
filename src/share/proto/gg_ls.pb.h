@@ -27,7 +27,7 @@
 #include "google/protobuf/message_lite.h"
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
-#include "commdef.pb.h"
+#include "google/protobuf/generated_enum_util.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -39,7 +39,9 @@
 struct TableStruct_gg_5fls_2eproto {
   static const ::uint32_t offsets[];
 };
-namespace GG_LS_Cmd {
+namespace GateLoginCmd {
+enum GateLoginMsgID : int;
+extern const uint32_t GateLoginMsgID_internal_data_[];
 class PKG_GG_LS_Login_REQ;
 struct PKG_GG_LS_Login_REQGlobalsTypeInternal;
 #ifndef PROTOBUF_MESSAGE_GLOBALS
@@ -72,13 +74,52 @@ extern const ::google::protobuf::internal::ClassDataLite PKG_LS_GG_Login_ACK_cla
 #else
 extern const PKG_LS_GG_Login_ACKGlobalsTypeInternal PKG_LS_GG_Login_ACK_globals_;
 #endif  // PROTOBUF_MESSAGE_GLOBALS
-}  // namespace GG_LS_Cmd
+}  // namespace GateLoginCmd
 namespace google {
 namespace protobuf {
+template <>
+internal::EnumTraitsT<::GateLoginCmd::GateLoginMsgID_internal_data_>
+    internal::EnumTraitsImpl::value<::GateLoginCmd::GateLoginMsgID>;
 }  // namespace protobuf
 }  // namespace google
 
-namespace GG_LS_Cmd {
+namespace GateLoginCmd {
+enum GateLoginMsgID : int {
+  GG_LS_Null = 0,
+  GG_LS_Login_REQ = 1,
+  LS_GG_Login_ACK = 2,
+  GG_LS_Logoff_NTF = 3,
+  LS_GG_Kickoff_NTF = 4,
+  GG_LS_ReportPlayerNum_NTF = 5,
+  GG_LS_SetPasswordTemp_REQ = 6,
+  LS_GG_SetPasswordTemp_ACK = 7,
+  GateLoginMsgID_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  GateLoginMsgID_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t GateLoginMsgID_internal_data_[];
+inline constexpr GateLoginMsgID GateLoginMsgID_MIN =
+    static_cast<GateLoginMsgID>(0);
+inline constexpr GateLoginMsgID GateLoginMsgID_MAX =
+    static_cast<GateLoginMsgID>(7);
+[[nodiscard]] inline bool GateLoginMsgID_IsValid(int value) {
+  return 0 <= value && value <= 7;
+}
+inline constexpr int GateLoginMsgID_ARRAYSIZE = 7 + 1;
+[[nodiscard]] const ::std::string& GateLoginMsgID_Name(GateLoginMsgID value);
+template <typename T>
+[[nodiscard]] const ::std::string& GateLoginMsgID_Name(T value) {
+  static_assert(::std::is_same<T, GateLoginMsgID>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to GateLoginMsgID_Name().");
+  return GateLoginMsgID_Name(static_cast<GateLoginMsgID>(value));
+}
+[[nodiscard]] bool GateLoginMsgID_Parse(
+    ::absl::string_view name, GateLoginMsgID* PROTOBUF_NONNULL value);
+using ::google::protobuf::internal::generated_enum::AbslParseFlag;
+using ::google::protobuf::internal::generated_enum::AbslUnparseFlag;
 
 // ===================================================================
 
@@ -86,7 +127,7 @@ namespace GG_LS_Cmd {
 // -------------------------------------------------------------------
 
 class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Login_ACK final : public ::google::protobuf::MessageLite
-/* @@protoc_insertion_point(class_definition:GG_LS_Cmd.PKG_LS_GG_Login_ACK) */ {
+/* @@protoc_insertion_point(class_definition:GateLoginCmd.PKG_LS_GG_Login_ACK) */ {
   using Super_ = ::google::protobuf::MessageLite;
 
  public:
@@ -196,7 +237,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Login_ACK final : public 
   static void SharedDtor(MessageLite& self);
   void InternalSwap(PKG_LS_GG_Login_ACK* PROTOBUF_NONNULL other);
  private:
-  static ::absl::string_view FullMessageName() { return "GG_LS_Cmd.PKG_LS_GG_Login_ACK"; }
+  static ::absl::string_view FullMessageName() { return "GateLoginCmd.PKG_LS_GG_Login_ACK"; }
 
   explicit PKG_LS_GG_Login_ACK(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   PKG_LS_GG_Login_ACK(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PKG_LS_GG_Login_ACK& from);
@@ -286,12 +327,12 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Login_ACK final : public 
   void _internal_set_error(::uint32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(class_scope:GateLoginCmd.PKG_LS_GG_Login_ACK)
  private:
   class _Internal;
   using ParseTableT_ =
       ::google::protobuf::internal::TcParseTable<3, 5,
-                          0, 53,
+                          0, 56,
                           2>;
   static constexpr ParseTableT_ InternalGenerateParseTable_(
       const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL class_data);
@@ -332,7 +373,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Login_ACK final : public 
 // -------------------------------------------------------------------
 
 class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Kickoff_NTF final : public ::google::protobuf::MessageLite
-/* @@protoc_insertion_point(class_definition:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF) */ {
+/* @@protoc_insertion_point(class_definition:GateLoginCmd.PKG_LS_GG_Kickoff_NTF) */ {
   using Super_ = ::google::protobuf::MessageLite;
 
  public:
@@ -442,7 +483,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Kickoff_NTF final : publi
   static void SharedDtor(MessageLite& self);
   void InternalSwap(PKG_LS_GG_Kickoff_NTF* PROTOBUF_NONNULL other);
  private:
-  static ::absl::string_view FullMessageName() { return "GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF"; }
+  static ::absl::string_view FullMessageName() { return "GateLoginCmd.PKG_LS_GG_Kickoff_NTF"; }
 
   explicit PKG_LS_GG_Kickoff_NTF(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   PKG_LS_GG_Kickoff_NTF(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PKG_LS_GG_Kickoff_NTF& from);
@@ -483,12 +524,12 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Kickoff_NTF final : publi
   ::std::string* PROTOBUF_NONNULL _internal_mutable_ptid();
 
   public:
-  // @@protoc_insertion_point(class_scope:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(class_scope:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
  private:
   class _Internal;
   using ParseTableT_ =
       ::google::protobuf::internal::TcParseTable<0, 1,
-                          0, 44,
+                          0, 47,
                           2>;
   static constexpr ParseTableT_ InternalGenerateParseTable_(
       const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL class_data);
@@ -525,7 +566,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_LS_GG_Kickoff_NTF final : publi
 // -------------------------------------------------------------------
 
 class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Logoff_NTF final : public ::google::protobuf::MessageLite
-/* @@protoc_insertion_point(class_definition:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF) */ {
+/* @@protoc_insertion_point(class_definition:GateLoginCmd.PKG_GG_LS_Logoff_NTF) */ {
   using Super_ = ::google::protobuf::MessageLite;
 
  public:
@@ -635,7 +676,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Logoff_NTF final : public
   static void SharedDtor(MessageLite& self);
   void InternalSwap(PKG_GG_LS_Logoff_NTF* PROTOBUF_NONNULL other);
  private:
-  static ::absl::string_view FullMessageName() { return "GG_LS_Cmd.PKG_GG_LS_Logoff_NTF"; }
+  static ::absl::string_view FullMessageName() { return "GateLoginCmd.PKG_GG_LS_Logoff_NTF"; }
 
   explicit PKG_GG_LS_Logoff_NTF(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   PKG_GG_LS_Logoff_NTF(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PKG_GG_LS_Logoff_NTF& from);
@@ -676,12 +717,12 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Logoff_NTF final : public
   ::std::string* PROTOBUF_NONNULL _internal_mutable_ptid();
 
   public:
-  // @@protoc_insertion_point(class_scope:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(class_scope:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
  private:
   class _Internal;
   using ParseTableT_ =
       ::google::protobuf::internal::TcParseTable<0, 1,
-                          0, 43,
+                          0, 46,
                           2>;
   static constexpr ParseTableT_ InternalGenerateParseTable_(
       const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL class_data);
@@ -718,7 +759,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Logoff_NTF final : public
 // -------------------------------------------------------------------
 
 class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Login_REQ final : public ::google::protobuf::MessageLite
-/* @@protoc_insertion_point(class_definition:GG_LS_Cmd.PKG_GG_LS_Login_REQ) */ {
+/* @@protoc_insertion_point(class_definition:GateLoginCmd.PKG_GG_LS_Login_REQ) */ {
   using Super_ = ::google::protobuf::MessageLite;
 
  public:
@@ -828,7 +869,7 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Login_REQ final : public 
   static void SharedDtor(MessageLite& self);
   void InternalSwap(PKG_GG_LS_Login_REQ* PROTOBUF_NONNULL other);
  private:
-  static ::absl::string_view FullMessageName() { return "GG_LS_Cmd.PKG_GG_LS_Login_REQ"; }
+  static ::absl::string_view FullMessageName() { return "GateLoginCmd.PKG_GG_LS_Login_REQ"; }
 
   explicit PKG_GG_LS_Login_REQ(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   PKG_GG_LS_Login_REQ(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PKG_GG_LS_Login_REQ& from);
@@ -967,12 +1008,12 @@ class  PROTOBUF_FUTURE_ADD_EARLY_WARN_UNUSED PKG_GG_LS_Login_REQ final : public 
   void _internal_set_reserve(::uint32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(class_scope:GateLoginCmd.PKG_GG_LS_Login_REQ)
  private:
   class _Internal;
   using ParseTableT_ =
       ::google::protobuf::internal::TcParseTable<4, 9,
-                          0, 70,
+                          0, 73,
                           2>;
   static constexpr ParseTableT_ InternalGenerateParseTable_(
       const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL class_data);
@@ -1039,7 +1080,7 @@ inline void PKG_GG_LS_Login_REQ::clear_authact() {
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::authact() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct)
   return _internal_authact();
 }
 template <typename Arg_, typename... Args_>
@@ -1047,13 +1088,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_GG_LS_Login_REQ::set_authact(Arg_&& arg, Args_..
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   _impl_.authact_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::mutable_authact()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   ::std::string* _s = _internal_mutable_authact();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct)
   return _s;
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::_internal_authact() const {
@@ -1070,7 +1111,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::_internal_mutable_au
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_GG_LS_Login_REQ::release_authact() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
     return nullptr;
   }
@@ -1092,7 +1133,7 @@ inline void PKG_GG_LS_Login_REQ::set_allocated_authact(::std::string* PROTOBUF_N
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.authact_.IsDefault()) {
     _impl_.authact_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct)
 }
 
 // string AuthStr = 2;
@@ -1103,7 +1144,7 @@ inline void PKG_GG_LS_Login_REQ::clear_authstr() {
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::authstr() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr)
   return _internal_authstr();
 }
 template <typename Arg_, typename... Args_>
@@ -1111,13 +1152,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_GG_LS_Login_REQ::set_authstr(Arg_&& arg, Args_..
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   _impl_.authstr_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::mutable_authstr()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::std::string* _s = _internal_mutable_authstr();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr)
   return _s;
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::_internal_authstr() const {
@@ -1134,7 +1175,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::_internal_mutable_au
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_GG_LS_Login_REQ::release_authstr() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
     return nullptr;
   }
@@ -1156,7 +1197,7 @@ inline void PKG_GG_LS_Login_REQ::set_allocated_authstr(::std::string* PROTOBUF_N
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.authstr_.IsDefault()) {
     _impl_.authstr_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr)
 }
 
 // uint32 APType = 3;
@@ -1166,13 +1207,13 @@ inline void PKG_GG_LS_Login_REQ::clear_aptype() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::aptype() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.APType)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.APType)
   return _internal_aptype();
 }
 inline void PKG_GG_LS_Login_REQ::set_aptype(::uint32_t value) {
   _internal_set_aptype(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.APType)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.APType)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_aptype() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1190,13 +1231,13 @@ inline void PKG_GG_LS_Login_REQ::clear_clientversion() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::clientversion() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.ClientVersion)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.ClientVersion)
   return _internal_clientversion();
 }
 inline void PKG_GG_LS_Login_REQ::set_clientversion(::uint32_t value) {
   _internal_set_clientversion(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.ClientVersion)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.ClientVersion)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_clientversion() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1214,13 +1255,13 @@ inline void PKG_GG_LS_Login_REQ::clear_clienttype() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000020U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::clienttype() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.ClientType)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.ClientType)
   return _internal_clienttype();
 }
 inline void PKG_GG_LS_Login_REQ::set_clienttype(::uint32_t value) {
   _internal_set_clienttype(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000020U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.ClientType)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.ClientType)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_clienttype() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1238,13 +1279,13 @@ inline void PKG_GG_LS_Login_REQ::clear_areagroup() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::areagroup() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AreaGroup)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.AreaGroup)
   return _internal_areagroup();
 }
 inline void PKG_GG_LS_Login_REQ::set_areagroup(::uint32_t value) {
   _internal_set_areagroup(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000040U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.AreaGroup)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.AreaGroup)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_areagroup() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1262,13 +1303,13 @@ inline void PKG_GG_LS_Login_REQ::clear_ip() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::ip() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.Ip)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.Ip)
   return _internal_ip();
 }
 inline void PKG_GG_LS_Login_REQ::set_ip(::uint32_t value) {
   _internal_set_ip(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000080U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.Ip)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.Ip)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_ip() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1287,7 +1328,7 @@ inline void PKG_GG_LS_Login_REQ::clear_invitecode() {
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::invitecode() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode)
   return _internal_invitecode();
 }
 template <typename Arg_, typename... Args_>
@@ -1295,13 +1336,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_GG_LS_Login_REQ::set_invitecode(Arg_&& arg, Args
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   _impl_.invitecode_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::mutable_invitecode()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   ::std::string* _s = _internal_mutable_invitecode();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode)
   return _s;
 }
 inline const ::std::string& PKG_GG_LS_Login_REQ::_internal_invitecode() const {
@@ -1318,7 +1359,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Login_REQ::_internal_mutable_in
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_GG_LS_Login_REQ::release_invitecode() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
     return nullptr;
   }
@@ -1340,7 +1381,7 @@ inline void PKG_GG_LS_Login_REQ::set_allocated_invitecode(::std::string* PROTOBU
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.invitecode_.IsDefault()) {
     _impl_.invitecode_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode)
 }
 
 // uint32 Reserve = 9;
@@ -1350,13 +1391,13 @@ inline void PKG_GG_LS_Login_REQ::clear_reserve() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000100U);
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::reserve() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Login_REQ.Reserve)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Login_REQ.Reserve)
   return _internal_reserve();
 }
 inline void PKG_GG_LS_Login_REQ::set_reserve(::uint32_t value) {
   _internal_set_reserve(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000100U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Login_REQ.Reserve)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Login_REQ.Reserve)
 }
 inline ::uint32_t PKG_GG_LS_Login_REQ::_internal_reserve() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1378,13 +1419,13 @@ inline void PKG_LS_GG_Login_ACK::clear_result() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::result() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Login_ACK.Result)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Login_ACK.Result)
   return _internal_result();
 }
 inline void PKG_LS_GG_Login_ACK::set_result(::uint32_t value) {
   _internal_set_result(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Login_ACK.Result)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Login_ACK.Result)
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::_internal_result() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1403,7 +1444,7 @@ inline void PKG_LS_GG_Login_ACK::clear_ptid() {
 }
 inline const ::std::string& PKG_LS_GG_Login_ACK::ptid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Login_ACK.PTID)
   return _internal_ptid();
 }
 template <typename Arg_, typename... Args_>
@@ -1411,13 +1452,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_LS_GG_Login_ACK::set_ptid(Arg_&& arg, Args_... a
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   _impl_.ptid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Login_ACK.PTID)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Login_ACK::mutable_ptid()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   ::std::string* _s = _internal_mutable_ptid();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_LS_GG_Login_ACK.PTID)
   return _s;
 }
 inline const ::std::string& PKG_LS_GG_Login_ACK::_internal_ptid() const {
@@ -1434,7 +1475,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Login_ACK::_internal_mutable_pt
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_LS_GG_Login_ACK::release_ptid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_LS_GG_Login_ACK.PTID)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
     return nullptr;
   }
@@ -1456,7 +1497,7 @@ inline void PKG_LS_GG_Login_ACK::set_allocated_ptid(::std::string* PROTOBUF_NULL
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ptid_.IsDefault()) {
     _impl_.ptid_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_LS_GG_Login_ACK.PTID)
 }
 
 // uint32 wPlatType = 3;
@@ -1466,13 +1507,13 @@ inline void PKG_LS_GG_Login_ACK::clear_wplattype() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::wplattype() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Login_ACK.wPlatType)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Login_ACK.wPlatType)
   return _internal_wplattype();
 }
 inline void PKG_LS_GG_Login_ACK::set_wplattype(::uint32_t value) {
   _internal_set_wplattype(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Login_ACK.wPlatType)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Login_ACK.wPlatType)
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::_internal_wplattype() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1491,7 +1532,7 @@ inline void PKG_LS_GG_Login_ACK::clear_abydatainfo() {
 }
 inline const ::std::string& PKG_LS_GG_Login_ACK::abydatainfo() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo)
   return _internal_abydatainfo();
 }
 template <typename Arg_, typename... Args_>
@@ -1499,13 +1540,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_LS_GG_Login_ACK::set_abydatainfo(Arg_&& arg, Arg
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   _impl_.abydatainfo_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Login_ACK::mutable_abydatainfo()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::std::string* _s = _internal_mutable_abydatainfo();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo)
   return _s;
 }
 inline const ::std::string& PKG_LS_GG_Login_ACK::_internal_abydatainfo() const {
@@ -1522,7 +1563,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Login_ACK::_internal_mutable_ab
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_LS_GG_Login_ACK::release_abydatainfo() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
     return nullptr;
   }
@@ -1544,7 +1585,7 @@ inline void PKG_LS_GG_Login_ACK::set_allocated_abydatainfo(::std::string* PROTOB
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.abydatainfo_.IsDefault()) {
     _impl_.abydatainfo_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo)
 }
 
 // uint32 error = 5;
@@ -1554,13 +1595,13 @@ inline void PKG_LS_GG_Login_ACK::clear_error() {
   ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::error() const {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Login_ACK.error)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Login_ACK.error)
   return _internal_error();
 }
 inline void PKG_LS_GG_Login_ACK::set_error(::uint32_t value) {
   _internal_set_error(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Login_ACK.error)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Login_ACK.error)
 }
 inline ::uint32_t PKG_LS_GG_Login_ACK::_internal_error() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -1583,7 +1624,7 @@ inline void PKG_GG_LS_Logoff_NTF::clear_ptid() {
 }
 inline const ::std::string& PKG_GG_LS_Logoff_NTF::ptid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID)
   return _internal_ptid();
 }
 template <typename Arg_, typename... Args_>
@@ -1591,13 +1632,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_GG_LS_Logoff_NTF::set_ptid(Arg_&& arg, Args_... 
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   _impl_.ptid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Logoff_NTF::mutable_ptid()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   ::std::string* _s = _internal_mutable_ptid();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID)
   return _s;
 }
 inline const ::std::string& PKG_GG_LS_Logoff_NTF::_internal_ptid() const {
@@ -1614,7 +1655,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_GG_LS_Logoff_NTF::_internal_mutable_p
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_GG_LS_Logoff_NTF::release_ptid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
     return nullptr;
   }
@@ -1636,7 +1677,7 @@ inline void PKG_GG_LS_Logoff_NTF::set_allocated_ptid(::std::string* PROTOBUF_NUL
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ptid_.IsDefault()) {
     _impl_.ptid_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID)
 }
 
 // -------------------------------------------------------------------
@@ -1651,7 +1692,7 @@ inline void PKG_LS_GG_Kickoff_NTF::clear_ptid() {
 }
 inline const ::std::string& PKG_LS_GG_Kickoff_NTF::ptid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID)
+  // @@protoc_insertion_point(field_get:GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID)
   return _internal_ptid();
 }
 template <typename Arg_, typename... Args_>
@@ -1659,13 +1700,13 @@ PROTOBUF_ALWAYS_INLINE void PKG_LS_GG_Kickoff_NTF::set_ptid(Arg_&& arg, Args_...
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   _impl_.ptid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID)
+  // @@protoc_insertion_point(field_set:GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID)
 }
 inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Kickoff_NTF::mutable_ptid()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   ::std::string* _s = _internal_mutable_ptid();
-  // @@protoc_insertion_point(field_mutable:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID)
+  // @@protoc_insertion_point(field_mutable:GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID)
   return _s;
 }
 inline const ::std::string& PKG_LS_GG_Kickoff_NTF::_internal_ptid() const {
@@ -1682,7 +1723,7 @@ inline ::std::string* PROTOBUF_NONNULL PKG_LS_GG_Kickoff_NTF::_internal_mutable_
 }
 inline ::std::string* PROTOBUF_NULLABLE PKG_LS_GG_Kickoff_NTF::release_ptid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID)
+  // @@protoc_insertion_point(field_release:GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
     return nullptr;
   }
@@ -1704,7 +1745,7 @@ inline void PKG_LS_GG_Kickoff_NTF::set_allocated_ptid(::std::string* PROTOBUF_NU
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ptid_.IsDefault()) {
     _impl_.ptid_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID)
+  // @@protoc_insertion_point(field_set_allocated:GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID)
 }
 
 #ifdef __GNUC__
@@ -1712,8 +1753,23 @@ inline void PKG_LS_GG_Kickoff_NTF::set_allocated_ptid(::std::string* PROTOBUF_NU
 #endif  // __GNUC__
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace GG_LS_Cmd
+}  // namespace GateLoginCmd
 
+
+namespace google {
+namespace protobuf {
+
+template <>
+struct is_proto_enum<::GateLoginCmd::GateLoginMsgID> : std::true_type {};
+template <>
+struct internal::LiteEnumFuncs<::GateLoginCmd::GateLoginMsgID> {
+  static constexpr bool kIsDefined = true;
+  static constexpr auto kParseFunc = ::GateLoginCmd::GateLoginMsgID_Parse;
+  static constexpr auto kNameFunc = ::GateLoginCmd::GateLoginMsgID_Name<int>;
+};
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

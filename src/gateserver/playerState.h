@@ -2,6 +2,14 @@
 
 #include <variant>
 #include <type_traits>
+#include <utility>
+
+#include "playerSession.h"
+
+#include "share/proto/gg_ls.pb.h"
+using namespace GateLoginCmd;
+#include "share/proto/cl_gg.pb.h"
+using namespace ClientGateCmd;
 
 
 enum class FsmStateType 
@@ -23,41 +31,65 @@ enum class FsmStateType
 	EFST_Dummy,
 };
 
-enum class GlobalStateType
+enum class EFsmGlobalEvtType
 {
+    EGET_Timeout,
+    EGET_LogoutNtf,
+	EGET_OfflineTrusteeNtf,
 
+    EGET_Kickoff_Ls,
+    EGET_Kickoff_Db,
+    EGET_Kickoff_Gs,
+    EGET_Kickoff_Gg,
+
+    EGET_Client_Socket_Close,
+    
+    EGET_Normal,
 };
 
 class Player;
 using PlayerPtr = Player*;
+
+class PlayerSession;
 struct FsmEvent
 {
 	uint32_t msgID{};
 	uint32_t errorCode{};
-	uint32_t transID{};
+	TransID transID{};
 	bool isGlobalEvent{};
 
+	union {
+		EFsmGlobalEvtType    globalEvtType;
+	};
+	PlayerSessionPtr playerSession_{};
 	//ClientSessionPtr session_{};
 	// TODO message use std::variant<>
-};
 
-class NoneState {
-
-public:
-	inline FsmStateType getType()const { return FsmStateType::EFST_NULL; }
-	void onEnter(PlayerPtr pPlayer) { (void)pPlayer; }
-	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event) { (void)pPlayer; (void)event; return true; }
-	void onLeave(PlayerPtr pPlayer) { (void)pPlayer; }
+	union {
+		PKG_CLI_GG_Login_REQ* pLoginReq;
+		PKG_LS_GG_Login_ACK* pLsLoginAck;
+		PKG_LS_GG_Kickoff_NTF* pLsKickNtf;
+	};
 };
 
 // Login LoginServer
 class LoginLsState
 {
+	enum {
+		Has_Handled_Nothing,
+		Has_Handled_LoginReq,
+		Has_Handled_LoginAck,
+	};
 public:
 	inline FsmStateType getType()const { return FsmStateType::EFST_LoginLs; }
 	void onEnter(PlayerPtr pPlayer);
 	bool onEvent(PlayerPtr pPlayer, FsmEvent const& event);
 	void onLeave(PlayerPtr pPlayer);
+private:
+	void handleLoginReq(PlayerPtr pPlayer, FsmEvent const& event);
+	void handleLoginAck(PlayerPtr pPlayer, FsmEvent const& event);
+private:
+	int32_t handled_{ Has_Handled_Nothing };
 };
 
 // Login DBServer
@@ -139,7 +171,7 @@ public:
 	void onLeave(PlayerPtr pPlayer);
 };
 
-using PlayerState = std::variant<NoneState, LoginLsState, LoginDBState, LoginGameState,InGameState,
+using PlayerState = std::variant<std::monostate, LoginLsState, LoginDBState, LoginGameState,InGameState,
 	LogoutGameState, RoleOpState, SelRoleState, ReselRoleState, GlobalState>;
 
 #if __cplusplus > 202306
@@ -158,7 +190,15 @@ struct overloads : Ts... { using Ts::operator()...; };
 
 inline FsmStateType getFsmStateType(PlayerState const& state)
 {
-	return std::visit([](auto&& arg) {return arg.getType();}, state);
+	return std::visit([](auto&& arg) {
+			using T = std::decay_t<decltype(arg)>;
+			if constexpr (std::is_same_v<T, std::monostate>) {
+				return FsmStateType::EFST_NULL;
+			}
+			else {
+				return arg.getType();
+			}
+		}, state);
 }
 
 class PlayerFSM

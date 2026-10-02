@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <spdlog/spdlog.h>
 #include <spdlog/async.h>
@@ -25,8 +25,6 @@ public:
 
 private:
 	void Init_Logger(std::string const&appName);
-private:
-	std::shared_ptr<spdlog::async_logger> m_logger;
 };
 
 using namespace spdlog;

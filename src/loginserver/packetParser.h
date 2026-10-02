@@ -16,12 +16,12 @@
 
 #include "player.h"
 
-using MessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, uint32_t transID)>;
+using MessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, TransID transID)>;
 
 class MessageParam
 {
 public:	
-	MessageParam(uint32_t id, uint32_t transID, uint32_t gate_session_fd, std::string_view data_view)
+	MessageParam(uint32_t id, TransID transID, uint32_t gate_session_fd, std::string_view data_view)
 		:msg_id{ id },
 		transID{ transID },
 		gate_session_fd{ gate_session_fd },
@@ -32,7 +32,7 @@ public:
 	}
 
 	uint32_t msg_id{};
-	uint32_t transID{};// transId
+	TransID transID{};// transId
 	uint32_t gate_session_fd{};// gate session fd
 	std::string data;
 	time_t tick;
@@ -42,15 +42,15 @@ using MessageParamList = std::list<MessageParam>;
 struct CmdMessage {
 	CmdMessage() = default;
 	CmdMessage(::google::protobuf::MessageLite* pMsg, MessageHandler handler)
-		:pMessage_{std::move(pMsg) },
+		:pMessage_{pMsg },
 		handler_{std::move(handler)}
 	{
 	}
 	~CmdMessage() {
 		delete pMessage_;
 	}
-	MessageHandler handler_{};
 	::google::protobuf::MessageLite* pMessage_{};
+	MessageHandler handler_{};
 };
 
 class PacketParser : public Singleton<PacketParser> 

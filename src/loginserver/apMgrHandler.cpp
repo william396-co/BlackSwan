@@ -21,7 +21,7 @@ bool APMgrHandler::start()
 	if (!isRunning()) {
 		startRunning();
 		running_.store(true, std::memory_order_release);
-		for(int i =0; i != work_arr_.size();++i){
+		for(size_t i =0; i != work_arr_.size();++i){
 			work_arr_[i] = std::thread(&APMgrHandler::run, this, i);
 		}
 		return true;
@@ -33,7 +33,7 @@ void APMgrHandler::stop()
 {
 	stopRunning();
 
-	for (int i = 0; i != message_arr_.size();++i) {
+	for (size_t i = 0; i != message_arr_.size();++i) {
 		std::lock_guard lk(mtx_arr_[i]);
 		message_arr_[i].clear();
 	}

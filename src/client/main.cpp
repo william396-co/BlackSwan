@@ -3,6 +3,9 @@
 #include <google/protobuf/stubs/common.h>
 #include "share/log/log.h"
 
+
+uint64_t self_player_Id = {};
+
 int main() 
 {
 	// Start Log function

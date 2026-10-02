@@ -9,7 +9,7 @@
 #include "networkEx/session.h"
 
 class Player;
-using MessageHandler = std::function<void(const char* data, size_t len)>;
+using MessageHandler = std::function<void(Player* pPlayer, const char* data, size_t len)>;
 
 class PacketParser : public Singleton<PacketParser> 
 {
@@ -30,7 +30,10 @@ public:
 	void registerHandler(uint32_t msgId, MessageHandler handler);
 	MessageHandler findHandle(uint32_t msgId);
 private:
-	static void HandleEchoResp(const char* data, size_t len);
+	static void HandleEchoResp(Player* pPlayer, const char* data, size_t len);
+	static void HandleLoginResp(Player* pPlayer, const char* data, size_t len);
+	static void HandleLogoutNtf(Player* pPlayer, const char* data, size_t len);
+	static void HandleGsResp(Player* pPlayer, const char* data, size_t len);
 private:
 	HandleMap handleMap_;
 };

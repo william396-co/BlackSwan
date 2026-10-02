@@ -48,7 +48,7 @@ bool GameService::start()
 		server_ = std::make_unique<Server>(pool_, port);
 		server_->start(
 			[](auto session) {// accept Handle
-				session->StartHeartbeat(
+				session->startHeartbeat(
 					[](SessionPtr s) {
 						LOG_DEBUG("Session fd:{} Send GateServer PING", s->fd());
 						s->sendInnerPing();

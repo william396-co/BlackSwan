@@ -35,10 +35,19 @@ public:
 	inline std::string const& playerName()const { return name_; }
 	bool changeName(std::string const& newName);
 
+	void setClientVersion(uint32_t ver) { clientVersion_ = ver; }
+	uint32_t getClientVersion()const { return clientVersion_; }
+	void setClientGroup(uint32_t group) { clientGroup_ = group; }
+	void setAuthenID(std::string const& authenID) { authenID_ = authenID; }
+private:
+	uint32_t clientVersion_{};
+	uint32_t clientGroup_{};
+	std::string authenID_{};
+
 	// functions about i/o server like forward message to client/server
 public:
-	void forward2Login(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
-	void forward2Server(uint32_t msgId, const char* data, uint32_t len, uint32_t transID);
+	void forward2Login(uint32_t msgId, const char* data, uint32_t len, TransID transID);
+	void forward2Server(uint32_t msgId, const char* data, uint32_t len, TransID transID);
 	void forward2Client(uint32_t msgId, const char* data, uint16_t len);
 	inline void setSession(PlayerSessionPtr session) { player_session_ = session; }
 	PlayerSessionPtr getSession()const { return player_session_; }

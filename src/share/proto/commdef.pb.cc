@@ -24,65 +24,6 @@ namespace _fl = ::google::protobuf::internal::field_layout;
 namespace commdefCmd {
 }  // namespace commdefCmd
 namespace commdefCmd {
-PROTOBUF_CONSTINIT const uint32_t ProtoId_internal_data_[] = {
-    524288u, 0u, };
-static const char ProtoId_names[] = {
-    "CS_NULL"
-    "GG_LS_Login_REQ"
-    "GG_LS_Logoff_NTF"
-    "GG_LS_ReportPlayerNum_NTF"
-    "GG_LS_SetPasswordTemp_REQ"
-    "LS_GG_Kickoff_NTF"
-    "LS_GG_Login_ACK"
-    "LS_GG_SetPasswordTemp_ACK"
-};
-
-static const ::google::protobuf::internal::EnumEntry ProtoId_entries[] = {
-    {{&ProtoId_names[0], 7}, 0},
-    {{&ProtoId_names[7], 15}, 1},
-    {{&ProtoId_names[22], 16}, 3},
-    {{&ProtoId_names[38], 25}, 5},
-    {{&ProtoId_names[63], 25}, 6},
-    {{&ProtoId_names[88], 17}, 4},
-    {{&ProtoId_names[105], 15}, 2},
-    {{&ProtoId_names[120], 25}, 7},
-};
-
-static const int ProtoId_entries_by_number[] = {
-    0,  // 0 -> CS_NULL
-    1,  // 1 -> GG_LS_Login_REQ
-    6,  // 2 -> LS_GG_Login_ACK
-    2,  // 3 -> GG_LS_Logoff_NTF
-    5,  // 4 -> LS_GG_Kickoff_NTF
-    3,  // 5 -> GG_LS_ReportPlayerNum_NTF
-    4,  // 6 -> GG_LS_SetPasswordTemp_REQ
-    7,  // 7 -> LS_GG_SetPasswordTemp_ACK
-};
-
-[[nodiscard]] bool ProtoId_Parse(::absl::string_view name,
-                                  ProtoId* PROTOBUF_NONNULL value) {
-  int int_value;
-  bool success = ::google::protobuf::internal::LookUpEnumValue(
-      ProtoId_entries, 8, name, &int_value);
-  if (success) {
-    *value = static_cast<ProtoId>(int_value);
-  }
-  return success;
-}
-static ::google::protobuf::internal::ExplicitlyConstructed<::std::string>
-    ProtoId_strings[8] = {};
-
-[[nodiscard]] const ::std::string& ProtoId_Name(ProtoId value) {
-  static const bool kDummy = ::google::protobuf::internal::InitializeEnumStrings(
-      ProtoId_entries, ProtoId_entries_by_number, 8,
-      ProtoId_strings);
-  (void)kDummy;
-
-  int idx = ::google::protobuf::internal::LookUpEnumName(ProtoId_entries,
-                                  ProtoId_entries_by_number,
-                                  8, value);
-  return idx == -1 ? ::google::protobuf::internal::GetEmptyString() : ProtoId_strings[idx].get();
-}
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace commdefCmd
 namespace google {

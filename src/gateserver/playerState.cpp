@@ -3,6 +3,13 @@
 #include "player.h"
 #include "playerMgr.h"
 #include "share/log/log.h"
+#include "share/proto/cl_gg.pb.h"
+using namespace ClientGateCmd;
+#include "share/proto/gg_ls.pb.h"
+using namespace GateLoginCmd;
+
+#include "share/proto/commdefs.h"
+#include "share/proto/errdefs.h"
 
 #include <variant>
 #include <utility>
@@ -14,14 +21,67 @@ void LoginLsState::onEnter(PlayerPtr pPlayer)
 
 bool LoginLsState::onEvent(PlayerPtr pPlayer, FsmEvent const& event)
 {
-	(void)pPlayer;
-	(void)event;
-	return false;
+	switch (event.msgID) {
+	case GateLoginMsgID::GG_LS_Login_REQ:
+		handleLoginReq(pPlayer, event);
+		break;
+	case GateLoginMsgID::LS_GG_Login_ACK:
+		handleLoginAck(pPlayer, event);
+		break;
+	}
+	return true;
 }
 
 void LoginLsState::onLeave(PlayerPtr pPlayer)
 {
 	(void)pPlayer;
+}
+
+void LoginLsState::handleLoginReq(PlayerPtr pPlayer, FsmEvent const& event)
+{
+	if (handled_ != Has_Handled_Nothing) {
+		LOG_ERROR("{} LoginLs's sub-state was incorrect, ignore this req!", pPlayer->playerID());
+		return;
+	}
+
+	auto erroCode = GGERR_NO_ERR;
+	do
+	{		
+		auto areaGruop = event.pLoginReq->serverid();
+		auto area = areaGruop / 1000;
+		auto group = areaGruop % 1000;
+
+		pPlayer->setClientVersion(event.pLoginReq->clientversion());
+		pPlayer->setAuthenID(event.pLoginReq->authact());
+
+		auto clientIp = pPlayer->getSession()->getClientIp();
+		PKG_GG_LS_Login_REQ req;
+		req.set_aptype(event.pLoginReq->aptype());
+		req.set_clientversion(pPlayer->getClientVersion());
+		req.set_authact(event.pLoginReq->authact());
+		req.set_authstr(event.pLoginReq->authstr());
+		req.set_invitecode(event.pLoginReq->invitecode());
+		//req.set_ip(clientIp);
+		req.set_reserve(event.pLoginReq->reserve());
+		req.set_clienttype(event.pLoginReq->clienttype());
+		req.set_areagroup(event.pLoginReq->serverid());
+
+		pPlayer->getSession()->forward2Login(GG_LS_Login_REQ, req);
+
+	} while (false);
+
+	if (erroCode != GGERR_NO_ERR) {	
+		PKG_GG_CLI_Login_ACK ack;
+		ack.set_result(PROTO_FAILURE);
+		ack.set_error(erroCode);
+		event.playerSession_->forward2Client(ClientGateMsgID::GG_CLI_Login_ACK, ack);
+		
+		event.playerSession_->Close();
+	}
+}
+
+void LoginLsState::handleLoginAck(PlayerPtr pPlayer, FsmEvent const& event)
+{
 }
 
 void LoginDBState::onEnter(PlayerPtr pPlayer)
@@ -170,13 +230,26 @@ void PlayerFSM::setState(PlayerState state)
 	setPreviousState(current_state_);
 	
 	std::visit([player = owner_](auto&& arg) {
-		return arg.onLeave(player);},
+		using T = std::decay_t<decltype(arg)>;
+	if constexpr (std::is_same_v<T, std::monostate>) {
+		return;
+	}
+	else {
+		return arg.onLeave(player);
+	}
+	},
 		current_state_);
 
 	// current = state
 	setCurrentState(state);
 	std::visit([player = owner_](auto&& arg) {
-		return arg.onEnter(player);},
+		using T = std::decay_t<decltype(arg)>;
+		if constexpr (std::is_same_v<T, std::monostate>) {
+			return;
+		}
+		else {
+			return arg.onEnter(player);
+		}},
 		current_state_);
 }
 
@@ -232,12 +305,24 @@ bool PlayerFSM::onEvent(FsmEvent const& event)
 {
 	if (event.isGlobalEvent) {
 		std::visit([player = owner_, &event](auto&& arg) {
-			return arg.onEvent(player, event);},
+			using T = std::decay_t<decltype(arg)>;
+			if constexpr (std::is_same_v<T, std::monostate>) {
+				return false;
+			}
+			else {
+				return arg.onEvent(player, event);
+			}},
 			global_state_);
 	}
 	else {
 		std::visit([player = owner_, &event](auto&& arg) {
-			return arg.onEvent(player, event);},
+			using T = std::decay_t<decltype(arg)>;
+			if constexpr (std::is_same_v<T, std::monostate>) {
+				return false;
+			}
+			else {
+				return arg.onEvent(player, event);
+			}},
 			current_state_);
 	}
 	return true;

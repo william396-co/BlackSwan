@@ -13,7 +13,7 @@ void Player::forward2Client(uint32_t msgId, const char* data, uint16_t len)
 	}
 }
 
-void Player::forward2Login(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
+void Player::forward2Login(uint32_t msgId, const char* data, uint32_t len, TransID transID)
 {	
 	if (auto s = player_session_) {
 		LOG_DEBUG("transID:{} msgID:{} len:{}", transID, msgId, len);
@@ -22,7 +22,7 @@ void Player::forward2Login(uint32_t msgId, const char* data, uint32_t len, uint3
 	}
 }
 
-void Player::forward2Server(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
+void Player::forward2Server(uint32_t msgId, const char* data, uint32_t len, TransID transID)
 {
 	if (getCurStateType() != FsmStateType::EFST_InGame) {
 		return;

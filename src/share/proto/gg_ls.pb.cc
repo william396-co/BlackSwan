@@ -22,7 +22,7 @@ PROTOBUF_PRAGMA_INIT_SEG
 namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
-namespace GG_LS_Cmd {
+namespace GateLoginCmd {
 class PKG_LS_GG_Login_ACK::_Internal {
  public:
   using HasBits = decltype(::std::declval<PKG_LS_GG_Login_ACK>()._impl_._has_bits_);
@@ -46,7 +46,7 @@ constexpr PKG_LS_GG_Login_ACK::ParseTableT_ PKG_LS_GG_Login_ACK::InternalGenerat
       nullptr,  // post_loop_handler
       ::_pbi::TcParser::MpUnknownFields,  // fallback
       #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-      ::_pbi::TcParser::GetTable<::GG_LS_Cmd::PKG_LS_GG_Login_ACK>(),  // to_prefetch
+      ::_pbi::TcParser::GetTable<::GateLoginCmd::PKG_LS_GG_Login_ACK>(),  // to_prefetch
       #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
     }, {{
       {::_pbi::TcParser::MiniParse, {}},
@@ -88,8 +88,8 @@ constexpr PKG_LS_GG_Login_ACK::ParseTableT_ PKG_LS_GG_Login_ACK::InternalGenerat
     }},
     // no aux_entries
     {{
-      "\35\0\4\0\13\0\0\0"
-      "GG_LS_Cmd.PKG_LS_GG_Login_ACK"
+      "\40\0\4\0\13\0\0\0"
+      "GateLoginCmd.PKG_LS_GG_Login_ACK"
       "PTID"
       "abyDataInfo"
     }},
@@ -150,7 +150,7 @@ constexpr auto PKG_LS_GG_Login_ACK::InternalGenerateClassData_(
           PROTOBUF_FIELD_OFFSET(PKG_LS_GG_Login_ACK, _impl_._cached_size_),
           true,
       },
-      "GG_LS_Cmd.PKG_LS_GG_Login_ACK",
+      "GateLoginCmd.PKG_LS_GG_Login_ACK",
   };
 }
 struct PKG_LS_GG_Login_ACKGlobalsTypeInternal : ::_pbi::MessageGlobalsBase {
@@ -219,7 +219,7 @@ constexpr PKG_LS_GG_Kickoff_NTF::ParseTableT_ PKG_LS_GG_Kickoff_NTF::InternalGen
       nullptr,  // post_loop_handler
       ::_pbi::TcParser::MpUnknownFields,  // fallback
       #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-      ::_pbi::TcParser::GetTable<::GG_LS_Cmd::PKG_LS_GG_Kickoff_NTF>(),  // to_prefetch
+      ::_pbi::TcParser::GetTable<::GateLoginCmd::PKG_LS_GG_Kickoff_NTF>(),  // to_prefetch
       #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
     }, {{
       // string PTID = 1;
@@ -234,8 +234,8 @@ constexpr PKG_LS_GG_Kickoff_NTF::ParseTableT_ PKG_LS_GG_Kickoff_NTF::InternalGen
     }},
     // no aux_entries
     {{
-      "\37\4\0\0\0\0\0\0"
-      "GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF"
+      "\42\4\0\0\0\0\0\0"
+      "GateLoginCmd.PKG_LS_GG_Kickoff_NTF"
       "PTID"
     }},
   };
@@ -289,7 +289,7 @@ constexpr auto PKG_LS_GG_Kickoff_NTF::InternalGenerateClassData_(
           PROTOBUF_FIELD_OFFSET(PKG_LS_GG_Kickoff_NTF, _impl_._cached_size_),
           true,
       },
-      "GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF",
+      "GateLoginCmd.PKG_LS_GG_Kickoff_NTF",
   };
 }
 struct PKG_LS_GG_Kickoff_NTFGlobalsTypeInternal : ::_pbi::MessageGlobalsBase {
@@ -358,7 +358,7 @@ constexpr PKG_GG_LS_Logoff_NTF::ParseTableT_ PKG_GG_LS_Logoff_NTF::InternalGener
       nullptr,  // post_loop_handler
       ::_pbi::TcParser::MpUnknownFields,  // fallback
       #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-      ::_pbi::TcParser::GetTable<::GG_LS_Cmd::PKG_GG_LS_Logoff_NTF>(),  // to_prefetch
+      ::_pbi::TcParser::GetTable<::GateLoginCmd::PKG_GG_LS_Logoff_NTF>(),  // to_prefetch
       #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
     }, {{
       // string PTID = 1;
@@ -373,8 +373,8 @@ constexpr PKG_GG_LS_Logoff_NTF::ParseTableT_ PKG_GG_LS_Logoff_NTF::InternalGener
     }},
     // no aux_entries
     {{
-      "\36\4\0\0\0\0\0\0"
-      "GG_LS_Cmd.PKG_GG_LS_Logoff_NTF"
+      "\41\4\0\0\0\0\0\0"
+      "GateLoginCmd.PKG_GG_LS_Logoff_NTF"
       "PTID"
     }},
   };
@@ -428,7 +428,7 @@ constexpr auto PKG_GG_LS_Logoff_NTF::InternalGenerateClassData_(
           PROTOBUF_FIELD_OFFSET(PKG_GG_LS_Logoff_NTF, _impl_._cached_size_),
           true,
       },
-      "GG_LS_Cmd.PKG_GG_LS_Logoff_NTF",
+      "GateLoginCmd.PKG_GG_LS_Logoff_NTF",
   };
 }
 struct PKG_GG_LS_Logoff_NTFGlobalsTypeInternal : ::_pbi::MessageGlobalsBase {
@@ -497,7 +497,7 @@ constexpr PKG_GG_LS_Login_REQ::ParseTableT_ PKG_GG_LS_Login_REQ::InternalGenerat
       nullptr,  // post_loop_handler
       ::_pbi::TcParser::MpUnknownFields,  // fallback
       #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-      ::_pbi::TcParser::GetTable<::GG_LS_Cmd::PKG_GG_LS_Login_REQ>(),  // to_prefetch
+      ::_pbi::TcParser::GetTable<::GateLoginCmd::PKG_GG_LS_Login_REQ>(),  // to_prefetch
       #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
     }, {{
       {::_pbi::TcParser::MiniParse, {}},
@@ -567,8 +567,8 @@ constexpr PKG_GG_LS_Login_REQ::ParseTableT_ PKG_GG_LS_Login_REQ::InternalGenerat
     }},
     // no aux_entries
     {{
-      "\35\7\7\0\0\0\0\0\12\0\0\0\0\0\0\0"
-      "GG_LS_Cmd.PKG_GG_LS_Login_REQ"
+      "\40\7\7\0\0\0\0\0\12\0\0\0\0\0\0\0"
+      "GateLoginCmd.PKG_GG_LS_Login_REQ"
       "AuthAct"
       "AuthStr"
       "InviteCode"
@@ -636,7 +636,7 @@ constexpr auto PKG_GG_LS_Login_REQ::InternalGenerateClassData_(
           PROTOBUF_FIELD_OFFSET(PKG_GG_LS_Login_REQ, _impl_._cached_size_),
           true,
       },
-      "GG_LS_Cmd.PKG_GG_LS_Login_REQ",
+      "GateLoginCmd.PKG_GG_LS_Login_REQ",
   };
 }
 struct PKG_GG_LS_Login_REQGlobalsTypeInternal : ::_pbi::MessageGlobalsBase {
@@ -682,8 +682,67 @@ const ::_pbi::ClassData* PKG_GG_LS_Login_REQ_get_class_data() {
 }
 }  // namespace
 #endif  // PROTOBUF_CUSTOM_VTABLE
-}  // namespace GG_LS_Cmd
-namespace GG_LS_Cmd {
+}  // namespace GateLoginCmd
+namespace GateLoginCmd {
+PROTOBUF_CONSTINIT const uint32_t GateLoginMsgID_internal_data_[] = {
+    524288u, 0u, };
+static const char GateLoginMsgID_names[] = {
+    "GG_LS_Login_REQ"
+    "GG_LS_Logoff_NTF"
+    "GG_LS_Null"
+    "GG_LS_ReportPlayerNum_NTF"
+    "GG_LS_SetPasswordTemp_REQ"
+    "LS_GG_Kickoff_NTF"
+    "LS_GG_Login_ACK"
+    "LS_GG_SetPasswordTemp_ACK"
+};
+
+static const ::google::protobuf::internal::EnumEntry GateLoginMsgID_entries[] = {
+    {{&GateLoginMsgID_names[0], 15}, 1},
+    {{&GateLoginMsgID_names[15], 16}, 3},
+    {{&GateLoginMsgID_names[31], 10}, 0},
+    {{&GateLoginMsgID_names[41], 25}, 5},
+    {{&GateLoginMsgID_names[66], 25}, 6},
+    {{&GateLoginMsgID_names[91], 17}, 4},
+    {{&GateLoginMsgID_names[108], 15}, 2},
+    {{&GateLoginMsgID_names[123], 25}, 7},
+};
+
+static const int GateLoginMsgID_entries_by_number[] = {
+    2,  // 0 -> GG_LS_Null
+    0,  // 1 -> GG_LS_Login_REQ
+    6,  // 2 -> LS_GG_Login_ACK
+    1,  // 3 -> GG_LS_Logoff_NTF
+    5,  // 4 -> LS_GG_Kickoff_NTF
+    3,  // 5 -> GG_LS_ReportPlayerNum_NTF
+    4,  // 6 -> GG_LS_SetPasswordTemp_REQ
+    7,  // 7 -> LS_GG_SetPasswordTemp_ACK
+};
+
+[[nodiscard]] bool GateLoginMsgID_Parse(::absl::string_view name,
+                                  GateLoginMsgID* PROTOBUF_NONNULL value) {
+  int int_value;
+  bool success = ::google::protobuf::internal::LookUpEnumValue(
+      GateLoginMsgID_entries, 8, name, &int_value);
+  if (success) {
+    *value = static_cast<GateLoginMsgID>(int_value);
+  }
+  return success;
+}
+static ::google::protobuf::internal::ExplicitlyConstructed<::std::string>
+    GateLoginMsgID_strings[8] = {};
+
+[[nodiscard]] const ::std::string& GateLoginMsgID_Name(GateLoginMsgID value) {
+  static const bool kDummy = ::google::protobuf::internal::InitializeEnumStrings(
+      GateLoginMsgID_entries, GateLoginMsgID_entries_by_number, 8,
+      GateLoginMsgID_strings);
+  (void)kDummy;
+
+  int idx = ::google::protobuf::internal::LookUpEnumName(GateLoginMsgID_entries,
+                                  GateLoginMsgID_entries_by_number,
+                                  8, value);
+  return idx == -1 ? ::google::protobuf::internal::GetEmptyString() : GateLoginMsgID_strings[idx].get();
+}
 // ===================================================================
 
 PKG_GG_LS_Login_REQ::PKG_GG_LS_Login_REQ(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
@@ -693,12 +752,12 @@ PKG_GG_LS_Login_REQ::PKG_GG_LS_Login_REQ(::google::protobuf::Arena* PROTOBUF_NUL
     : Super_(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(arena_constructor:GateLoginCmd.PKG_GG_LS_Login_REQ)
 }
 PROTOBUF_NDEBUG_INLINE PKG_GG_LS_Login_REQ::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::GG_LS_Cmd::PKG_GG_LS_Login_REQ& from_msg)
+    [[maybe_unused]] const ::GateLoginCmd::PKG_GG_LS_Login_REQ& from_msg)
       : _has_bits_{from._has_bits_},
         authact_(arena, from.authact_),
         authstr_(arena, from.authstr_),
@@ -726,7 +785,7 @@ PKG_GG_LS_Login_REQ::PKG_GG_LS_Login_REQ(
                offsetof(Impl_, aptype_) +
                sizeof(Impl_::reserve_));
 
-  // @@protoc_insertion_point(copy_constructor:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(copy_constructor:GateLoginCmd.PKG_GG_LS_Login_REQ)
 }
 PROTOBUF_NDEBUG_INLINE PKG_GG_LS_Login_REQ::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
@@ -745,7 +804,7 @@ inline void PKG_GG_LS_Login_REQ::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE aren
                sizeof(Impl_::reserve_));
 }
 PKG_GG_LS_Login_REQ::~PKG_GG_LS_Login_REQ() {
-  // @@protoc_insertion_point(destructor:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(destructor:GateLoginCmd.PKG_GG_LS_Login_REQ)
   SharedDtor(*this);
 }
 inline void PKG_GG_LS_Login_REQ::SharedDtor(MessageLite& self) {
@@ -785,7 +844,7 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const PKG_GG_LS_Login_REQ::ParseTableT_
 #endif  // !PROTOBUF_MESSAGE_GLOBALS
 PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
   auto& this_ [[maybe_unused]] = *this;
-  // @@protoc_insertion_point(message_clear_start:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(message_clear_start:GateLoginCmd.PKG_GG_LS_Login_REQ)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
 
@@ -827,7 +886,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(serialize_to_array_start:GateLoginCmd.PKG_GG_LS_Login_REQ)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -837,7 +896,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
     if (!this_._internal_authact().empty()) {
       const ::std::string& _s = this_._internal_authact();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthAct");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_GG_LS_Login_REQ.AuthAct");
       target = stream->WriteStringMaybeAliased(1, _s, target);
     }
   }
@@ -847,7 +906,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
     if (!this_._internal_authstr().empty()) {
       const ::std::string& _s = this_._internal_authstr();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_GG_LS_Login_REQ.AuthStr");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_GG_LS_Login_REQ.AuthStr");
       target = stream->WriteStringMaybeAliased(2, _s, target);
     }
   }
@@ -902,7 +961,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
     if (!this_._internal_invitecode().empty()) {
       const ::std::string& _s = this_._internal_invitecode();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_GG_LS_Login_REQ.InviteCode");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_GG_LS_Login_REQ.InviteCode");
       target = stream->WriteStringMaybeAliased(8, _s, target);
     }
   }
@@ -921,7 +980,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
         this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).data(),
         static_cast<int>(this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).size()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(serialize_to_array_end:GateLoginCmd.PKG_GG_LS_Login_REQ)
   return target;
 }
 
@@ -932,7 +991,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Login_REQ::Clear() {
 ::size_t PKG_GG_LS_Login_REQ::ByteSizeLong() const {
   const PKG_GG_LS_Login_REQ& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(message_byte_size_start:GateLoginCmd.PKG_GG_LS_Login_REQ)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
@@ -1020,7 +1079,7 @@ void PKG_GG_LS_Login_REQ::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(class_specific_merge_from_start:GateLoginCmd.PKG_GG_LS_Login_REQ)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -1091,7 +1150,7 @@ void PKG_GG_LS_Login_REQ::MergeImpl(::google::protobuf::MessageLite& to_msg,
 }
 
 void PKG_GG_LS_Login_REQ::CopyFrom(const PKG_GG_LS_Login_REQ& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:GG_LS_Cmd.PKG_GG_LS_Login_REQ)
+  // @@protoc_insertion_point(class_specific_copy_from_start:GateLoginCmd.PKG_GG_LS_Login_REQ)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1124,12 +1183,12 @@ PKG_LS_GG_Login_ACK::PKG_LS_GG_Login_ACK(::google::protobuf::Arena* PROTOBUF_NUL
     : Super_(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(arena_constructor:GateLoginCmd.PKG_LS_GG_Login_ACK)
 }
 PROTOBUF_NDEBUG_INLINE PKG_LS_GG_Login_ACK::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::GG_LS_Cmd::PKG_LS_GG_Login_ACK& from_msg)
+    [[maybe_unused]] const ::GateLoginCmd::PKG_LS_GG_Login_ACK& from_msg)
       : _has_bits_{from._has_bits_},
         ptid_(arena, from.ptid_),
         abydatainfo_(arena, from.abydatainfo_) {}
@@ -1156,7 +1215,7 @@ PKG_LS_GG_Login_ACK::PKG_LS_GG_Login_ACK(
                offsetof(Impl_, result_) +
                sizeof(Impl_::error_));
 
-  // @@protoc_insertion_point(copy_constructor:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(copy_constructor:GateLoginCmd.PKG_LS_GG_Login_ACK)
 }
 PROTOBUF_NDEBUG_INLINE PKG_LS_GG_Login_ACK::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
@@ -1174,7 +1233,7 @@ inline void PKG_LS_GG_Login_ACK::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE aren
                sizeof(Impl_::error_));
 }
 PKG_LS_GG_Login_ACK::~PKG_LS_GG_Login_ACK() {
-  // @@protoc_insertion_point(destructor:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(destructor:GateLoginCmd.PKG_LS_GG_Login_ACK)
   SharedDtor(*this);
 }
 inline void PKG_LS_GG_Login_ACK::SharedDtor(MessageLite& self) {
@@ -1213,7 +1272,7 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const PKG_LS_GG_Login_ACK::ParseTableT_
 #endif  // !PROTOBUF_MESSAGE_GLOBALS
 PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
   auto& this_ [[maybe_unused]] = *this;
-  // @@protoc_insertion_point(message_clear_start:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(message_clear_start:GateLoginCmd.PKG_LS_GG_Login_ACK)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
 
@@ -1251,7 +1310,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(serialize_to_array_start:GateLoginCmd.PKG_LS_GG_Login_ACK)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -1270,7 +1329,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
     if (!this_._internal_ptid().empty()) {
       const ::std::string& _s = this_._internal_ptid();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_LS_GG_Login_ACK.PTID");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_LS_GG_Login_ACK.PTID");
       target = stream->WriteStringMaybeAliased(2, _s, target);
     }
   }
@@ -1289,7 +1348,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
     if (!this_._internal_abydatainfo().empty()) {
       const ::std::string& _s = this_._internal_abydatainfo();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_LS_GG_Login_ACK.abyDataInfo");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_LS_GG_Login_ACK.abyDataInfo");
       target = stream->WriteStringMaybeAliased(4, _s, target);
     }
   }
@@ -1308,7 +1367,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
         this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).data(),
         static_cast<int>(this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).size()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(serialize_to_array_end:GateLoginCmd.PKG_LS_GG_Login_ACK)
   return target;
 }
 
@@ -1319,7 +1378,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Login_ACK::Clear() {
 ::size_t PKG_LS_GG_Login_ACK::ByteSizeLong() const {
   const PKG_LS_GG_Login_ACK& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(message_byte_size_start:GateLoginCmd.PKG_LS_GG_Login_ACK)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
@@ -1377,7 +1436,7 @@ void PKG_LS_GG_Login_ACK::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(class_specific_merge_from_start:GateLoginCmd.PKG_LS_GG_Login_ACK)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -1424,7 +1483,7 @@ void PKG_LS_GG_Login_ACK::MergeImpl(::google::protobuf::MessageLite& to_msg,
 }
 
 void PKG_LS_GG_Login_ACK::CopyFrom(const PKG_LS_GG_Login_ACK& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:GG_LS_Cmd.PKG_LS_GG_Login_ACK)
+  // @@protoc_insertion_point(class_specific_copy_from_start:GateLoginCmd.PKG_LS_GG_Login_ACK)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1456,12 +1515,12 @@ PKG_GG_LS_Logoff_NTF::PKG_GG_LS_Logoff_NTF(::google::protobuf::Arena* PROTOBUF_N
     : Super_(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(arena_constructor:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
 }
 PROTOBUF_NDEBUG_INLINE PKG_GG_LS_Logoff_NTF::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::GG_LS_Cmd::PKG_GG_LS_Logoff_NTF& from_msg)
+    [[maybe_unused]] const ::GateLoginCmd::PKG_GG_LS_Logoff_NTF& from_msg)
       : _has_bits_{from._has_bits_},
         ptid_(arena, from.ptid_) {}
 
@@ -1480,7 +1539,7 @@ PKG_GG_LS_Logoff_NTF::PKG_GG_LS_Logoff_NTF(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(copy_constructor:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
 }
 PROTOBUF_NDEBUG_INLINE PKG_GG_LS_Logoff_NTF::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
@@ -1491,7 +1550,7 @@ inline void PKG_GG_LS_Logoff_NTF::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE are
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 PKG_GG_LS_Logoff_NTF::~PKG_GG_LS_Logoff_NTF() {
-  // @@protoc_insertion_point(destructor:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(destructor:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   SharedDtor(*this);
 }
 inline void PKG_GG_LS_Logoff_NTF::SharedDtor(MessageLite& self) {
@@ -1529,7 +1588,7 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const PKG_GG_LS_Logoff_NTF::ParseTableT_
 #endif  // !PROTOBUF_MESSAGE_GLOBALS
 PROTOBUF_NOINLINE void PKG_GG_LS_Logoff_NTF::Clear() {
   auto& this_ [[maybe_unused]] = *this;
-  // @@protoc_insertion_point(message_clear_start:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(message_clear_start:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
 
@@ -1555,7 +1614,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Logoff_NTF::Clear() {
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(serialize_to_array_start:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -1565,7 +1624,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Logoff_NTF::Clear() {
     if (!this_._internal_ptid().empty()) {
       const ::std::string& _s = this_._internal_ptid();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_GG_LS_Logoff_NTF.PTID");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_GG_LS_Logoff_NTF.PTID");
       target = stream->WriteStringMaybeAliased(1, _s, target);
     }
   }
@@ -1575,7 +1634,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Logoff_NTF::Clear() {
         this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).data(),
         static_cast<int>(this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).size()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(serialize_to_array_end:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   return target;
 }
 
@@ -1586,7 +1645,7 @@ PROTOBUF_NOINLINE void PKG_GG_LS_Logoff_NTF::Clear() {
 ::size_t PKG_GG_LS_Logoff_NTF::ByteSizeLong() const {
   const PKG_GG_LS_Logoff_NTF& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(message_byte_size_start:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
@@ -1615,7 +1674,7 @@ void PKG_GG_LS_Logoff_NTF::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(class_specific_merge_from_start:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -1636,7 +1695,7 @@ void PKG_GG_LS_Logoff_NTF::MergeImpl(::google::protobuf::MessageLite& to_msg,
 }
 
 void PKG_GG_LS_Logoff_NTF::CopyFrom(const PKG_GG_LS_Logoff_NTF& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:GG_LS_Cmd.PKG_GG_LS_Logoff_NTF)
+  // @@protoc_insertion_point(class_specific_copy_from_start:GateLoginCmd.PKG_GG_LS_Logoff_NTF)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1661,12 +1720,12 @@ PKG_LS_GG_Kickoff_NTF::PKG_LS_GG_Kickoff_NTF(::google::protobuf::Arena* PROTOBUF
     : Super_(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(arena_constructor:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
 }
 PROTOBUF_NDEBUG_INLINE PKG_LS_GG_Kickoff_NTF::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::GG_LS_Cmd::PKG_LS_GG_Kickoff_NTF& from_msg)
+    [[maybe_unused]] const ::GateLoginCmd::PKG_LS_GG_Kickoff_NTF& from_msg)
       : _has_bits_{from._has_bits_},
         ptid_(arena, from.ptid_) {}
 
@@ -1685,7 +1744,7 @@ PKG_LS_GG_Kickoff_NTF::PKG_LS_GG_Kickoff_NTF(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(copy_constructor:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
 }
 PROTOBUF_NDEBUG_INLINE PKG_LS_GG_Kickoff_NTF::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
@@ -1696,7 +1755,7 @@ inline void PKG_LS_GG_Kickoff_NTF::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE ar
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 PKG_LS_GG_Kickoff_NTF::~PKG_LS_GG_Kickoff_NTF() {
-  // @@protoc_insertion_point(destructor:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(destructor:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   SharedDtor(*this);
 }
 inline void PKG_LS_GG_Kickoff_NTF::SharedDtor(MessageLite& self) {
@@ -1734,7 +1793,7 @@ PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const PKG_LS_GG_Kickoff_NTF::ParseTableT_
 #endif  // !PROTOBUF_MESSAGE_GLOBALS
 PROTOBUF_NOINLINE void PKG_LS_GG_Kickoff_NTF::Clear() {
   auto& this_ [[maybe_unused]] = *this;
-  // @@protoc_insertion_point(message_clear_start:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(message_clear_start:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
 
@@ -1760,7 +1819,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Kickoff_NTF::Clear() {
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(serialize_to_array_start:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -1770,7 +1829,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Kickoff_NTF::Clear() {
     if (!this_._internal_ptid().empty()) {
       const ::std::string& _s = this_._internal_ptid();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF.PTID");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "GateLoginCmd.PKG_LS_GG_Kickoff_NTF.PTID");
       target = stream->WriteStringMaybeAliased(1, _s, target);
     }
   }
@@ -1780,7 +1839,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Kickoff_NTF::Clear() {
         this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).data(),
         static_cast<int>(this_._internal_metadata_.unknown_fields<::std::string>(::google::protobuf::internal::GetEmptyString).size()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(serialize_to_array_end:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   return target;
 }
 
@@ -1791,7 +1850,7 @@ PROTOBUF_NOINLINE void PKG_LS_GG_Kickoff_NTF::Clear() {
 ::size_t PKG_LS_GG_Kickoff_NTF::ByteSizeLong() const {
   const PKG_LS_GG_Kickoff_NTF& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(message_byte_size_start:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits [[maybe_unused]] = 0;
@@ -1820,7 +1879,7 @@ void PKG_LS_GG_Kickoff_NTF::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(class_specific_merge_from_start:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -1841,7 +1900,7 @@ void PKG_LS_GG_Kickoff_NTF::MergeImpl(::google::protobuf::MessageLite& to_msg,
 }
 
 void PKG_LS_GG_Kickoff_NTF::CopyFrom(const PKG_LS_GG_Kickoff_NTF& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:GG_LS_Cmd.PKG_LS_GG_Kickoff_NTF)
+  // @@protoc_insertion_point(class_specific_copy_from_start:GateLoginCmd.PKG_LS_GG_Kickoff_NTF)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1858,7 +1917,7 @@ void PKG_LS_GG_Kickoff_NTF::InternalSwap(PKG_LS_GG_Kickoff_NTF* PROTOBUF_RESTRIC
 }
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace GG_LS_Cmd
+}  // namespace GateLoginCmd
 namespace google {
 namespace protobuf {
 }  // namespace protobuf

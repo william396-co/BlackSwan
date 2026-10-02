@@ -47,8 +47,10 @@ void APMgr::processApMsg(APMsg const& msg)
 	case RESULT::failed:
 
 		break;
-
-		
+	case RESULT::not_open:
+		break;
+	case RESULT::last_Result:
+		break;
 	}
 }
 

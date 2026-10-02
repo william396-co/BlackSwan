@@ -35,14 +35,14 @@ bool decode_packet(const char* data, uint16_t len, Packet& out) {
     return true;
 }
 
-std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, uint32_t transID)
+std::string encode_inner_packet(uint32_t msgId, const char* data, uint32_t len, TransID transID)
 {
     std::string out;
     out.resize(InnerMsgHeaderSize + len);
 
 	auto* header = reinterpret_cast<InnerMsgHeader*>(out.data());
 	header->id = htonl(msgId);
-	header->transID = htonl(transID);
+	header->transID = htonll(transID);
     header->sz = htonl(len);
 
     if (len > 0) {
@@ -59,7 +59,7 @@ bool decode_inner_packet(const char* data, uint32_t len, InnerPacket& out)
 
     const auto* header = reinterpret_cast<const InnerMsgHeader*>(data);
     out.id = ntohl(header->id);
-    out.transID = ntohl(header->transID);
+    out.transID = ntohll(header->transID);
     out.sz = ntohl(header->sz);
 
     if (len < InnerMsgHeaderSize + out.sz) {

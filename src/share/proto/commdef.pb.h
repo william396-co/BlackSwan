@@ -26,7 +26,6 @@
 #include "google/protobuf/metadata_lite.h"
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
-#include "google/protobuf/generated_enum_util.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -38,55 +37,12 @@
 struct TableStruct_commdef_2eproto {
   static const ::uint32_t offsets[];
 };
-namespace commdefCmd {
-enum ProtoId : int;
-extern const uint32_t ProtoId_internal_data_[];
-}  // namespace commdefCmd
 namespace google {
 namespace protobuf {
-template <>
-internal::EnumTraitsT<::commdefCmd::ProtoId_internal_data_>
-    internal::EnumTraitsImpl::value<::commdefCmd::ProtoId>;
 }  // namespace protobuf
 }  // namespace google
 
 namespace commdefCmd {
-enum ProtoId : int {
-  CS_NULL = 0,
-  GG_LS_Login_REQ = 1,
-  LS_GG_Login_ACK = 2,
-  GG_LS_Logoff_NTF = 3,
-  LS_GG_Kickoff_NTF = 4,
-  GG_LS_ReportPlayerNum_NTF = 5,
-  GG_LS_SetPasswordTemp_REQ = 6,
-  LS_GG_SetPasswordTemp_ACK = 7,
-  ProtoId_INT_MIN_SENTINEL_DO_NOT_USE_ =
-      ::std::numeric_limits<::int32_t>::min(),
-  ProtoId_INT_MAX_SENTINEL_DO_NOT_USE_ =
-      ::std::numeric_limits<::int32_t>::max(),
-};
-
-extern const uint32_t ProtoId_internal_data_[];
-inline constexpr ProtoId ProtoId_MIN =
-    static_cast<ProtoId>(0);
-inline constexpr ProtoId ProtoId_MAX =
-    static_cast<ProtoId>(7);
-[[nodiscard]] inline bool ProtoId_IsValid(int value) {
-  return 0 <= value && value <= 7;
-}
-inline constexpr int ProtoId_ARRAYSIZE = 7 + 1;
-[[nodiscard]] const ::std::string& ProtoId_Name(ProtoId value);
-template <typename T>
-[[nodiscard]] const ::std::string& ProtoId_Name(T value) {
-  static_assert(::std::is_same<T, ProtoId>::value ||
-                    ::std::is_integral<T>::value,
-                "Incorrect type passed to ProtoId_Name().");
-  return ProtoId_Name(static_cast<ProtoId>(value));
-}
-[[nodiscard]] bool ProtoId_Parse(
-    ::absl::string_view name, ProtoId* PROTOBUF_NONNULL value);
-using ::google::protobuf::internal::generated_enum::AbslParseFlag;
-using ::google::protobuf::internal::generated_enum::AbslUnparseFlag;
 
 // ===================================================================
 
@@ -111,21 +67,6 @@ using ::google::protobuf::internal::generated_enum::AbslUnparseFlag;
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace commdefCmd
 
-
-namespace google {
-namespace protobuf {
-
-template <>
-struct is_proto_enum<::commdefCmd::ProtoId> : std::true_type {};
-template <>
-struct internal::LiteEnumFuncs<::commdefCmd::ProtoId> {
-  static constexpr bool kIsDefined = true;
-  static constexpr auto kParseFunc = ::commdefCmd::ProtoId_Parse;
-  static constexpr auto kNameFunc = ::commdefCmd::ProtoId_Name<int>;
-};
-
-}  // namespace protobuf
-}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

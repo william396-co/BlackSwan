@@ -28,6 +28,7 @@ void PlayerSessionMgr::delSession(uint32_t fd)
 	if (it != session_map_.end()) {
 		auto pPlayer = it->second->getPlayer();
 		if (pPlayer) {
+			//g_playerMgr->delPlayer(pPlayer->playerID()); TODO need confirm
 			pPlayer->setSession(nullptr);
 		}
 	}

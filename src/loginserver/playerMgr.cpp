@@ -4,7 +4,7 @@
 #include "proto/commdef.pb.h"
 using namespace commdefCmd;
 #include "proto/gg_ls.pb.h"
-using namespace GG_LS_Cmd;
+using namespace GateLoginCmd;
 
 PlayerID  PlayerMgr::player_idx_ = {};
 
@@ -53,7 +53,7 @@ void PlayerMgr::kickOffPlayer(std::string const& ptid)
 		if (pPlayer) {
 			PKG_LS_GG_Kickoff_NTF ntf;
 			ntf.set_ptid(ptid);
-			pPlayer->send(ProtoId::LS_GG_Kickoff_NTF, ntf);
+			pPlayer->send(GateLoginMsgID::LS_GG_Kickoff_NTF, ntf);
 			pPlayer->changeState(FsmStateType::EFST_Logout);
 		}
 	}
