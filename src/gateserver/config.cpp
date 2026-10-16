@@ -5,6 +5,9 @@
 
 #include <string>
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 
 bool Config::init() 
 {
@@ -21,8 +24,10 @@ bool Config::loadCfg()
 {
 	constexpr auto cfg_file = "gateserver.toml";
 
+	fs::path curDir = fs::current_path();
+    curDir.append(cfg_file);
 	try {
-		auto config = toml::parse_file(cfg_file);
+		auto config = toml::parse_file(curDir.c_str());
 
         listen_port_ = config["GameGate"]["ListenPort"].value_or(0);
 		serverType_ = (ServerType)config["GameGate"]["ServerType"].value_or(ServerType::GateServer);

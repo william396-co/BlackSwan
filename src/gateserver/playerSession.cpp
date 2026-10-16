@@ -64,6 +64,7 @@ void PlayerSession::forward2Login(uint32_t msgId, ::google::protobuf::MessageLit
 		LOG_CRITICAL("protoData Bodysize:{} over bufferSize:{} msgID:{}", bodySize, std::numeric_limits<uint32_t>::max(), msgId);
 		bodySize = 0;
 	}
+	LOG_INFO("{} forwardlogin:{}  transID:{}", player_->playerID(), msgId, transID());
 	forward2Login(encode_inner_packet(msgId, bodySize ? refMsg.SerializeAsString().c_str() : nullptr, (uint32_t)bodySize, transID()));
 }
 

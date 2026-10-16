@@ -68,6 +68,8 @@ void LoginLsState::handleLoginReq(PlayerPtr pPlayer, FsmEvent const& event)
 
 		pPlayer->getSession()->forward2Login(GG_LS_Login_REQ, req);
 
+		handled_ = Has_Handled_LoginReq;
+
 	} while (false);
 
 	if (erroCode != GGERR_NO_ERR) {	
@@ -82,6 +84,29 @@ void LoginLsState::handleLoginReq(PlayerPtr pPlayer, FsmEvent const& event)
 
 void LoginLsState::handleLoginAck(PlayerPtr pPlayer, FsmEvent const& event)
 {
+	LOG_INFO("{} transId:{} result:{} ", pPlayer->playerID(), pPlayer->getSession()->transID(), event.pLsLoginAck->result());
+	if (Has_Handled_LoginReq != handled_) {
+		LOG_ERROR("loginLs sub-state was incorrect,ignore this Ack", pPlayer->playerID());
+		return;
+	}
+	if (event.pLsLoginAck->result() == PROTO_SUCCESS) {
+
+		
+		pPlayer->changeState(FsmStateType::EFST_LoginDB);		
+	}
+	else {
+		
+		PKG_GG_CLI_Login_ACK ack;
+
+		ack.set_result(PROTO_FAILURE);
+		ack.set_error(event.pLsLoginAck->error());
+		event.playerSession_->forward2Client(ClientGateMsgID::GG_CLI_Login_ACK, ack);
+	}
+}
+
+void LoginLsState::reset() 
+{
+	handled_ = Has_Handled_Nothing;
 }
 
 void LoginDBState::onEnter(PlayerPtr pPlayer)

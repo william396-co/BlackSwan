@@ -12,7 +12,7 @@
 class CLog
 {
 public:
-	// now allow copy and move
+	// disable copy and move
 	CLog(CLog const&) = delete;
 	CLog& operator=(CLog const&) = delete;
 	CLog(CLog&&) = delete;

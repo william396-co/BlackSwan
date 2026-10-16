@@ -23,6 +23,6 @@ public:
 	Connector* getConn() { return connector_ ? connector_.get() : nullptr; }
 private:	
 	std::shared_ptr<IoContextPool> pool_{};
-	std::unique_ptr<Connector> connector_{};
+	std::shared_ptr<Connector> connector_{};
 	std::unique_ptr<boost::asio::signal_set> signals_{};
 };

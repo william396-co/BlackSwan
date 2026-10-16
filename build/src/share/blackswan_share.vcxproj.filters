@@ -16,6 +16,9 @@
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\utils\CrashInspector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\utils\runningFlag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

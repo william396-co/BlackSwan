@@ -17,22 +17,13 @@ using namespace commdefCmd;
 #include "constdefs.h"
 #include "config.h"
 
-CmdMessage PacketParser::findCmdMessage(uint32_t msgId)
-{
-	auto it = cmd_message_map_.find(msgId);
-	if (it != cmd_message_map_.end()) {
-		return it->second;
-	}
-	return {};
-}
-
 void PacketParser::Init() 
 {
 	registerCommand(GateLoginMsgID::GG_LS_Login_REQ, new PKG_GG_LS_Login_REQ,&PacketParser::RecvGgLoginReq);
 	registerCommand(GateLoginMsgID::GG_LS_Logoff_NTF, new PKG_GG_LS_Logoff_NTF, &PacketParser::OnLogoffNtf);
 }
 
-void PacketParser::registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, MessageHandler handler)
+void PacketParser::registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, CmdMessageHandler handler)
 {
 	cmd_message_map_[msgId] = CmdMessage{ pMsg,std::move(handler) };
 }
@@ -100,6 +91,8 @@ void PacketParser::RecvGgLoginReq(const void* pData, size_t len, uint32_t gate_s
 
 	pPlayer->setGateSessionFd(gate_session_fd);
 	pPlayer->setTransID(transID);
+
+	LOG_INFO("{} transID:{}", pReq->authstr(), transID);
 
 	// Check ClientVersion
 	if (pReq->clientversion() < g_Config->getClientVersion()) {
