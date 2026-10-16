@@ -2,7 +2,9 @@
 
 #include <google/protobuf/stubs/common.h>
 #include "share/log/log.h"
+#include "share/utils/CrashInspector.h"
 
+char version[] = "blackSwan_1.0.0";
 
 uint64_t self_player_Id = {};
 
@@ -10,6 +12,8 @@ int main()
 {
 	// Start Log function
 	auto log = std::make_unique<CLog>("Client");
+
+	CrashInspector::EnableAutoDump();
 
 	ClientService service;
 	if (!service.start()) {

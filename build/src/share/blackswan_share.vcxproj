@@ -78,8 +78,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/spdlog/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -117,8 +117,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/spdlog/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -157,8 +157,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/spdlog/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -197,8 +197,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;D:\git-workspace\BlackSwan\thirdparty\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/boost_1_87_0"</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\git-workspace\BlackSwan\src\share;D:\git-workspace\BlackSwan\src;D:\git-workspace\BlackSwan\thirdparty\protobuf-36.1\win-x64\include;D:\git-workspace\BlackSwan\thirdparty\toml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/git-workspace/BlackSwan/thirdparty/spdlog/include" /external:I "C:/boost_1_87_0"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ConformanceMode>true</ConformanceMode>
@@ -297,6 +297,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\packet.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\server.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\networkEx\session.cpp" />
+    <ClCompile Include="D:\git-workspace\BlackSwan\src\share\utils\CrashInspector.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\utils\runningFlag.cpp" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\cl_gg.pb.cc" />
     <ClCompile Include="D:\git-workspace\BlackSwan\src\share\proto\commdef.pb.cc" />

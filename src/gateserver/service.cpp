@@ -68,7 +68,7 @@ bool GateService::start()
 
 		// Async Connector to GameSever
 		server_connector_->asyncConnect(host, game_port,
-			[](SessionPtr session) {
+			[=](SessionPtr session) {
 				LOG_INFO("Connect GameServer successed: {}:{}", session->remote_ep().address().to_string(), std::to_string(session->remote_ep().port()));
 				session->startHeartbeat(
 					[](SessionPtr s) {
@@ -78,9 +78,12 @@ bool GateService::start()
 				session->setDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvServerData(data, len, session);
 					});
+				if (login_connector_->isConnected()) {
+					enableGameRunning();
+				}
 			},
 			[](tcp::endpoint ep) {				
-				LOG_ERROR("Connect GameServer {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));
+				LOG_ERROR("Connect GameServer {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));				
 			}
 		);
 
@@ -93,7 +96,7 @@ bool GateService::start()
 
 		// Async Connector to LoginServer
 		login_connector_->asyncConnect(host, login_port,
-			[](SessionPtr session) {
+			[=](SessionPtr session) {
 				LOG_INFO("Connect LoginServer successed: {}:{}", session->remote_ep().address().to_string(), std::to_string(session->remote_ep().port()));
 				session->startHeartbeat(
 					[](SessionPtr s) {
@@ -103,6 +106,9 @@ bool GateService::start()
 				session->setDataProc([](const char* data, size_t len, SessionPtr session)->size_t {
 					return g_packetParser->onRecvLoginData(data, len, session);
 					});
+				if (server_connector_->isConnected()) {
+					enableGameRunning();
+				}
 			},
 			[](tcp::endpoint ep) {
 				LOG_ERROR("Connect LoginServer {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));
@@ -129,14 +135,11 @@ bool GateService::start()
 		);
 
 		// GameServer already start Service
-		if (server_connector_->isConnected() && login_connector_->isConnected()) {
-			LOG_INFO("GateServer running, listen port:{}", g_Config->getListenPort());
-			enableGameRunning();
-
-			g_ClientPacketHandler->init();
-			g_loginPacketHandler->init();
-			g_gsPacketHandler->init();
-		}
+		g_ClientPacketHandler->init();
+		g_loginPacketHandler->init();
+		g_gsPacketHandler->init();
+		
+		LOG_INFO("GateServer running, listen port:{}", g_Config->getListenPort());
 	}
 	catch (std::exception const& e) {
 		LOG_CRITICAL("Exception: {}", e.what());
@@ -147,8 +150,14 @@ bool GateService::start()
 	return isGameRunning();
 }
 
-void GateService::run() 
+void GateService::run()
 {
+	while (!isGameRunning())
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		continue;
+	}
+
 	// main thread handle
 	while (isGameRunning())
 	{

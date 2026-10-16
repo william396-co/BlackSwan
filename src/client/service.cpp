@@ -18,6 +18,8 @@
 auto host = "127.0.0.1";
 uint16_t port = 9527;
 
+PlayerPtr my_self = {};
+
 extern std::atomic<bool> g_stop_flag_;
 
 bool ClientService::start()
@@ -37,7 +39,7 @@ bool ClientService::start()
 		pool_->start();
 
 		// connector 
-		connector_ = std::make_unique<Connector>(pool_->getNext());
+		connector_ = std::make_shared<Connector>(pool_->getNext());
 		connector_->setDisconnectProc([this](SessionPtr) {
 			disableGameRunning();
 			LOG_ERROR("disconnected from GateServer");
@@ -56,11 +58,11 @@ bool ClientService::start()
 				session->setDataProc([](const char* data, size_t len, SessionPtr session)->size_t {// decode call back					
 					return g_packetParser->onRecvData(data, len, session);
 					});
-#if 0
-				auto pPlayer = findPlayer(1);
-				// send LoginReq
-				pPlayer->sendLoginReq();
-#endif
+				my_self = g_playerMgr->fetchPlayer();
+				if (my_self) {
+					my_self->setConnector(connector_);
+					my_self->sendLoginReq();
+				}
 			},
 			[](tcp::endpoint ep) {
 				LOG_ERROR("connect {}:{} failed", ep.address().to_string(), std::to_string(ep.port()));

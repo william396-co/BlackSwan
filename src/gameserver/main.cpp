@@ -2,11 +2,16 @@
 
 #include <google/protobuf/stubs/common.h>
 #include "share/log/log.h"
+#include "share/utils/CrashInspector.h"
+
+char version[] = "blackSwan_1.0.0";
 
 int main()
 {
 	// Start Log function
 	auto log = std::make_unique<CLog>("GameServer");
+	
+	CrashInspector::EnableAutoDump();
 
 	GameService service;
 	if (!service.start()) {

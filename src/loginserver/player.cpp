@@ -64,6 +64,8 @@ void Player::sendGateLoginSucc()
 	resp.set_abydatainfo("");// TODO loginData
 	send(GateLoginCmd::LS_GG_Login_ACK, resp);
 
+	LOG_INFO("{} send login Ack", getAuthenID());
+	
 	// change state to Online
 	changeState(FsmStateType::EFST_Online);
 }

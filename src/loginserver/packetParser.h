@@ -13,10 +13,9 @@
 
 #include "utils/singleton.h"
 #include "networkEx/session.h"
+#include "share/common/message.h"
 
 #include "player.h"
-
-using MessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, TransID transID)>;
 
 class MessageParam
 {
@@ -39,19 +38,8 @@ public:
 };
 using MessageParamList = std::list<MessageParam>;
 
-struct CmdMessage {
-	CmdMessage() = default;
-	CmdMessage(::google::protobuf::MessageLite* pMsg, MessageHandler handler)
-		:pMessage_{pMsg },
-		handler_{std::move(handler)}
-	{
-	}
-	~CmdMessage() {
-		delete pMessage_;
-	}
-	::google::protobuf::MessageLite* pMessage_{};
-	MessageHandler handler_{};
-};
+using CmdMessageHandler = std::function<void(const void* data, size_t len, uint32_t gate_session_fd, TransID transID)>;
+using CmdMessage = MessageData<CmdMessageHandler>;
 
 class PacketParser : public Singleton<PacketParser> 
 {
@@ -69,10 +57,9 @@ public:
 
 public:
 	void Init();
-private:
-	CmdMessage findCmdMessage(uint32_t msgId);
+private:	
 	// Register Command
-	void registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, MessageHandler handler);
+	void registerCommand(uint32_t msgId, ::google::protobuf::MessageLite* pMsg, CmdMessageHandler handler);
 public:
 	void onUpdate();
 	

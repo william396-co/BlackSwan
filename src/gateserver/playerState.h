@@ -89,6 +89,8 @@ private:
 	void handleLoginReq(PlayerPtr pPlayer, FsmEvent const& event);
 	void handleLoginAck(PlayerPtr pPlayer, FsmEvent const& event);
 private:
+	void reset();
+private:
 	int32_t handled_{ Has_Handled_Nothing };
 };
 
